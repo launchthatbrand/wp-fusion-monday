@@ -1,52 +1,75 @@
 <?php
 /*
-Plugin Name: WPFusion Monday.com Integration
-Plugin URI: https://yourwebsite.com/
-Description: Extends WPFusion to work with Monday.com
-Version: 1.0
-Author: Your Name
-Author URI: https://yourwebsite.com/
+Plugin Name: WP Fusion - Monday.com Integration
+Plugin URI: https://wpfusion.com/
+Description: Monday.com integration for WP Fusion
+Version: 1.0.0
+Author: Very Good Plugins
+Author URI: https://verygoodplugins.com/
+Text Domain: wp-fusion-monday
 */
 
 // Exit if accessed directly
-if (!defined('ABSPATH')) {
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-// Check if WPFusion is active
-if (!class_exists('WP_Fusion')) {
-    return;
+define( 'WPF_MONDAY_VERSION', '1.0.0' );
+define( 'WPF_MONDAY_DIR', plugin_dir_path( __FILE__ ) );
+define( 'WPF_MONDAY_URL', plugin_dir_url( __FILE__ ) );
+
+// Check if WP Fusion is active
+if ( ! function_exists( 'wp_fusion' ) ) {
+	return;
 }
 
-class WPFusion_Monday_Integration {
+class WPF_Monday {
 
-    public function __construct() {
-        // Add filters and actions here
-        add_filter('wpf_crm_fields', array($this, 'add_custom_fields'), 10, 1);
-        add_filter('wpf_crm_post_data', array($this, 'format_post_data'), 10, 1);
-    }
+	/**
+	 * Contains API params
+	 */
+	public $params;
 
-    public function add_custom_fields($fields) {
-        // Add custom Monday.com fields here
-        $fields['monday_user_id'] = array(
-            'crm_label' => 'Monday.com User ID',
-            'crm_field' => 'monday_user_id'
-        );
-        // Add more fields as needed
-        return $fields;
-    }
+	/**
+	 * Lets pluggable functions know which features are supported by the CRM
+	 */
+	public $supports;
 
-    public function format_post_data($post_data) {
-        // Format the data before sending to Monday.com
-        // This is where you'll need to adapt the data structure for Monday.com
-        return $post_data;
-    }
+	/**
+	 * Get things started
+	 *
+	 * @access  public
+	 * @since   1.0
+	 */
+	public function __construct() {
 
-    // Add more methods as needed for Monday.com integration
+		$this->slug     = 'monday';
+		$this->name     = 'Monday.com';
+		$this->supports = array();
+
+		// Set up admin options
+		if ( is_admin() ) {
+			require_once dirname( __FILE__ ) . '/includes/admin/class-admin.php';
+			new WPF_Monday_Admin( $this->slug, $this->name, $this );
+		}
+
+		add_filter( 'wpf_crm_addons', array( $this, 'register_addon' ) );
+	}
+
+	/**
+	 * Registers addon with WP Fusion
+	 *
+	 * @access public
+	 * @return array Addons
+	 */
+	public function register_addon( $addons ) {
+
+		$addons[ $this->slug ] = $this->name;
+
+		return $addons;
+
+	}
+
 }
 
-// Initialize the plugin
-function wpfusion_monday_integration_init() {
-    new WPFusion_Monday_Integration();
-}
-add_action('plugins_loaded', 'wpfusion_monday_integration_init');
+new WPF_Monday();
