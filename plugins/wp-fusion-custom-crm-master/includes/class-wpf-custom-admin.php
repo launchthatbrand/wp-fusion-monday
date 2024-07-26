@@ -181,17 +181,14 @@ class WPF_Custom_Admin {
 			'post_fields' => array( 'custom_url', 'custom_key' ), // This tells us which settings fields need to be POSTed when the Test Connection button is clicked.
 		);
 
-		if ( $settings['connection_configured'] && wpf_get_option( 'crm' ) === $this->slug ) {
 		$new_settings['monday_board'] = array(
 			'title'       => __( 'Select Monday.com Board', 'wp-fusion' ),
 			'desc'        => __( 'Select the Monday.com board to sync with.', 'wp-fusion' ),
 			'type'        => 'select',
 			'placeholder' => 'Select Board',
 			'section'     => 'setup',
-			'choices'     => WPF_Monday_API::get_monday_boards(),
+			'choices'     => array( $this, 'get_monday_boards' ),
 		);
-			
-    }
 
 		// OR, Option 2, OAuth based authentication. Remove if not using OAuth.
 
@@ -231,7 +228,7 @@ class WPF_Custom_Admin {
 		return $settings;
 	}
 
-	// private function get_monday_boards() {
+	public function get_monday_boards() {
     //     $api_key = wpf_get_option( 'custom_key' );
 
     //     if ( empty( $api_key ) ) {
