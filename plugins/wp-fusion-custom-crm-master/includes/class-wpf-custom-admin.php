@@ -229,43 +229,43 @@ class WPF_Custom_Admin {
 	}
 
 	public function get_monday_boards() {
-    //     $api_key = wpf_get_option( 'custom_key' );
+        $api_key = wpf_get_option( 'custom_key' );
 
-    //     if ( empty( $api_key ) ) {
-    //         return array();
-    //     }
+        if ( empty( $api_key ) ) {
+            return array( '' => __( 'Please enter your API key first', 'wp-fusion' ) );
+        }
 
-    //     $query = '{"query": "{ boards { id name } }"}';
-    //     $response = wp_safe_remote_post(
-    //         'https://api.monday.com/v2',
-    //         array(
-    //             'method'  => 'POST',
-    //             'headers' => array(
-    //                 'Authorization' => $api_key,
-    //                 'Content-Type'  => 'application/json',
-    //             ),
-    //             'body'    => $query,
-    //         )
-    //     );
+        $query = '{"query": "{ boards { id name } }"}';
+        $response = wp_safe_remote_post(
+            'https://api.monday.com/v2',
+            array(
+                'method'  => 'POST',
+                'headers' => array(
+                    'Authorization' => $api_key,
+                    'Content-Type'  => 'application/json',
+                ),
+                'body'    => $query,
+            )
+        );
 
-    //     if ( is_wp_error( $response ) ) {
-    //         return array();
-    //     }
+        if ( is_wp_error( $response ) ) {
+            return array( '' => __( 'Error fetching boards', 'wp-fusion' ) );
+        }
 
-    //     $body = json_decode( wp_remote_retrieve_body( $response ), true );
+        $body = json_decode( wp_remote_retrieve_body( $response ), true );
 
-    //     if ( empty( $body['data']['boards'] ) ) {
-    //         return array();
-    //     }
+        if ( empty( $body['data']['boards'] ) ) {
+            return array( '' => __( 'No boards found', 'wp-fusion' ) );
+        }
 
-    //     $boards = array();
+        $boards = array( '' => __( 'Select a board', 'wp-fusion' ) );
 
-    //     foreach ( $body['data']['boards'] as $board ) {
-    //         $boards[ $board['id'] ] = $board['name'];
-    //     }
+        foreach ( $body['data']['boards'] as $board ) {
+            $boards[ $board['id'] ] = $board['name'];
+        }
 
-    //     return $boards;
-    // }
+        return $boards;
+    }
 
 	/**
 	 * Loads standard CRM field names and attempts to match them up with
