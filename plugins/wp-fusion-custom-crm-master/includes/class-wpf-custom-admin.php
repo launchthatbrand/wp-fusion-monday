@@ -153,17 +153,31 @@ class WPF_Custom_Admin {
 	 * @param array $options  The options saved in the database.
 	 * @return array $settings The settings.
 	 */
-	public function register_connection_settings( $settings, $options ) {
+
+	 public function register_connection_settings( $settings, $options ) {
 
 		$new_settings = array();
 
 		$new_settings['custom_header'] = array(
-			'title'   => __( 'Zoho CRM Configuration', 'wp-fusion' ),
+			'title'   => __( 'Monday Configuration', 'wp-fusion-lite' ),
 			'type'    => 'heading',
 			'section' => 'setup',
 		);
 
-		// Option 1, API URL + API key based authentication.
+		$auth_url = 'https://wpfusion.com/oauth/?redirect=' . urlencode( admin_url( 'options-general.php?page=wpf-settings&crm=zoho' ) ) . '&action=wpf_get_zoho_token&client_id=' . $this->crm->client_id;
+		$auth_url = apply_filters( 'wpf_zoho_auth_url', $auth_url );
+
+		if ( ! empty( $options['connection_configured'] ) && 'custom' === wpf_get_option( 'crm' ) ) {
+
+		$new_settings['monday_board'] = array(
+			'title'       => __( 'Select Monday.com Board', 'wp-fusion' ),
+			'desc'        => __( 'Select the Monday.com board to sync with.', 'wp-fusion' ),
+			'type'        => 'select',
+			'placeholder' => 'Select Board',
+			'section'     => 'setup',
+			'choices'     => WPF_Monday_API::get_monday_boards(),
+		);
+		}
 
 		$new_settings['custom_url'] = array(
 			'title'   => __( 'URL', 'wp-fusion' ),
@@ -181,91 +195,104 @@ class WPF_Custom_Admin {
 			'post_fields' => array( 'custom_url', 'custom_key' ), // This tells us which settings fields need to be POSTed when the Test Connection button is clicked.
 		);
 
-		$new_settings['monday_board'] = array(
-			'title'       => __( 'Select Monday.com Board', 'wp-fusion' ),
-			'desc'        => __( 'Select the Monday.com board to sync with.', 'wp-fusion' ),
-			'type'        => 'select',
-			'placeholder' => 'Select Board',
-			'section'     => 'setup',
-			'choices'     => array( $this, 'get_monday_boards' ),
-		);
+			// $new_settings['custom_header']['desc']  = '<table class="form-table"><tr>';
+			// $new_settings['custom_header']['desc'] .= '<th scope="row"><label>Authorize</label></th>';
+			// $new_settings['custom_header']['desc'] .= '<td><a class="button button-primary" href="' . esc_url( $auth_url ) . '">Authorize with Zoho</a><br /><span class="description">You\'ll be taken to Zoho to authorize WP Fusion and generate access keys for this site.</td>';
+			// $new_settings['custom_header']['desc'] .= '</tr></table></div><table class="form-table">';
 
-		// OR, Option 2, OAuth based authentication. Remove if not using OAuth.
+		// } else {
 
-		/*
-		if ( empty( $options[ "{$this->slug}_refresh_token" ] ) && ! isset( $_GET['code'] ) ) {
-
-			$new_settings[ "{$this->slug}_auth" ] = array(
-				'title'   => __( 'Authorize', 'wp-fusion' ),
-				'type'    => 'oauth_authorize',
-				'section' => 'setup',
-				'url'     => $this->get_oauth_url(),
-				'name'    => $this->name,
-				'slug'    => $this->slug,
-			);
-
-		} else {
-
-			$new_settings[ "{$this->slug}_token" ] = array(
-				'title'   => __( 'Access Token', 'wp-fusion' ),
-				'type'    => 'text',
-				'section' => 'setup',
-			);
-
-			$new_settings[ "{$this->slug}_refresh_token" ] = array(
-				'title'       => __( 'Refresh token', 'wp-fusion' ),
-				'type'        => 'api_validate',
-				'section'     => 'setup',
-				'class'       => 'api_key',
-				'post_fields' => array( "{$this->slug}_token", "{$this->slug}_refresh_token" ),
-				'desc'        => '<a href="' . esc_url( $this->get_oauth_url() ) . '">' . sprintf( esc_html__( 'Re-authorize with %s', 'wp-fusion' ), $this->crm->name ) . '</a>. ',
-			);
-
-		} */
+			
 
 		$settings = wp_fusion()->settings->insert_setting_after( 'crm', $settings, $new_settings );
 
 		return $settings;
+
 	}
 
-	public function get_monday_boards() {
-        $api_key = wpf_get_option( 'custom_key' );
+	// public function register_connection_settings( $settings, $options ) {
 
-        if ( empty( $api_key ) ) {
-            return array( '' => __( 'Please enter your API key first', 'wp-fusion' ) );
-        }
+	// 	$new_settings = array();
 
-        $query = '{"query": "{ boards { id name } }"}';
-        $response = wp_safe_remote_post(
-            'https://api.monday.com/v2',
-            array(
-                'method'  => 'POST',
-                'headers' => array(
-                    'Authorization' => $api_key,
-                    'Content-Type'  => 'application/json',
-                ),
-                'body'    => $query,
-            )
-        );
+	// 	$new_settings['custom_header'] = array(
+	// 		'title'   => __( 'Zoho CRM Configuration', 'wp-fusion' ),
+	// 		'type'    => 'heading',
+	// 		'section' => 'setup',
+	// 	);
 
-        if ( is_wp_error( $response ) ) {
-            return array( '' => __( 'Error fetching boards', 'wp-fusion' ) );
-        }
+	// 	// Option 1, API URL + API key based authentication.
 
-        $body = json_decode( wp_remote_retrieve_body( $response ), true );
+	// 	$new_settings['custom_url'] = array(
+	// 		'title'   => __( 'URL', 'wp-fusion' ),
+	// 		'desc'    => __( 'URL to your Zoho CRM.', 'wp-fusion' ),
+	// 		'type'    => 'text',
+	// 		'section' => 'setup',
+	// 	);
 
-        if ( empty( $body['data']['boards'] ) ) {
-            return array( '' => __( 'No boards found', 'wp-fusion' ) );
-        }
+	// 	$new_settings['custom_key'] = array(
+	// 		'title'       => __( 'API Key', 'wp-fusion' ),
+	// 		'desc'        => __( 'Your API key.', 'wp-fusion' ),
+	// 		'section'     => 'setup',
+	// 		'class'       => 'api_key',
+	// 		'type'        => 'api_validate', // api_validate field type causes the Test Connection button to be appended to the input.
+	// 		'post_fields' => array( 'custom_url', 'custom_key' ), // This tells us which settings fields need to be POSTed when the Test Connection button is clicked.
+	// 	);
 
-        $boards = array( '' => __( 'Select a board', 'wp-fusion' ) );
+	// 	if ( $settings['connection_configured'] && wpf_get_option( 'crm' ) === $this->slug ) {
+	// 	$new_settings['monday_board'] = array(
+	// 		'title'       => __( 'Select Monday.com Board', 'wp-fusion' ),
+	// 		'desc'        => __( 'Select the Monday.com board to sync with.', 'wp-fusion' ),
+	// 		'type'        => 'select',
+	// 		'placeholder' => 'Select Board',
+	// 		'section'     => 'setup',
+	// 		'choices'     => WPF_Monday_API::get_monday_boards(),
+	// 	);
+			
+    // }
 
-        foreach ( $body['data']['boards'] as $board ) {
-            $boards[ $board['id'] ] = $board['name'];
-        }
+	// 	$settings = wp_fusion()->settings->insert_setting_after( 'crm', $settings, $new_settings );
 
-        return $boards;
-    }
+	// 	return $settings;
+	// }
+
+	// private function get_monday_boards() {
+    //     $api_key = wpf_get_option( 'custom_key' );
+
+    //     if ( empty( $api_key ) ) {
+    //         return array();
+    //     }
+
+    //     $query = '{"query": "{ boards { id name } }"}';
+    //     $response = wp_safe_remote_post(
+    //         'https://api.monday.com/v2',
+    //         array(
+    //             'method'  => 'POST',
+    //             'headers' => array(
+    //                 'Authorization' => $api_key,
+    //                 'Content-Type'  => 'application/json',
+    //             ),
+    //             'body'    => $query,
+    //         )
+    //     );
+
+    //     if ( is_wp_error( $response ) ) {
+    //         return array();
+    //     }
+
+    //     $body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+    //     if ( empty( $body['data']['boards'] ) ) {
+    //         return array();
+    //     }
+
+    //     $boards = array();
+
+    //     foreach ( $body['data']['boards'] as $board ) {
+    //         $boards[ $board['id'] ] = $board['name'];
+    //     }
+
+    //     return $boards;
+    // }
 
 	/**
 	 * Loads standard CRM field names and attempts to match them up with
@@ -300,23 +327,23 @@ class WPF_Custom_Admin {
 	 */
 	public function register_settings( $settings, $options ) {
 
-		// Add site tracking option
-		$site_tracking = array();
+		// // Add site tracking option
+		// $site_tracking = array();
 
-		$site_tracking['site_tracking_header'] = array(
-			'title'   => sprintf( __( '%s Settings', 'wp-fusion' ), $this->name ),
-			'type'    => 'heading',
-			'section' => 'main',
-		);
+		// $site_tracking['site_tracking_header'] = array(
+		// 	'title'   => sprintf( __( '%s Settings', 'wp-fusion' ), $this->name ),
+		// 	'type'    => 'heading',
+		// 	'section' => 'main',
+		// );
 
-		$site_tracking['site_tracking'] = array(
-			'title'   => __( 'Site Tracking', 'wp-fusion' ),
-			'desc'    => printf( __( 'Enable %s site tracking</a>.', 'wp-fusion' ), $this->name ),
-			'type'    => 'checkbox',
-			'section' => 'main',
-		);
+		// $site_tracking['site_tracking'] = array(
+		// 	'title'   => __( 'Site Tracking', 'wp-fusion' ),
+		// 	'desc'    => printf( __( 'Enable %s site tracking</a>.', 'wp-fusion' ), $this->name ),
+		// 	'type'    => 'checkbox',
+		// 	'section' => 'main',
+		// );
 
-		$settings = wp_fusion()->settings->insert_setting_after( 'login_meta_sync', $settings, $site_tracking );
+		// $settings = wp_fusion()->settings->insert_setting_after( 'login_meta_sync', $settings, $site_tracking );
 
 		return $settings;
 
@@ -334,8 +361,8 @@ class WPF_Custom_Admin {
 	public function show_field_custom_header_begin( $id, $field ) {
 
 		echo '</table>';
-		$crm = wp_fusion()->settings->get( 'crm' );
-		echo '<div id="' . esc_attr( $this->slug ) . '" class="crm-config ' . ( false === $crm || $crm !== $this->slug ? 'hidden' : 'crm-active' ) . '" data-name="' . esc_attr( $this->name ) . '" data-crm="' . esc_attr( $this->slug ) . '">';
+		$crm = wpf_get_option( 'crm' );
+		echo '<div id="' . esc_attr( $this->slug ) . '" class="crm-config ' . ( $crm == false || $crm != $this->slug ? 'hidden' : 'crm-active' ) . '" data-name="' . esc_attr( $this->name ) . '" data-crm="' . esc_attr( $this->slug ) . '">';
 	}
 
 
