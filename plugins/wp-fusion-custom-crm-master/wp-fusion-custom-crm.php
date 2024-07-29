@@ -39,6 +39,10 @@ if ( ! class_exists( 'WPF_Custom' ) ) {
 	include_once __DIR__ . '/includes/class-wpf-custom.php';
 }
 
+// if ( ! class_exists( 'WPF_Post_Type' ) ) {
+// 	include_once __DIR__ . '/includes/class-post-type.php';
+// }
+
 /**
  * Add our custom CRM class to the list of registered CRMs
  *
@@ -70,6 +74,9 @@ function wpf_include_custom_integration() {
 	include_once dirname( __FILE__ ) . '/includes/class-example-membership-integration.php';
 	include_once dirname( __FILE__ ) . '/includes/class-wpf-monday-api.php';
 	include_once dirname( __FILE__ ) . '/includes/wpf-custom-utilities.php';
+	// include_once dirname( __FILE__ ) . '/includes/class-post-type.php';
+
+	
 	
 
 }

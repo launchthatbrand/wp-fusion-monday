@@ -1,0 +1,77 @@
+[27-Jul-2024 18:51:10 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[27-Jul-2024 18:55:35 UTC] save_post_init
+[27-Jul-2024 18:55:36 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[27-Jul-2024 18:55:41 UTC] save_post_init
+[27-Jul-2024 18:55:41 UTC] save_post_init
+[27-Jul-2024 18:56:25 UTC] save_post_init
+[27-Jul-2024 18:56:30 UTC] save_post_init
+[27-Jul-2024 18:57:34 UTC] save_post_init
+[27-Jul-2024 18:57:53 UTC] PHP Parse error:  syntax error, unexpected token "}" in /var/www/html/wp-content/themes/twentytwentyfour/functions.php on line 218
+[27-Jul-2024 18:57:53 UTC] PHP Warning:  Trying to access array offset on value of type bool in /var/www/html/wp-includes/class-wp-recovery-mode-email-service.php on line 367
+[27-Jul-2024 18:57:53 UTC] PHP Warning:  Trying to access array offset on value of type bool in /var/www/html/wp-includes/class-wp-recovery-mode-email-service.php on line 368
+[27-Jul-2024 18:58:01 UTC] save_post_init
+[27-Jul-2024 18:58:08 UTC] save_post_init
+[27-Jul-2024 18:58:54 UTC] save_post_init
+[27-Jul-2024 18:59:41 UTC] save_post_init
+[27-Jul-2024 19:01:08 UTC] save_post_init
+[27-Jul-2024 19:03:23 UTC] save_post_init
+[27-Jul-2024 19:03:41 UTC] save_post_init
+[27-Jul-2024 19:03:53 UTC] save_post_init
+[27-Jul-2024 19:06:56 UTC] PHP Fatal error:  Cannot redeclare save_post_callback() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-post-type.php:156) in /var/www/html/wp-content/themes/twentytwentyfour/functions.php on line 214
+[27-Jul-2024 19:06:57 UTC] PHP Fatal error:  Cannot redeclare save_post_callback() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-post-type.php:156) in /var/www/html/wp-content/themes/twentytwentyfour/functions.php on line 214
+[27-Jul-2024 19:07:18 UTC] PHP Fatal error:  Cannot redeclare save_post_callback() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-post-type.php:156) in /var/www/html/wp-content/themes/twentytwentyfour/functions.php on line 214
+[27-Jul-2024 19:07:26 UTC] PHP Fatal error:  Cannot redeclare save_post_callback() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-post-type.php:156) in /var/www/html/wp-content/themes/twentytwentyfour/functions.php on line 214
+[27-Jul-2024 19:07:26 UTC] PHP Fatal error:  Cannot redeclare save_post_callback() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-post-type.php:156) in /var/www/html/wp-content/themes/twentytwentyfour/functions.php on line 214
+[27-Jul-2024 19:07:27 UTC] PHP Fatal error:  Cannot redeclare save_post_callback() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-post-type.php:156) in /var/www/html/wp-content/themes/twentytwentyfour/functions.php on line 214
+[27-Jul-2024 19:07:28 UTC] PHP Fatal error:  Cannot redeclare save_post_callback() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-post-type.php:156) in /var/www/html/wp-content/themes/twentytwentyfour/functions.php on line 214
+[27-Jul-2024 19:08:04 UTC] save_post_init
+[27-Jul-2024 19:08:04 UTC] save_post_init
+[27-Jul-2024 19:10:13 UTC] save_post_init
+[27-Jul-2024 19:10:13 UTC] save_post_init
+[27-Jul-2024 19:10:27 UTC] save_post_init
+[27-Jul-2024 19:10:59 UTC] save_post_callback2
+[27-Jul-2024 19:14:47 UTC] save_post_callback2
+[27-Jul-2024 19:23:25 UTC] save_post_init
+[27-Jul-2024 19:23:25 UTC] save_post_callback2
+[27-Jul-2024 19:23:45 UTC] post_updated
+[27-Jul-2024 19:23:45 UTC] save_post_callback2
+[27-Jul-2024 19:29:00 UTC] PHP Fatal error:  Uncaught Error: Call to a member function api() on bool in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-example-membership-integration.php:45
+Stack trace:
+#0 /var/www/html/wp-includes/class-wp-hook.php(326): WPF_Post_Type_Sync_Integration->post_updated(24)
+#1 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#2 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 24, Object(WP_Post), Object(WP_Post))
+#4 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#5 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#6 /var/www/html/wp-admin/post.php(227): edit_post()
+#7 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-example-membership-integration.php on line 45
+[27-Jul-2024 19:29:38 UTC] PHP Fatal error:  Uncaught Error: Call to a member function api() on bool in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-example-membership-integration.php:45
+Stack trace:
+#0 /var/www/html/wp-includes/class-wp-hook.php(326): WPF_Post_Type_Sync_Integration->post_updated(24)
+#1 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#2 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 24, Object(WP_Post), Object(WP_Post))
+#4 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#5 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#6 /var/www/html/wp-admin/post.php(227): edit_post()
+#7 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-example-membership-integration.php on line 45
+[27-Jul-2024 19:29:56 UTC] PHP Warning:  Undefined variable $wp_fusion in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-example-membership-integration.php on line 45
+[27-Jul-2024 19:29:56 UTC] PHP Fatal error:  Uncaught Error: Value of type null is not callable in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-example-membership-integration.php:45
+Stack trace:
+#0 /var/www/html/wp-includes/class-wp-hook.php(326): WPF_Post_Type_Sync_Integration->post_updated(24)
+#1 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#2 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 24, Object(WP_Post), Object(WP_Post))
+#4 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#5 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#6 /var/www/html/wp-admin/post.php(227): edit_post()
+#7 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-example-membership-integration.php on line 45
+[27-Jul-2024 19:43:17 UTC] PHP Warning:  Attempt to read property "api" on null in /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-example-membership-integration.php on line 45
+[27-Jul-2024 19:43:17 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-example-membership-integration.php:45) in /var/www/html/wp-includes/pluggable.php on line 1435
+[27-Jul-2024 19:43:17 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-custom-crm-master/includes/class-example-membership-integration.php:45) in /var/www/html/wp-includes/pluggable.php on line 1438
+[28-Jul-2024 20:52:22 UTC] Automatic updates starting...
+[28-Jul-2024 20:52:23 UTC] Automatic updates complete.
+[28-Jul-2024 20:52:34 UTC] PHP Deprecated:  Function wp_update_https_detection_errors is <strong>deprecated</strong> since version 6.4.0 with no alternative available. in /var/www/html/wp-includes/functions.php on line 6085

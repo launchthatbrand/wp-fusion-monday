@@ -13,6 +13,12 @@ class WPF_Custom {
 
 	 public $params;
 
+	 /**
+	 * Allows for direct access to the API, bypassing WP Fusion
+	 */
+
+	public $app;
+
 	/**
 	 * The CRM slug.
 	 *
@@ -38,7 +44,7 @@ class WPF_Custom {
 	 * @since x.x.x
 	 */
 
-	public $url = 'https://myapi.com';
+	public $api_url = 'https://myapi.com';
 
 	/**
 	 * Monday OAuth stuff

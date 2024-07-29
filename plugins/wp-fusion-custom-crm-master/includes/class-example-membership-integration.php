@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
+
 	public $slug = 'post-type-sync';
 
 	public $name = 'Post Type Sync';
@@ -34,6 +35,28 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 		// Save field mappings
 		add_action( 'admin_init', array( $this, 'save_field_mappings' ) );
+
+		// Post type actions
+		add_action( 'post_updated', array( $this, 'post_updated' ), 10 );
+	}
+
+	public function post_updated() {
+		BugFu::log("post_updated");
+		BugFu::log(wp_fusion()->crm->crm);
+
+		// // Don't run on autosave
+		// if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		// 	return;
+		// }
+
+		// // Don't run for revisions
+		// if ( wp_is_post_revision( $post_id ) ) {
+		// 	return;
+		// }
+
+		// // Push post data to CRM
+		// $this->push_post_data( $post_id );
+
 	}
 
 	public function register_settings( $settings, $options ) {
