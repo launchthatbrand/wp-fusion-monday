@@ -17,7 +17,7 @@ class WPF_Custom {
 	 * Allows for direct access to the API, bypassing WP Fusion
 	 */
 
-	public $app;
+	public $app="test";
 
 	/**
 	 * The CRM slug.
@@ -385,17 +385,24 @@ class WPF_Custom {
 	 */
 	public function connect( $api_url = null, $api_key = null, $test = false ) {
 
+		BugFu::log("connect_init");
+
 		if ( false === $test ) {
 			return true;
 		}
 
-		$request  = $api_url . '/endpoint/';
-		$response = wp_safe_remote_get( $request, $this->get_params( $api_key ) );
-
-		// Validate the connection.
-		if ( is_wp_error( $response ) ) {
-			return $response;
+		if ( ! class_exists( 'Monday' ) ) {
+			BugFu::log("Monday activated");
+			require_once __DIR__ . '/Monday.class.php';
+		} else {
+			BugFu::log("Monday already activated", false);
 		}
+
+		$this->app = new Monday( $api_url, $api_key );
+
+		$test = wp_fusion()->crm->app->api( 'item/add' );
+
+		BugFu::log($test, false);
 
 		return true;
 	}

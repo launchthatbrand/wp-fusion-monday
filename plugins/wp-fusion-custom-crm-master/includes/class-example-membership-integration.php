@@ -1,8 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+// if ( ! defined( 'ABSPATH' ) ) {
+// 	exit; // Exit if accessed directly
+// }
 
 /**
  * Post Type Sync Integration
@@ -42,22 +42,40 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 	public function post_updated() {
 		BugFu::log("post_updated");
-		BugFu::log(wp_fusion()->crm->crm);
+		
+		$test = wp_fusion()->crm->app->api("item/add");
 
-		// // Don't run on autosave
-		// if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-		// 	return;
+		BugFu::log($test);
+		
+		// BugFu::log("CRM class: " . get_class($crm));
+		
+		// if ($crm instanceof WPF_Custom) {
+		// 	$test = $crm->app;
+		// 	BugFu::log($test, false);
+		// } else {
+		// 	BugFu::log("CRM is not an instance of WPF_Custom. It is an instance of: " . get_class($crm), false);
 		// }
-
-		// // Don't run for revisions
-		// if ( wp_is_post_revision( $post_id ) ) {
-		// 	return;
-		// }
-
-		// // Push post data to CRM
-		// $this->push_post_data( $post_id );
-
 	}
+
+	// public function post_updated() {
+	// 	BugFu::log("post_updated");
+	// 	$test = wp_fusion()->crm;
+	// 	BugFu::log($test, false);
+
+	// 	// // Don't run on autosave
+	// 	// if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+	// 	// 	return;
+	// 	// }
+
+	// 	// // Don't run for revisions
+	// 	// if ( wp_is_post_revision( $post_id ) ) {
+	// 	// 	return;
+	// 	// }
+
+	// 	// // Push post data to CRM
+	// 	// $this->push_post_data( $post_id );
+
+	// }
 
 	public function register_settings( $settings, $options ) {
 		$settings['post_type_sync_header'] = array(
@@ -66,25 +84,25 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 			'section' => 'wpf-settings-monday',
 		);
 
-		$post_types = get_post_types( array( 'public' => true ), 'objects' );
-		$boards = WPF_Monday_API::get_monday_boards();
+		// $post_types = get_post_types( array( 'public' => true ), 'objects' );
+		// $boards = WPF_Monday_API::get_monday_boards();
 
-		foreach ( $post_types as $post_type ) {
-			$settings['post_type_sync_' . $post_type->name] = array(
-				'title'   => $post_type->label,
-				'type'    => 'select',
-				'section' => 'wpf-settings-monday',
-				'choices' => $boards,
-			);
-		}
+		// foreach ( $post_types as $post_type ) {
+		// 	$settings['post_type_sync_' . $post_type->name] = array(
+		// 		'title'   => $post_type->label,
+		// 		'type'    => 'select',
+		// 		'section' => 'wpf-settings-monday',
+		// 		'choices' => $boards,
+		// 	);
+		// }
 
-        $settings['contact_fields2'] = array(
-			'title'   => __( 'Contact Fields2', 'wp-fusion-lite' ),
-			'std'     => array(),
-			'type'    => 'post-fields',
-			'section' => 'post-fields',
-			'choices' => array(),
-		);
+        // $settings['contact_fields2'] = array(
+		// 	'title'   => __( 'Contact Fields2', 'wp-fusion-lite' ),
+		// 	'std'     => array(),
+		// 	'type'    => 'post-fields',
+		// 	'section' => 'post-fields',
+		// 	'choices' => array(),
+		// );
 
 		return $settings;
 	}
@@ -193,6 +211,11 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		echo '</td>';
 	
 		echo '</tr>';
+
+		echo '</tbody>';
+
+		echo '</table>';
+
 	}
 	
 	
