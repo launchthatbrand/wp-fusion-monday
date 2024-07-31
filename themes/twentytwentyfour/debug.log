@@ -1,241 +1,110 @@
-[29-Jul-2024 23:33:38 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
-[29-Jul-2024 23:33:38 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: 6950913950, item_name: "admin", column_values: "{\"l_name\":\"Dev\",\"f_name\":\"Dev\",\"email\":{\"email\":\"admin@localhost.com\",\"text\":\"admin@localhost.com\"},\"name\":\"admin\"}") {
-				id
-			}
-		}
-[29-Jul-2024 23:33:39 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
-[29-Jul-2024 23:33:39 UTC] API response body: {"data":{"create_item":{"id":"7119035140"}},"account_id":20627268}
-[29-Jul-2024 23:37:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_selected_board() in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php:969
+[30-Jul-2024 16:27:43 UTC] PHP Fatal error:  Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, class WPF_Post_Type_Sync_Integration does not have a method "show_field_sync_button" in /var/www/html/wp-includes/class-wp-hook.php:324
 Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/crms/class-base.php(423): WPF_Monday->update_contact('7119035140', Array, false)
-#1 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/crms/class-base.php(1310): WPF_CRM_Base->request('update_contact', Array)
-#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_CRM_Base->shutdown('')
-#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#5 /var/www/html/wp-includes/load.php(1280): do_action('shutdown')
-#6 [internal function]: shutdown_action_hook()
+#0 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#1 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#2 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(973): do_action('show_field_sync...', 'post_type_sync_...', Array)
+#3 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(881): WP_Fusion_Options->show_section('post-types')
+#4 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Options->show_page('')
+#5 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#6 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#7 /var/www/html/wp-admin/admin.php(259): do_action('settings_page_w...')
+#8 {main}
+  thrown in /var/www/html/wp-includes/class-wp-hook.php on line 324
+[30-Jul-2024 16:48:40 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "WPF_EC_DIR_PATH" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:54
+Stack trace:
+#0 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->admin_scripts('settings_page_w...')
+#1 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#2 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /var/www/html/wp-admin/admin-header.php(118): do_action('admin_enqueue_s...', 'settings_page_w...')
+#4 /var/www/html/wp-admin/admin.php(239): require_once('/var/www/html/w...')
+#5 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 54
+[30-Jul-2024 17:05:21 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:06:10 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:08:52 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:09:49 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:09:49 UTC] PHP Warning:  Array to string conversion in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 385
+[30-Jul-2024 17:10:22 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:10:22 UTC] PHP Warning:  Array to string conversion in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 394
+[30-Jul-2024 17:10:37 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:21:58 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:26:20 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:26:23 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:28:18 UTC] PHP Fatal error:  Uncaught Error: Call to a member function api() on null in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:79
+Stack trace:
+#0 /var/www/html/wp-includes/class-wp-hook.php(326): WPF_Post_Type_Sync_Integration->post_updated(24)
+#1 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#2 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 24, Object(WP_Post), Object(WP_Post))
+#4 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#5 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#6 /var/www/html/wp-admin/post.php(227): edit_post()
 #7 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 969
-[29-Jul-2024 23:37:53 UTC] GraphQL Mutation: mutation {
-			change_multiple_column_values (board_id: 6950913950, item_id: 7119035140, column_values: "{\"l_name\":\"Dev\",\"f_name\":\"Dev\",\"email\":{\"email\":\"admin@localhost.com\",\"text\":\"admin@localhost.com\"},\"name\":\"Dev Dev\"}") {
-				id
-			}
-		}
-[29-Jul-2024 23:37:53 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
-[29-Jul-2024 23:37:53 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7119035140"}},"account_id":20627268}
-[29-Jul-2024 23:38:02 UTC] GraphQL Mutation: mutation {
-			change_multiple_column_values (board_id: 6950913950, item_id: 7119035140, column_values: "{\"l_name\":\"Dev\",\"f_name\":\"Dev\",\"email\":{\"email\":\"admin@localhost.com\",\"text\":\"admin@localhost.com\"},\"name\":\"admin\"}") {
-				id
-			}
-		}
-[29-Jul-2024 23:38:03 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
-[29-Jul-2024 23:38:03 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7119035140"}},"account_id":20627268}
-[29-Jul-2024 23:38:13 UTC] GraphQL Mutation: mutation {
-			change_multiple_column_values (board_id: 6950913950, item_id: 7119035140, column_values: "{\"l_name\":\"Devs\",\"f_name\":\"Dev\",\"email\":{\"email\":\"admin@localhost.com\",\"text\":\"admin@localhost.com\"},\"name\":\"admin\"}") {
-				id
-			}
-		}
-[29-Jul-2024 23:38:14 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
-[29-Jul-2024 23:38:14 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7119035140"}},"account_id":20627268}
-[29-Jul-2024 23:38:33 UTC] GraphQL Mutation: mutation {
-			change_multiple_column_values (board_id: 6950913950, item_id: 7119035140, column_values: "{\"f_name\":\"Devs\",\"l_name\":\"Dev\",\"email\":{\"email\":\"admin@localhost.com\",\"text\":\"admin@localhost.com\"},\"name\":\"admin\"}") {
-				id
-			}
-		}
-[29-Jul-2024 23:38:34 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
-[29-Jul-2024 23:38:34 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7119035140"}},"account_id":20627268}
-[29-Jul-2024 23:53:32 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-example-membership-integration.php): Failed to open stream: No such file or directory in /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php on line 53
-[29-Jul-2024 23:53:32 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-example-membership-integration.php' for inclusion (include_path='.:') in /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php on line 53
-[29-Jul-2024 23:53:33 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php:53) in /var/www/html/wp-admin/includes/misc.php on line 1438
-[29-Jul-2024 23:53:33 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php:53) in /var/www/html/wp-includes/functions.php on line 7108
-[29-Jul-2024 23:53:33 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php:53) in /var/www/html/wp-admin/admin-header.php on line 9
-[29-Jul-2024 23:53:34 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-example-membership-integration.php): Failed to open stream: No such file or directory in /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php on line 53
-[29-Jul-2024 23:53:34 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-example-membership-integration.php' for inclusion (include_path='.:') in /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php on line 53
-[29-Jul-2024 23:53:38 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-example-membership-integration.php): Failed to open stream: No such file or directory in /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php on line 53
-[29-Jul-2024 23:53:38 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-example-membership-integration.php' for inclusion (include_path='.:') in /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php on line 53
-[30-Jul-2024 01:03:38 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Post_Type could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:52
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 79
+[30-Jul-2024 17:28:53 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:32:36 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[30-Jul-2024 17:32:42 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:32:44 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:32:45 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:33:52 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:43:44 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:45:10 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:45:34 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:45:34 UTC] API response body: {"data":{"tags":[{"id":"23337467","name":"tag1"},{"id":"23337468","name":"tag2"}]},"account_id":20627268}
+[30-Jul-2024 17:45:35 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:45:35 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:52:04 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:52:15 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:52:44 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:53:10 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:53:25 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:54:59 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 17:55:30 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 18:20:15 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 18:20:15 UTC] Automatic updates starting...
+[30-Jul-2024 18:20:15 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 18:20:15 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 18:20:15 UTC] Automatic updates complete.
+[30-Jul-2024 18:20:15 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 20:39:18 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[30-Jul-2024 20:55:01 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 20:55:47 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 20:55:55 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 21:13:38 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 21:30:53 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Monday::sync_post_type_fields() in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:84
 Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(43): WPF_Post_Type_Sync_Integration->register_dynamic_actions()
-#1 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/integrations/class-base.php(32): WPF_Post_Type_Sync_Integration->init()
-#2 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(360): WPF_Integrations_Base->__construct()
-#3 /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php(53): include_once('/var/www/html/w...')
-#4 /var/www/html/wp-includes/class-wp-hook.php(324): wpf_include_custom_integration('')
-#5 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#6 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#7 /var/www/html/wp-content/plugins/wp-fusion-lite/wp-fusion-lite.php(594): do_action('wp_fusion_init')
-#8 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Lite->init('')
-#9 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#10 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#11 /var/www/html/wp-settings.php(700): do_action('init')
-#12 /var/www/html/wp-config.php(98): require_once('/var/www/html/w...')
-#13 /var/www/html/wp-load.php(50): require_once('/var/www/html/w...')
-#14 /var/www/html/wp-admin/admin-ajax.php(22): require_once('/var/www/html/w...')
-#15 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 52
-[30-Jul-2024 01:03:39 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Post_Type could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:52
+#0 /var/www/html/wp-includes/class-wp-hook.php(326): WPF_Post_Type_Sync_Integration->postType_updated(24)
+#1 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#2 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /var/www/html/wp-includes/post.php(4880): do_action('save_post_post', 24, Object(WP_Post), true)
+#4 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#5 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#6 /var/www/html/wp-admin/post.php(227): edit_post()
+#7 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 84
+[30-Jul-2024 21:31:24 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Monday::sync_post_type_fields() in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:84
 Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(43): WPF_Post_Type_Sync_Integration->register_dynamic_actions()
-#1 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/integrations/class-base.php(32): WPF_Post_Type_Sync_Integration->init()
-#2 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(360): WPF_Integrations_Base->__construct()
-#3 /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php(53): include_once('/var/www/html/w...')
-#4 /var/www/html/wp-includes/class-wp-hook.php(324): wpf_include_custom_integration('')
-#5 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#6 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#7 /var/www/html/wp-content/plugins/wp-fusion-lite/wp-fusion-lite.php(594): do_action('wp_fusion_init')
-#8 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Lite->init('')
-#9 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#10 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#11 /var/www/html/wp-settings.php(700): do_action('init')
-#12 /var/www/html/wp-config.php(98): require_once('/var/www/html/w...')
-#13 /var/www/html/wp-load.php(50): require_once('/var/www/html/w...')
-#14 /var/www/html/wp-admin/admin-ajax.php(22): require_once('/var/www/html/w...')
-#15 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 52
-[30-Jul-2024 01:03:39 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Post_Type could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:52
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(43): WPF_Post_Type_Sync_Integration->register_dynamic_actions()
-#1 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/integrations/class-base.php(32): WPF_Post_Type_Sync_Integration->init()
-#2 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(360): WPF_Integrations_Base->__construct()
-#3 /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php(53): include_once('/var/www/html/w...')
-#4 /var/www/html/wp-includes/class-wp-hook.php(324): wpf_include_custom_integration('')
-#5 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#6 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#7 /var/www/html/wp-content/plugins/wp-fusion-lite/wp-fusion-lite.php(594): do_action('wp_fusion_init')
-#8 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Lite->init('')
-#9 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#10 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#11 /var/www/html/wp-settings.php(700): do_action('init')
-#12 /var/www/html/wp-config.php(98): require_once('/var/www/html/w...')
-#13 /var/www/html/wp-load.php(50): require_once('/var/www/html/w...')
-#14 /var/www/html/wp-admin/admin.php(34): require_once('/var/www/html/w...')
-#15 /var/www/html/wp-admin/tools.php(40): require_once('/var/www/html/w...')
-#16 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 52
-[30-Jul-2024 01:05:13 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Post_Type could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:52
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(43): WPF_Post_Type_Sync_Integration->register_dynamic_actions()
-#1 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/integrations/class-base.php(32): WPF_Post_Type_Sync_Integration->init()
-#2 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(360): WPF_Integrations_Base->__construct()
-#3 /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php(53): include_once('/var/www/html/w...')
-#4 /var/www/html/wp-includes/class-wp-hook.php(324): wpf_include_custom_integration('')
-#5 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#6 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#7 /var/www/html/wp-content/plugins/wp-fusion-lite/wp-fusion-lite.php(594): do_action('wp_fusion_init')
-#8 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Lite->init('')
-#9 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#10 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#11 /var/www/html/wp-settings.php(700): do_action('init')
-#12 /var/www/html/wp-config.php(98): require_once('/var/www/html/w...')
-#13 /var/www/html/wp-load.php(50): require_once('/var/www/html/w...')
-#14 /var/www/html/wp-admin/admin-ajax.php(22): require_once('/var/www/html/w...')
-#15 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 52
-[30-Jul-2024 01:05:13 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Post_Type could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:52
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(43): WPF_Post_Type_Sync_Integration->register_dynamic_actions()
-#1 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/integrations/class-base.php(32): WPF_Post_Type_Sync_Integration->init()
-#2 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(360): WPF_Integrations_Base->__construct()
-#3 /var/www/html/wp-content/plugins/wp-fusion-post-types/wp-fusion-post-types.php(53): include_once('/var/www/html/w...')
-#4 /var/www/html/wp-includes/class-wp-hook.php(324): wpf_include_custom_integration('')
-#5 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#6 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#7 /var/www/html/wp-content/plugins/wp-fusion-lite/wp-fusion-lite.php(594): do_action('wp_fusion_init')
-#8 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Lite->init('')
-#9 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#10 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#11 /var/www/html/wp-settings.php(700): do_action('init')
-#12 /var/www/html/wp-config.php(98): require_once('/var/www/html/w...')
-#13 /var/www/html/wp-load.php(50): require_once('/var/www/html/w...')
-#14 /var/www/html/wp-admin/admin-ajax.php(22): require_once('/var/www/html/w...')
-#15 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 52
-[30-Jul-2024 01:05:37 UTC] PHP Fatal error:  Uncaught TypeError: call_user_func(): Argument #1 ($callback) must be a valid callback, class WP_Fusion_Options does not have a method "show_field_post-fields" in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php:976
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(881): WP_Fusion_Options->show_section('post-fields')
-#1 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Options->show_page('')
-#2 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#3 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#4 /var/www/html/wp-admin/admin.php(259): do_action('settings_page_w...')
-#5 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php on line 976
-[30-Jul-2024 01:07:51 UTC] PHP Fatal error:  Uncaught TypeError: call_user_func(): Argument #1 ($callback) must be a valid callback, class WP_Fusion_Options does not have a method "show_field_post-fields" in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php:976
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(881): WP_Fusion_Options->show_section('post-fields')
-#1 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Options->show_page('')
-#2 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#3 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#4 /var/www/html/wp-admin/admin.php(259): do_action('settings_page_w...')
-#5 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php on line 976
-[30-Jul-2024 01:08:26 UTC] PHP Fatal error:  Uncaught TypeError: call_user_func(): Argument #1 ($callback) must be a valid callback, class WP_Fusion_Options does not have a method "show_field_post-fields" in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php:976
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(881): WP_Fusion_Options->show_section('post-fields')
-#1 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Options->show_page('')
-#2 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#3 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#4 /var/www/html/wp-admin/admin.php(259): do_action('settings_page_w...')
-#5 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php on line 976
-[30-Jul-2024 01:09:35 UTC] PHP Fatal error:  Uncaught TypeError: call_user_func(): Argument #1 ($callback) must be a valid callback, class WP_Fusion_Options does not have a method "show_field_post-fields" in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php:976
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(881): WP_Fusion_Options->show_section('post-fields')
-#1 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Options->show_page('')
-#2 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#3 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#4 /var/www/html/wp-admin/admin.php(259): do_action('settings_page_w...')
-#5 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php on line 976
-[30-Jul-2024 01:10:46 UTC] PHP Fatal error:  Uncaught TypeError: call_user_func(): Argument #1 ($callback) must be a valid callback, class WP_Fusion_Options does not have a method "show_field_post-fields" in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php:976
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(881): WP_Fusion_Options->show_section('post-fields')
-#1 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Options->show_page('')
-#2 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#3 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#4 /var/www/html/wp-admin/admin.php(259): do_action('settings_page_w...')
-#5 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php on line 976
-[30-Jul-2024 01:14:16 UTC] PHP Fatal error:  Cannot redeclare get_post_meta_keys() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/wpf-custom-utilities.php:44) in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/admin-functions.php on line 7
-[30-Jul-2024 01:15:03 UTC] PHP Fatal error:  Cannot redeclare get_post_meta_keys() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/wpf-custom-utilities.php:44) in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/admin-functions.php on line 7
-[30-Jul-2024 01:15:04 UTC] PHP Fatal error:  Cannot redeclare get_post_meta_keys() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/wpf-custom-utilities.php:44) in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/admin-functions.php on line 7
-[30-Jul-2024 01:15:09 UTC] PHP Fatal error:  Cannot redeclare get_post_meta_keys() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/wpf-custom-utilities.php:44) in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/admin-functions.php on line 7
-[30-Jul-2024 01:15:12 UTC] PHP Fatal error:  Cannot redeclare get_post_meta_keys() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/wpf-custom-utilities.php:44) in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/admin-functions.php on line 7
-[30-Jul-2024 01:15:29 UTC] PHP Fatal error:  Cannot redeclare format_post_meta_keys() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/wpf-custom-utilities.php:67) in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/admin-functions.php on line 24
-[30-Jul-2024 01:15:36 UTC] PHP Fatal error:  Cannot redeclare get_board_fields() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/wpf-custom-utilities.php:87) in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/admin-functions.php on line 39
-[30-Jul-2024 01:15:53 UTC] PHP Fatal error:  Cannot redeclare wpf_render_post_field_select() (previously declared in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/wpf-custom-utilities.php:135) in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/admin-functions.php on line 81
-[30-Jul-2024 01:48:04 UTC] PHP Fatal error:  Uncaught TypeError: call_user_func(): Argument #1 ($callback) must be a valid callback, class WP_Fusion_Options does not have a method "show_field_post-fields" in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php:976
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(881): WP_Fusion_Options->show_section('post_fields')
-#1 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Options->show_page('')
-#2 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#3 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#4 /var/www/html/wp-admin/admin.php(259): do_action('settings_page_w...')
-#5 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php on line 976
-[30-Jul-2024 02:00:19 UTC] PHP Fatal error:  Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, class WPF_Post_Type_Sync_Integration does not have a method "show_field_postType_fields_begin" in /var/www/html/wp-includes/class-wp-hook.php:324
-Stack trace:
-#0 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#1 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#2 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(936): do_action('show_field_post...', 'post_fields', Array)
-#3 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(881): WP_Fusion_Options->show_section('post-fields')
-#4 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Options->show_page('')
-#5 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#6 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#7 /var/www/html/wp-admin/admin.php(259): do_action('settings_page_w...')
-#8 {main}
-  thrown in /var/www/html/wp-includes/class-wp-hook.php on line 324
-[30-Jul-2024 02:00:47 UTC] PHP Fatal error:  Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, class WPF_Post_Type_Sync_Integration does not have a method "show_field_postType_fields_begin" in /var/www/html/wp-includes/class-wp-hook.php:324
-Stack trace:
-#0 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#1 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#2 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(936): do_action('show_field_post...', 'post_fields', Array)
-#3 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(881): WP_Fusion_Options->show_section('post-fields')
-#4 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Options->show_page('')
-#5 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
-#6 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#7 /var/www/html/wp-admin/admin.php(259): do_action('settings_page_w...')
-#8 {main}
-  thrown in /var/www/html/wp-includes/class-wp-hook.php on line 324
-[30-Jul-2024 02:12:27 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[30-Jul-2024 02:12:32 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
-[30-Jul-2024 02:12:32 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php:198) in /var/www/html/wp-admin/admin-header.php on line 9
+#0 /var/www/html/wp-includes/class-wp-hook.php(326): WPF_Post_Type_Sync_Integration->post_updated(24)
+#1 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#2 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 24, Object(WP_Post), Object(WP_Post))
+#4 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#5 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#6 /var/www/html/wp-admin/post.php(227): edit_post()
+#7 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 84
+[30-Jul-2024 21:31:26 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 21:31:46 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 21:31:54 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 21:37:33 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 21:37:56 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 21:42:57 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 21:55:03 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 21:55:54 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 22:09:20 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 22:17:04 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 22:18:22 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 22:19:15 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 22:21:27 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[30-Jul-2024 22:21:35 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198
+[30-Jul-2024 22:22:16 UTC] PHP Warning:  Undefined property: WPF_Monday::$url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 198

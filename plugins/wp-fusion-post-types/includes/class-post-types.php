@@ -16,6 +16,9 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 	public function init() {
 
+		// Initialize custom JS
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ), 20 );
+
 		// Add tabs for post types
 		add_filter( 'wpf_settings_tabs', array( $this, 'add_post_type_tabs' ) );
         add_filter( 'wpf_configure_sections', array( $this, 'configure_sections' ), 20, 2 );
@@ -30,17 +33,28 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		// Render field mapping
 		add_action( 'wpf_settings_page_content', array( $this, 'render_post_type_field_mapping' ) );
 
-		// add_action( 'show_field_contact_fields2', array( $this, 'show_field_post_fields' ), 15, 2 );
-		// add_action( 'show_field_contact_fields2_begin', array( $this, 'show_field_post_fields_begin' ), 15, 2 );
+		// Post type sync button AJAX method
+		add_action('wp_ajax_wpf_sync_post_type_fields', array($this, 'ajax_sync_post_type_fields'));
+
+		// Post type sync button rendering
+		add_action( 'show_field_sync_button', array( $this, 'show_field_sync_button' ), 15, 2 );
 
 		// Save field mappings
 		add_action( 'admin_init', array( $this, 'save_field_mappings' ) );
 
 		// Post type actions
-		add_action( 'post_updated', array( $this, 'post_updated' ), 10 );
+		add_action( 'post_updated', array( $this, 'post_updated' ), 10, 3 );
 
 		// Register dynamic actions for all post types
 		$this->register_dynamic_actions();
+	}
+
+	public function admin_scripts() {
+		// Define the path to the JavaScript file using the constant
+		$script_url = WPF_CPT_DIR_URL . 'assets/js/wpf-post-types.js';
+		
+		// Enqueue the script
+		wp_enqueue_script( 'wpf-post-types', $script_url, array('jquery'), '1.0', true );
 	}
 
 	private function register_dynamic_actions() {
@@ -49,32 +63,34 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		
 		foreach ($post_types as $post_type) {
 			if (isset($options['post_type_sync_' . $post_type->name]) && !empty($options['post_type_sync_' . $post_type->name])) {
-				// $board_id = $options['post_type_sync_' . $post_type->name];
-	
+
+				// WPF Post Type Fields Table Rendering
 				add_action("show_field_{$post_type->name}_fields", array($this, 'show_field_postType_fields'), 15, 2);
 				add_action("show_field_{$post_type->name}_fields_begin", array($this, 'show_field_postType_fields_begin'), 15, 2);
+
+				// Hook into post type updates only for post types with a configured list
+				// add_action( "save_post_{$post_type->name}", array( $this, 'postType_updated' ), 10 );
 			}
 		}
 	}
 	
 	
 
-	public function post_updated() {
-		BugFu::log("post_updated");
-		
-		$test = wp_fusion()->crm->app->api("item/add");
+	public function post_updated($post_ID, $post, $post_before) {
+        BugFu::log("post_updated_init");
 
-		BugFu::log($test);
+		$options = get_option('wpf_options');
+
+		if (isset($options['post_type_sync_' . get_post_type( $post )]) && !empty($options['post_type_sync_' . get_post_type( $post )])) {
+			BugFu::log("Post type registered");
+			// wp_fusion()->crm->connect();
+			$test = wp_fusion()->crm;
+        	BugFu::log($test);
+		}
+
 		
-		// BugFu::log("CRM class: " . get_class($crm));
-		
-		// if ($crm instanceof WPF_Custom) {
-		// 	$test = $crm->app;
-		// 	BugFu::log($test, false);
-		// } else {
-		// 	BugFu::log("CRM is not an instance of WPF_Custom. It is an instance of: " . get_class($crm), false);
-		// }
-	}
+
+    }
 
 	// public function post_updated() {
 	// 	BugFu::log("post_updated");
@@ -114,11 +130,17 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 				continue; // Skip excluded post types
 			}
 
+			// Define the custom type for the post type with a sync button
 			$settings['post_type_sync_' . $post_type->name] = array(
 				'title'   => $post_type->label,
-				'type'    => 'select',
+				'type'    => 'sync_button',
 				'section' => 'post-types',
 				'choices' => $boards,
+				'attributes'  => array(
+					'data-post_type' => $post_type->name,
+					'data-nonce'     => wp_create_nonce('wpf_sync_post_type_fields'),
+				),
+				'post_fields' => array( 'post_type_sync_' . $post_type->name ),
 			);
 		}
 
@@ -243,10 +265,142 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		echo '</table>';
 
 	}
+
+	public function show_field_sync_button( $id, $field ) {
+		$post_type = $field['attributes']['data-post_type'];
+
+		// Retrieve the saved value from options
+		$options = get_option('wpf_options');
+		$select_value = isset($options[$id]) ? (string) $options[$id] : '';
+		
+		$boards = wp_fusion()->settings->get( 'available_lists', array() );
+
+		// Render the select field
+		echo '<select style="display:inline-block;margin-right:5px;" id="' . esc_attr( $id ) . '" class="form-control ' . esc_attr( $field['class'] ) . '" name="wpf_options[' . esc_attr( $id ) . ']">';
+		echo '<option value="">' . esc_html__( 'Select Board', 'wp-fusion' ) . '</option>';
+		foreach ( $boards as $value => $label ) {
+			echo '<option value="' . esc_attr( $value ) . '" ' . selected( $select_value, $value, false ) . '>' . esc_html( $label ) . '</option>';
+		}
+		echo '</select>';
+
+		// Render the sync button
+		echo '<a id="sync-post-type-fields-' . esc_attr( $post_type ) . '" class="button button-primary sync-post-type-fields" data-post_type="' . esc_attr( $post_type ) . '" data-nonce="' . esc_attr( $field['attributes']['data-nonce'] ) . '">';
+		echo '<span class="dashicons dashicons-update-alt"></span>';
+		echo '<span class="text">' . esc_html__( 'Sync Fields', 'wp-fusion' ) . '</span>';
+		echo '</a>';
+	}
+
+	public function show_field_sync_button_end( $id, $field ) {
+
+		if ( ! empty( $field['desc'] ) ) {
+			echo '<span class="description">' . wp_kses_post( $field['desc'] ) . '</span>';
+		}
+		echo '</td>';
+		echo '</tr>';
+
+		echo '</table><div id="connection-output"></div>';
+		echo '</div>'; // close CRM div.
+		// echo '<table class="form-table">';
+
+	}
+
+
+	public function ajax_sync_post_type_fields() {
+		BugFu::log("ajax_sync_post_type_fields init");
+		check_ajax_referer('wpf_sync_post_type_fields', '_ajax_nonce');
 	
+		$post_type = isset($_POST['post_type']) ? sanitize_text_field($_POST['post_type']) : '';
 	
+		if (empty($post_type)) {
+			wp_send_json_error('Post type not specified');
+			return;
+		}
+
+		BugFu::log("calling sync_post_type_fields");
+		$result = $this->sync_post_type_fields($post_type);
 	
+		if (true === $result) {
+			wp_send_json_success();
+		} else {
+			if (is_wp_error($result)) {
+				wp_send_json_error($result->get_error_message());
+			} else {
+				wp_send_json_error();
+			}
+		}
+	}
+
+	public function sync_post_type_fields($post_type) {
+		BugFu::log("sync_post_type_fields init");
+        // Fetch the API key
+        $api_key = wpf_get_option('monday_key');
+        if (empty($api_key)) {
+            return new WP_Error('no_api_key', __('No API key provided.', 'wp-fusion'));
+        }
+
+		$options = get_option('wpf_options');
+
+		// Check if the post_type_sync_ key exists and its value
+		if (isset($options['post_type_sync_' . $post_type])) {
+			$board = $options['post_type_sync_' . $post_type];
+		}
+
+		BugFu::log("selected board: " . $board);
+
+        if (empty($board)) {
+            return new WP_Error('no_board_selected', __('No board selected for this post type.', 'wp-fusion'));
+        }
+
+        // Prepare the GraphQL query
+        $query = '{"query": "{ boards (ids: [' . $board . ']) { columns { id title } } }"}';
+
+        // Make the request
+        $response = wp_safe_remote_post(
+            'https://api.monday.com/v2',
+            array(
+                'method'  => 'POST',
+                'headers' => array(
+                    'Authorization' => $api_key,
+                    'Content-Type'  => 'application/json',
+                ),
+                'body'    => $query,
+            )
+        );
+
+        // Handle the response
+        if (is_wp_error($response)) {
+            return $response;
+        }
+
+        $body = json_decode(wp_remote_retrieve_body($response), true);
+
+        // Check for errors in the response
+        if (isset($body['errors']) && !empty($body['errors'])) {
+            $error_message = isset($body['errors'][0]['message']) ? $body['errors'][0]['message'] : 'Unknown error';
+            return new WP_Error('authentication_error', __('Authentication failed: ', 'wp-fusion') . $error_message);
+        }
+
+        if (empty($body['data']['boards'][0]['columns'])) {
+            return new WP_Error('no_columns_found', __('No columns found for the selected board.', 'wp-fusion'));
+        }
+
+		
+
+        // Process the columns
+        $fields = array();
+
+        foreach ($body['data']['boards'][0]['columns'] as $column) {
+            $fields[$column['id']] = $column['title'];
+        }
+
+		BugFu::log($fields);
+
+        wp_fusion()->settings->set('post_type_fields_' . $post_type, $fields);
+
+        return true;
+    }
 	
+
 
 	public function show_field_postType_fields_begin( $id, $field ) {
 

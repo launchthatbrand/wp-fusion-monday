@@ -104,7 +104,10 @@ function wpf_render_post_field_select( $setting, $meta_name, $field_id = false, 
     echo '<option></option>';
 
     $board_id = wp_fusion()->settings->get( 'post_type_sync_' . $post_type );
-    $post_fields = get_board_fields( $board_id );
+    $post_fields = wpf_get_option( 'post_type_fields_' . $post_type );
+
+    BugFu::log("post fields:");
+    BugFu::log($post_fields, false);
 
     if ( ! empty( $post_fields ) ) {
         foreach ( $post_fields as $field => $label ) {

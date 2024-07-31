@@ -40,6 +40,7 @@ if ( ! function_exists( 'add_action' ) ) {
  * @since 1.0.2
  */
 
+
 function wpf_include_custom_integration() {
 
 	// if ( class_exists( 'My/PluginDependencyClass' ) ) {
@@ -52,6 +53,14 @@ function wpf_include_custom_integration() {
 
 	include_once dirname( __FILE__ ) . '/includes/class-post-types.php';
 	include_once dirname( __FILE__ ) . '/includes/admin-functions.php';
+
+	if ( ! defined( 'WPF_CPT_DIR_PATH' ) ) {
+        define( 'WPF_CPT_DIR_PATH', plugin_dir_path( __FILE__ ) );
+    }
+
+    if ( ! defined( 'WPF_CPT_DIR_URL' ) ) {
+        define( 'WPF_CPT_DIR_URL', plugin_dir_url( __FILE__ ) );
+    }
 	
 
 }
