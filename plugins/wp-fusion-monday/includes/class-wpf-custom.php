@@ -532,17 +532,11 @@ class WPF_Monday {
 	 public function get_selected_board() {
 		// Retrieve the entire options array
 		$options = get_option('wpf_options');
-		BugFu::log($options, false);
+		// BugFu::log($options, false);
 	
 		// Check if the monday_board key exists and its value
 		if (isset($options['monday_board'])) {
 			$selected_board = $options['monday_board'];
-			BugFu::log('Board ID before casting: ' . $selected_board, false);
-	
-			// Ensure it's cast to a string
-			$selected_board = (string) $selected_board;
-			BugFu::log('Board ID after casting: ' . $selected_board, false);
-	
 			return $selected_board;
 		} else {
 			BugFu::log('monday_board key does not exist in options', false);

@@ -70,47 +70,305 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 				// Hook into post type updates only for post types with a configured list
 				// add_action( "save_post_{$post_type->name}", array( $this, 'postType_updated' ), 10 );
+
+				// Load the field mapping into memory.
+				$this->{$post_type->name . '_fields'} = wpf_get_option( $post_type->name . '_fields', array() );
 			}
 		}
 	}
 	
 	
 
-	public function post_updated($post_ID, $post, $post_before) {
-        BugFu::log("post_updated_init");
+	public function post_updated($post_id, $post, $post_before) {
 
-		$options = get_option('wpf_options');
+		$bypass = apply_filters( 'wpf_bypass_post_updated', false, wpf_clean( wp_unslash( $_REQUEST ) ) );
 
-		if (isset($options['post_type_sync_' . get_post_type( $post )]) && !empty($options['post_type_sync_' . get_post_type( $post )])) {
-			BugFu::log("Post type registered");
-			// wp_fusion()->crm->connect();
-			$test = wp_fusion()->crm;
-        	BugFu::log($test);
+		// This doesn't need to run twice on a page load.
+		// remove_action( 'profile_update', array( $this, 'profile_update' ), 10, 2 );
+
+		if ( ! empty( $_POST ) && false === $bypass ) {
+
+			BugFu::log("send post data");
+
+			$post_data = wpf_clean( wp_unslash( $_POST ) );
+
+			//BugFu::log($post_data);
+
+			$this->push_post_meta( $post_id, $post_data );
+
 		}
+
+
+        // BugFu::log("post_updated_init");
+	
+		// $options = get_option('wpf_options');
+
+		// if (isset($options['post_type_sync_' . get_post_type( $post )]) && !empty($options['post_type_sync_' . get_post_type( $post )])) {
+		// 	BugFu::log("Post type registered");
+		// 	// wp_fusion()->crm->connect();
+		// 	$test = wp_fusion()->crm->test();
+        // 	BugFu::log($test);
+		// }
 
 		
 
     }
 
-	// public function post_updated() {
-	// 	BugFu::log("post_updated");
-	// 	$test = wp_fusion()->crm;
-	// 	BugFu::log($test, false);
+	public function push_post_meta( $post_id, $post_meta = false ) {
+		BugFu::log("push_post_meta init");
 
-	// 	// // Don't run on autosave
-	// 	// if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-	// 	// 	return;
-	// 	// }
+		// if ( ! wpf_get_option( 'push' ) ) {
+		// 	return;
+		// }
 
-	// 	// // Don't run for revisions
-	// 	// if ( wp_is_post_revision( $post_id ) ) {
-	// 	// 	return;
-	// 	// }
+		do_action( 'wpf_push_post_meta_start', $post_id, $post_meta );
 
-	// 	// // Push post data to CRM
-	// 	// $this->push_post_data( $post_id );
+		// If nothing's been supplied, get the latest from the DB.
 
-	// }
+		if ( false === $post_meta ) {
+			$post_meta = $this->get_post_meta( $post_id );
+		}
+
+		$post_meta = apply_filters( 'wpf_post_update', $post_meta, $post_id );
+		// BugFu::log($post_meta);
+
+		// Allows for cancelling via filter.
+
+		if ( null === $post_meta ) {
+			wpf_log( 'notice', $post_id, 'Push post meta aborted: no metadata found for post.' );
+			return false;
+		}
+
+		// get connected post type board
+		$post_type = get_post_type( $post_id );
+		$options = get_option('wpf_options');
+		
+	
+
+		// Check if the post_type_sync_ key exists and its value
+		if (isset($options['post_type_sync_' . $post_type])) {
+			$associated_crm_object_id = $options['post_type_sync_' . $post_type];
+		}
+
+		
+
+		if ( empty( $post_meta ) || empty( $associated_crm_object_id ) ) {
+			BugFu::log("no post meta or associated_crm_object_id");
+			return;
+		}
+
+		wpf_log( 'info', $post_id, 'Pushing meta data to ' . wp_fusion()->crm->name . ': ', array( 'meta_array' => $post_meta ) );
+
+		$result = $this->update_post( $post_id, $post_type, $associated_crm_object_id, $post_meta );
+
+		if ( is_wp_error( $result ) ) {
+
+			wpf_log( $result->get_error_code(), $post_id, 'Error while updating meta data: ' . $result->get_error_message(), array( 'source' => wp_fusion()->crm->slug ) );
+			return false;
+
+		} elseif ( false === $result ) {
+
+			// If nothing was updated.
+			return false;
+
+		}
+
+		do_action( 'wpf_pushed_post_meta', $post_id, $associated_crm_object_id, $post_meta );
+
+		return true;
+
+	}
+
+
+
+	/**
+	 * Update post - Monday
+	 *
+	 * @access public
+	 * @return bool
+	 */
+
+	 public function update_post( $post_id, $post_type, $associated_crm_object_id, $post_meta, $map_meta_fields = true ) {
+		BugFu::log("update_post init");
+		// Ensure the API key and board ID are available
+		$api_key = wpf_get_option('monday_key');
+		$board_id = wp_fusion()->crm->get_selected_board();
+	
+		if ( empty($api_key) || empty($board_id) ) {
+			return new WP_Error('missing_api_key_or_board_id', __('API key or board ID is missing.', 'wp-fusion'));
+		}
+	
+		// If set to true, WP Fusion will convert the field keys from WordPress meta keys into the field names in the CRM.
+		if ( $map_meta_fields ) {
+			$post_meta = $this->map_post_meta_fields( $post_type, $post_meta );
+		}
+	
+		// // Prepare the column values in JSON format dynamically
+		// $column_values = array();
+		// foreach ( $contact_data as $key => $value ) {
+		// 	if ( $key === 'email' ) {
+		// 		$column_values[$key] = array(
+		// 			'email' => $value,
+		// 			'text' => $value
+		// 		);
+		// 	} else {
+		// 		$column_values[$key] = $value;
+		// 	}
+		// }
+	
+		// $column_values_json = json_encode( $column_values, JSON_UNESCAPED_SLASHES );
+	
+		// // Prepare the GraphQL mutation
+		// $mutation = 'mutation {
+		// 	change_multiple_column_values (board_id: ' . $board_id . ', item_id: ' . $contact_id . ', column_values: "' . addslashes( $column_values_json ) . '") {
+		// 		id
+		// 	}
+		// }';
+	
+		// // Log the mutation for debugging
+		// error_log('GraphQL Mutation: ' . $mutation);
+	
+		// // Make the request to the Monday.com API
+		// $response = wp_safe_remote_post(
+		// 	'https://api.monday.com/v2',
+		// 	array(
+		// 		'method'  => 'POST',
+		// 		'headers' => array(
+		// 			'Authorization' => $api_key,
+		// 			'Content-Type'  => 'application/json',
+		// 		),
+		// 		'body'    => wp_json_encode(array('query' => $mutation)),
+		// 	)
+		// );
+	
+		// // Handle the response
+		// if ( is_wp_error( $response ) ) {
+		// 	error_log('API request error: ' . $response->get_error_message());
+		// 	return $response;
+		// }
+	
+		// $body = wp_remote_retrieve_body( $response );
+		// error_log('API response body: ' . $body);
+	
+		// $body_json = json_decode( $body, true );
+	
+		// // Check if the body or data is null or empty
+		// if ( is_null( $body_json ) || !isset( $body_json['data'] ) ) {
+		// 	return new WP_Error('api_error', __('API error: Invalid response', 'wp-fusion'));
+		// }
+	
+		// // Check for errors in the response
+		// if ( isset($body_json['errors']) && !empty($body_json['errors']) ) {
+		// 	$error_message = isset($body_json['errors'][0]['message']) ? $body_json['errors'][0]['message'] : 'Unknown error';
+		// 	return new WP_Error('api_error', __('API error: ', 'wp-fusion') . $error_message);
+		// }
+	
+		// // Ensure the expected data structure is present
+		// if ( !isset( $body_json['data']['change_multiple_column_values']['id'] ) ) {
+		// 	return new WP_Error('api_error', __('API error: Missing contact ID in response', 'wp-fusion'));
+		// }
+	
+		// return true;
+	}
+
+	public function map_post_meta_fields( $post_type, $post_meta ) {
+		BugFu::log("map_post_meta_fields init");
+		BugFu::log($post_type);
+
+		if ( ! is_array( $post_meta ) || empty( $post_meta ) ) {
+			return array();
+		}
+
+		$update_data = array();
+
+		foreach ( $this->{$post_type. '_fields'} as $field => $field_data ) {
+			// BugFu::log($field_data );
+			
+
+			if ( empty( $field_data['active'] ) || !isset( $field_data['active'] ) || empty( $field_data['crm_field'] ) ) {
+				continue;
+			}
+
+			// BugFu::log("PASS 2");
+		
+
+			// Don't send add_tag_ fields to the CRM as fields.
+			if ( strpos( $field_data['crm_field'], 'add_tag_' ) !== false ) {
+				continue;
+			}
+
+			// If field exists in form and sync is active.
+			if ( isset( $post_meta[ $field ] ) ) {
+				BugFu::log("PASS");
+
+				if ( empty( $field_data['type'] ) ) {
+					$field_data['type'] = 'text';
+				}
+
+				$field_data['crm_field'] = strval( $field_data['crm_field'] );
+
+				if ( 'datepicker' === $field_data['type'] ) {
+
+					// We'd been using date and datepicker interchangeably up until
+					// 3.38.11, which is confusing. We'll just use "date" going forward.
+
+					$field_data['type'] = 'date';
+				}
+
+				/**
+				 * Format field value.
+				 *
+				 * @since 1.0.0
+				 *
+				 * @link  https://wpfusion.com/documentation/filters/wpf_format_field_value/
+				 *
+				 * @param mixed  $value     The field value.
+				 * @param string $type      The field type.
+				 * @param string $crm_field The field ID in the CRM.
+				 */
+
+				$value = apply_filters( 'wpf_format_field_value', $post_meta[ $field ], $field_data['type'], $field_data['crm_field'] );
+
+				if ( 'raw' === $field_data['type'] ) {
+
+					// Allow overriding the empty() check by setting the field type to raw.
+
+					$update_data[ $field_data['crm_field'] ] = $value;
+
+				} elseif ( is_null( $value ) ) {
+
+					// Allow overriding empty() check by returning null from wpf_format_field_value.
+
+					$update_data[ $field_data['crm_field'] ] = '';
+
+				} elseif ( false === $value ) {
+
+					// Some CRMs (i.e. Sendinblue) need to be able to sync false as a value to clear checkboxes.
+
+					$update_data[ $field_data['crm_field'] ] = false;
+
+				} elseif ( 0 === $value || '0' === $value ) {
+
+					$update_data[ $field_data['crm_field'] ] = 0;
+
+				} elseif ( empty( $value ) && ! empty( $post_meta[ $field ] ) && 'date' === $field_data['type'] ) {
+
+					// Date conversion failed.
+					wpf_log( 'notice', wpf_get_current_post_id(), 'Failed to create timestamp from value <code>' . $post_meta[ $field ] . '</code>. Try setting the field type to <code>text</code> instead, or fixing the format of the input date.' );
+
+				} elseif ( ! empty( $value ) ) {
+
+					$update_data[ $field_data['crm_field'] ] = $value;
+
+				}
+			}
+		}
+
+		$update_data = apply_filters( 'wpf_map_meta_fields', $update_data, $post_meta );
+
+		return $update_data;
+
+	}
 
 	public function register_settings( $settings, $options ) {
 		$settings['post_type_sync_header'] = array(

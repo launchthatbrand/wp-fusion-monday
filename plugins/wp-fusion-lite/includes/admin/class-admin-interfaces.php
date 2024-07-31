@@ -1061,6 +1061,7 @@ class WPF_Admin_Interfaces {
 	 */
 
 	public function admin_menu_save( $menu_id, $menu_item_db_id ) {
+		BugFu::log("admin_menu_save init");
 
 		// Verify this came from our screen and with proper authorization.
 		if ( ! isset( $_POST['wpf-nav-menu-nonce'] ) || ! wp_verify_nonce( $_POST['wpf-nav-menu-nonce'], 'wpf-nav-menu-nonce-name' ) ) {
@@ -1624,6 +1625,7 @@ class WPF_Admin_Interfaces {
 	 */
 
 	public function save_meta_box_data( $post_id ) {
+		BugFu::log("save_meta_box_data init");
 
 		if ( isset( $_POST['post_ID'] ) && $_POST['post_ID'] != $post_id ) {
 			return;
