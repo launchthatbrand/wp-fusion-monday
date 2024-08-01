@@ -61,6 +61,8 @@ function wpf_include_custom_integration() {
     if ( ! defined( 'WPF_CPT_DIR_URL' ) ) {
         define( 'WPF_CPT_DIR_URL', plugin_dir_url( __FILE__ ) );
     }
+
+	
 	
 
 }

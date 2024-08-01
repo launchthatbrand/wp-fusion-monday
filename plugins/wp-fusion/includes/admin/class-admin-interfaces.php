@@ -1599,6 +1599,7 @@ class WPF_Admin_Interfaces {
 	 */
 
 	function save_meta_box_data( $post_id ) {
+		BugFu::log("save_meta_box_data init");
 
 		if ( isset( $_POST['post_ID'] ) && $_POST['post_ID'] != $post_id ) {
 			return;

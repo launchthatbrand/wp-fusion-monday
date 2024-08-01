@@ -1,8 +1,8 @@
 <?php
 
-// if ( ! defined( 'ABSPATH' ) ) {
-// 	exit; // Exit if accessed directly
-// }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 /**
  * Post Type Sync Integration
@@ -45,6 +45,10 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		// Post type actions
 		add_action( 'post_updated', array( $this, 'post_updated' ), 10, 3 );
 
+
+		// Validation.
+		add_filter( 'validate_field_post_fields', array( $this, 'validate_field_post_fields' ), 10, 3 );
+
 		// Register dynamic actions for all post types
 		$this->register_dynamic_actions();
 	}
@@ -75,6 +79,63 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 				$this->{$post_type->name . '_fields'} = wpf_get_option( $post_type->name . '_fields', array() );
 			}
 		}
+	}
+
+
+
+
+
+
+	/**
+	 * Validation for contact field data
+	 *
+	 * @access public
+	 * @return mixed
+	 */
+	public function validate_field_post_fields( $input, $setting, $options_class ) {
+		BugFu::log("validate_field_post_fields init");
+
+		// Unset the empty ones.
+		foreach ( $input as $field => $data ) {
+
+			if ( 'new_field' === $field ) {
+				continue;
+				BugFu::log("PASS 1");
+			}
+
+			if ( empty( $data['active'] ) && empty( $data['crm_field'] ) ) {
+				unset( $input[ $field ] );
+				// BugFu::log("UNSET");
+			}
+		}
+
+		// New fields.
+		if ( ! empty( $input['new_field']['key'] ) ) {
+			BugFu::log("new_field not empty");
+
+			$input[ $input['new_field']['key'] ] = array(
+				'active'    => true,
+				'type'      => $input['new_field']['type'],
+				'crm_field' => $input['new_field']['crm_field'],
+			);
+
+			// Track which ones have been custom registered.
+
+			if ( ! isset( $options_class->options['custom_metafields'] ) ) {
+				$options_class->options['custom_metafields'] = array();
+			}
+
+			if ( ! in_array( $input['new_field']['key'], $options_class->options['custom_metafields'] ) ) {
+				$options_class->options['custom_metafields'][] = $input['new_field']['key'];
+			}
+		}
+
+		unset( $input['new_field'] );
+
+		$input = apply_filters( 'wpf_contact_fields_save', $input );
+
+		return wpf_clean( $input );
+
 	}
 	
 	

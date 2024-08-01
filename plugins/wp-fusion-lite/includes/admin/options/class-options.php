@@ -214,6 +214,8 @@ class WP_Fusion_Options {
 	 */
 
 	private function save_options() {
+
+		BugFu::log("save_options init");
 		$nonce = $_POST[ $this->setup['project_slug'] . '_nonce' ];
 
 		if ( ! isset( $_POST[ $this->setup['project_slug'] . '_nonce' ] ) ) {
@@ -368,26 +370,34 @@ class WP_Fusion_Options {
 	 */
 
 	private function validate_options( $id, $input, $setting ) {
+		// BugFu::log("validate_options init");
+		// BugFu::log($setting, false);
+		
 
 		if ( method_exists( $this, 'validate_field_' . $setting['type'] ) && ! has_filter( 'validate_field_' . $setting['type'] . '_override' ) ) {
 
 			// If a validation filter has been specified for the setting type, register it with add_filters
 			add_filter( 'validate_field_' . $setting['type'], array( $this, 'validate_field_' . $setting['type'] ), 10, 3 );
+			BugFu::log("Method exists[type]: validate_field_" . $setting['type']);
 
 		}
 
 		// Handles the Reset option.
 		if ( method_exists( $this, 'validate_field_' . $id ) ) {
 			add_filter( 'validate_field_' . $id, array( $this, 'validate_field_' . $id ), 10, 3 );
+			BugFu::log("Method exists[id]: validate_field_" . $id);
 		}
 
+
 		if ( has_filter( 'validate_field_' . $id ) ) {
+			// validate_fields_contact_fields fired here
 
 			// If there's a validation function for this particular field ID
 			$input = apply_filters( 'validate_field_' . $id, $input, $setting, $this );
+			BugFu::log("Has Filter[id]: validate_field_" . $id);
 
 		} elseif ( has_filter( 'validate_field_' . $setting['type'] ) || has_filter( 'validate_field_' . $setting['type'] . '_override' ) ) {
-
+			BugFu::log("Has Filter[type]: validate_field_" . $setting['type']);
 			// If there's a validation for this field type or an override
 			if ( has_filter( 'validate_field_' . $setting['type'] . '_override' ) ) {
 

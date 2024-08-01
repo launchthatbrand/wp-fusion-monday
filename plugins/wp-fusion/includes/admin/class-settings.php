@@ -3024,6 +3024,7 @@ class WPF_Settings {
 	 * @return mixed
 	 */
 	public function validate_field_contact_fields( $input, $setting, $options_class ) {
+		BugFu::log("validate_field_contact_fields init");
 
 		// Unset the empty ones.
 		foreach ( $input as $field => $data ) {

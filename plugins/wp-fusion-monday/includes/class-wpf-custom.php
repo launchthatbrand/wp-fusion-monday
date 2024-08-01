@@ -195,7 +195,7 @@ class WPF_Monday {
 
 	public function handle_http_response( $response, $args, $url ) {
 
-		if ( strpos( $url, $this->url ) !== false && 'WP Fusion; ' . home_url() === $args['user-agent'] ) { // check if the request came from us.
+		if ( strpos( $url, $this->api_url ) !== false && 'WP Fusion; ' . home_url() === $args['user-agent'] ) { // check if the request came from us.
 
 			$body_json     = json_decode( wp_remote_retrieve_body( $response ) );
 			$response_code = wp_remote_retrieve_response_code( $response );

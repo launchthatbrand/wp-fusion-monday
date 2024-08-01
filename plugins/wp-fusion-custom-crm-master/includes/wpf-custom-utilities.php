@@ -133,6 +133,9 @@ function get_board_fields( $board_id ) {
 }
 
 function wpf_render_post_field_select( $setting, $meta_name, $field_id = false, $field_sub_id = false, $post_type = 'post' ) {
+	BugFu::log("wpf_render_post_field_select init");
+	BugFu::log($setting);
+	
 	if ( doing_action( 'show_field_post_field' ) ) {
 		$name = $meta_name . '[' . $field_id . ']';
 	} elseif ( false === $field_id ) {

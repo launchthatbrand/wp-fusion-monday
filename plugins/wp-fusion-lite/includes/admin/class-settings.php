@@ -2517,6 +2517,7 @@ class WPF_Settings {
 	 */
 
 	public function show_field_crm_field( $id, $field ) {
+		BugFu::log("show_field_crm_field init");
 
 		$setting = $this->get( $id );
 
@@ -3197,6 +3198,7 @@ class WPF_Settings {
 	 * @return mixed
 	 */
 	public function validate_field_contact_fields( $input, $setting, $options_class ) {
+		// BugFu::log("validate_field_contact_fields init");
 
 		// Unset the empty ones.
 		foreach ( $input as $field => $data ) {
