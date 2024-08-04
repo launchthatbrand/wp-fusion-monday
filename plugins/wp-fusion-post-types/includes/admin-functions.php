@@ -5,7 +5,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function get_post_meta_keys( $post_type ) {
+    // BugFu::log("get_post_meta_keys init");
+    // BugFu::log($post_type);
+
     global $wpdb;
+
+    // Get the standard fields dynamically from the wp_posts table
+    $standard_fields_query = "SHOW COLUMNS FROM {$wpdb->posts}";
+    $columns = $wpdb->get_col($standard_fields_query, 0);
+
+    // Filter columns to remove any unnecessary fields (like IDs)
+    $excluded_columns = array('ID');
+    $standard_fields = array_diff($columns, $excluded_columns);
 
     // Query to get all meta keys for the specified post type
     $query = $wpdb->prepare("
@@ -18,8 +29,14 @@ function get_post_meta_keys( $post_type ) {
     // Get the results
     $meta_keys = $wpdb->get_col($query);
 
+    // Merge standard fields with meta keys
+    $meta_keys = array_merge($standard_fields, $meta_keys);
+
+    // BugFu::log($meta_keys);
+    
     return $meta_keys;
 }
+
 
 function format_post_meta_keys( $post_type ) {
 	$meta_keys = get_post_meta_keys( $post_type );
@@ -83,41 +100,139 @@ function format_post_meta_keys( $post_type ) {
 //     return $fields;
 // }
 
-function wpf_render_post_field_select( $setting, $meta_name, $field_id = false, $field_sub_id = false, $post_type = 'post' ) {
 
-    BugFu::log("wpf_render_post_field_select init");
-	BugFu::log($setting);
-    
-    if ( doing_action( 'show_field_post_field' ) ) {
-        $name = $meta_name . '[' . $field_id . ']';
-    } elseif ( false === $field_id ) {
-        $name = $meta_name . '[post_field]';
-    } elseif ( false === $field_sub_id ) {
-        $name = $meta_name . '[' . $field_id . '][post_field]';
-    } else {
-        $name = $meta_name . '[' . $field_id . '][' . $field_sub_id . '][post_field]';
-    }
 
-    if ( false === $field_id ) {
-        $id = sanitize_html_class( $meta_name );
-    } else {
-        $id = sanitize_html_class( $meta_name ) . '-' . $field_id;
-    }
+function wpf_render_post_field_select( $setting, $meta_name, $field_id = false, $field_sub_id = false ) {
+	// BugFu::log("wpf_render_crm_field_select init");
+	// BugFu::log($setting);
 
-    echo '<select id="' . esc_attr( $id . ( ! empty( $field_sub_id ) ? '-' . $field_sub_id : '' ) ) . '" class="select4-crm-field" name="' . esc_attr( $name ) . '" data-placeholder="Select a field">';
-    echo '<option></option>';
+	if ( doing_action( 'show_field_crm_field' ) ) {
+		// Settings page.
+		$name = $meta_name . '[' . $field_id . ']';
+	} elseif ( false === $field_id ) {
+		$name = $meta_name . '[crm_field]';
+	} elseif ( false === $field_sub_id ) {
+		$name = $meta_name . '[' . $field_id . '][crm_field]';
+	} else {
+		$name = $meta_name . '[' . $field_id . '][' . $field_sub_id . '][crm_field]';
+	}
 
-    $board_id = wp_fusion()->settings->get( 'post_type_sync_' . $post_type );
-    $post_fields = wpf_get_option( 'post_type_fields_' . $post_type );
+	// ID.
 
-    // BugFu::log("post fields:");
-    // BugFu::log($post_fields, false);
+	if ( false === $field_id ) {
+		$id = sanitize_html_class( $meta_name );
+	} else {
+		$id = sanitize_html_class( $meta_name ) . '-' . $field_id;
+	}
 
-    if ( ! empty( $post_fields ) ) {
-        foreach ( $post_fields as $field => $label ) {
-            echo '<option ' . selected( esc_attr( $setting ), $field, false ) . ' value="' . esc_attr( $field ) . '">' . esc_html( $label ) . '</option>';
-        }
-    }
+	echo '<select id="' . esc_attr( $id . ( ! empty( $field_sub_id ) ? '-' . $field_sub_id : '' ) ) . '" class="select4-crm-field" name="' . esc_attr( $name ) . '" data-placeholder="Select a field">';
 
-    echo '</select>';
+	echo '<option></option>';
+
+	$crm_fields = wpf_get_option( 'post_fields' );
+    // BugFu::log("wpf_get_option_post_fields");
+    // BugFu::log($crm_fields);
+
+	if ( ! empty( $crm_fields ) ) {
+
+		foreach ( $crm_fields as $group_header => $fields ) {
+
+			// For CRMs with separate custom and built in fields, or using the new data storage.
+			if ( is_array( $fields ) ) {
+
+				echo '<optgroup label="' . esc_attr( $group_header ) . '">';
+
+				foreach ( $crm_fields[ $group_header ] as $field => $label ) {
+
+					if ( is_array( $label ) ) {
+
+						if ( isset( $label['label'] ) ) {
+							$label = $label['label'];
+						} else {
+							$label = $label['crm_label']; // new 3.42.5 storage.
+						}
+					}
+
+					$label = str_replace( '(', '<small>', $label ); // (read only) and (compound field)
+					$label = str_replace( ')', '</small>', $label );
+
+					echo '<option ' . selected( esc_attr( $setting ), $field, false ) . ' value="' . esc_attr( $field ) . '">' . esc_html( $label ) . '</option>';
+				}
+
+				echo '</optgroup>';
+
+			} else {
+
+				$field = $group_header;
+				$label = $fields;
+
+				$label = str_replace( '(', '<small>', $label ); // (read only) and (compound field)
+				$label = str_replace( ')', '</small>', $label );
+
+				echo '<option ' . selected( esc_attr( $setting ), $field, false ) . ' value="' . esc_attr( $field ) . '">' . esc_html( $label ) . '</option>';
+
+			}
+		}
+	}
+
+	// Save custom added fields to the DB.
+	if ( in_array( 'add_fields', wp_fusion()->crm->supports ) ) {
+
+		$field_check = array();
+
+		// Collapse fields if they're grouped.
+		if ( isset( $crm_fields['Custom Fields'] ) ) {
+
+			foreach ( $crm_fields as $field_group ) {
+
+				if ( ! empty( $field_group ) ) {
+
+					foreach ( $field_group as $field => $label ) {
+						$field_check[ $field ] = $label;
+					}
+				}
+			}
+		} else {
+
+			$field_check = $crm_fields;
+
+		}
+
+		// Check to see if new custom fields have been added.
+		if ( ! empty( $setting ) && ! isset( $field_check[ $setting ] ) ) {
+			BugFu::log($setting);
+
+			echo '<option value="' . esc_attr( $setting ) . '" selected="selected">' . esc_html( $setting ) . '</option>';
+
+			if ( isset( $crm_fields['Custom Fields'] ) ) {
+
+				$crm_fields['Custom Fields'][ $setting ] = $setting;
+				asort( $crm_fields['Custom Fields'] );
+
+			} else {
+				$crm_fields[ $setting ] = $setting;
+				asort( $crm_fields );
+			}
+
+			wp_fusion()->settings->set( 'post_fields', $crm_fields );
+
+			// Save safe crm field to DB.
+			$post_fields                               = wpf_get_option( 'post_fields' );
+			$post_fields[ $field_sub_id ]['crm_field'] = $setting;
+			wp_fusion()->settings->set( 'post_fields', $post_fields );
+
+		}
+	}
+
+	if ( in_array( 'add_tags', wp_fusion()->crm->supports ) ) {
+
+		echo '<optgroup label="Tagging">';
+
+			echo '<option ' . selected( esc_attr( $setting ), 'add_tag_' . $field_id ) . ' value="add_tag_' . esc_attr( $field_id ) . '">+ ' . esc_html__( 'Create tag(s) from value', 'wp-fusion-lite' ) . '</option>';
+
+		echo '</optgroup>';
+
+	}
+
+	echo '</select>';
 }

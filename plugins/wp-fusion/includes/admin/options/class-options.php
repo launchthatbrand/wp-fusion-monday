@@ -359,8 +359,8 @@ class WP_Fusion_Options {
 	 */
 
 	private function validate_options( $id, $input, $setting ) {
-		BugFu::log("validate_options init");
-		BugFu::log($setting);
+		// BugFu::log("validate_options init");
+		// BugFu::log($setting);
 
 		if ( method_exists( $this, 'validate_field_' . $setting['type'] ) && ! has_filter( 'validate_field_' . $setting['type'] . '_override' ) ) {
 

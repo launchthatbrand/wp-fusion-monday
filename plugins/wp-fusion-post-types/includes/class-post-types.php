@@ -49,6 +49,12 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		// Validation.
 		add_filter( 'validate_field_post_fields', array( $this, 'validate_field_post_fields' ), 10, 3 );
 
+		add_filter( 'wpf_set_setting_post_fields', array( $this, 'handle_post_type_fields_update' ), 10, 2 );
+		add_filter( 'wpf_get_setting_post_fields', array( $this, 'handle_get_post_fields' ) );
+
+		
+
+		
 		// Register dynamic actions for all post types
 		$this->register_dynamic_actions();
 	}
@@ -71,6 +77,9 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 				// WPF Post Type Fields Table Rendering
 				add_action("show_field_{$post_type->name}_fields", array($this, 'show_field_postType_fields'), 15, 2);
 				add_action("show_field_{$post_type->name}_fields_begin", array($this, 'show_field_postType_fields_begin'), 15, 2);
+				add_filter( "wpf_{$post_type->name}_meta_fields", array( $this, "prepare_{$post_type->name}_meta_fields" ), 60 );
+
+				// add_filter( "wpf_set_setting_post_type_fields_{$post_type->name}", array( $this, "handle_post_type_fields_update" ), 10, 2 );
 
 				// Hook into post type updates only for post types with a configured list
 				// add_action( "save_post_{$post_type->name}", array( $this, 'postType_updated' ), 10 );
@@ -94,6 +103,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 	 */
 	public function validate_field_post_fields( $input, $setting, $options_class ) {
 		BugFu::log("validate_field_post_fields init");
+		// BugFu::log($input);
 
 		// Unset the empty ones.
 		foreach ( $input as $field => $data ) {
@@ -259,10 +269,10 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 			return new WP_Error('missing_api_key_or_board_id', __('API key or board ID is missing.', 'wp-fusion'));
 		}
 	
-		// If set to true, WP Fusion will convert the field keys from WordPress meta keys into the field names in the CRM.
-		if ( $map_meta_fields ) {
-			$post_meta = $this->map_post_meta_fields( $post_type, $post_meta );
-		}
+		// // If set to true, WP Fusion will convert the field keys from WordPress meta keys into the field names in the CRM.
+		// if ( $map_meta_fields ) {
+		// 	$post_meta = $this->map_post_meta_fields( $post_type, $post_meta );
+		// }
 	
 		// // Prepare the column values in JSON format dynamically
 		// $column_values = array();
@@ -332,104 +342,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		// return true;
 	}
 
-	public function map_post_meta_fields( $post_type, $post_meta ) {
-		BugFu::log("map_post_meta_fields init");
-		BugFu::log($post_type);
-
-		if ( ! is_array( $post_meta ) || empty( $post_meta ) ) {
-			return array();
-		}
-
-		$update_data = array();
-
-		foreach ( $this->{$post_type. '_fields'} as $field => $field_data ) {
-			// BugFu::log($field_data );
-			
-
-			if ( empty( $field_data['active'] ) || !isset( $field_data['active'] ) || empty( $field_data['crm_field'] ) ) {
-				continue;
-			}
-
-			// BugFu::log("PASS 2");
-		
-
-			// Don't send add_tag_ fields to the CRM as fields.
-			if ( strpos( $field_data['crm_field'], 'add_tag_' ) !== false ) {
-				continue;
-			}
-
-			// If field exists in form and sync is active.
-			if ( isset( $post_meta[ $field ] ) ) {
-				BugFu::log("PASS");
-
-				if ( empty( $field_data['type'] ) ) {
-					$field_data['type'] = 'text';
-				}
-
-				$field_data['crm_field'] = strval( $field_data['crm_field'] );
-
-				if ( 'datepicker' === $field_data['type'] ) {
-
-					// We'd been using date and datepicker interchangeably up until
-					// 3.38.11, which is confusing. We'll just use "date" going forward.
-
-					$field_data['type'] = 'date';
-				}
-
-				/**
-				 * Format field value.
-				 *
-				 * @since 1.0.0
-				 *
-				 * @link  https://wpfusion.com/documentation/filters/wpf_format_field_value/
-				 *
-				 * @param mixed  $value     The field value.
-				 * @param string $type      The field type.
-				 * @param string $crm_field The field ID in the CRM.
-				 */
-
-				$value = apply_filters( 'wpf_format_field_value', $post_meta[ $field ], $field_data['type'], $field_data['crm_field'] );
-
-				if ( 'raw' === $field_data['type'] ) {
-
-					// Allow overriding the empty() check by setting the field type to raw.
-
-					$update_data[ $field_data['crm_field'] ] = $value;
-
-				} elseif ( is_null( $value ) ) {
-
-					// Allow overriding empty() check by returning null from wpf_format_field_value.
-
-					$update_data[ $field_data['crm_field'] ] = '';
-
-				} elseif ( false === $value ) {
-
-					// Some CRMs (i.e. Sendinblue) need to be able to sync false as a value to clear checkboxes.
-
-					$update_data[ $field_data['crm_field'] ] = false;
-
-				} elseif ( 0 === $value || '0' === $value ) {
-
-					$update_data[ $field_data['crm_field'] ] = 0;
-
-				} elseif ( empty( $value ) && ! empty( $post_meta[ $field ] ) && 'date' === $field_data['type'] ) {
-
-					// Date conversion failed.
-					wpf_log( 'notice', wpf_get_current_post_id(), 'Failed to create timestamp from value <code>' . $post_meta[ $field ] . '</code>. Try setting the field type to <code>text</code> instead, or fixing the format of the input date.' );
-
-				} elseif ( ! empty( $value ) ) {
-
-					$update_data[ $field_data['crm_field'] ] = $value;
-
-				}
-			}
-		}
-
-		$update_data = apply_filters( 'wpf_map_meta_fields', $update_data, $post_meta );
-
-		return $update_data;
-
-	}
+	
 
 	public function register_settings( $settings, $options ) {
 		$settings['post_type_sync_header'] = array(
@@ -442,7 +355,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 		$post_types = get_post_types( array( 'public' => true ), 'objects' );
 		$boards = wp_fusion()->settings->get( 'available_lists', array() );
-		BugFu::log($boards);
+		// BugFu::log($boards);
 
 		foreach ( $post_types as $post_type ) {
 			if (in_array($post_type->name, $exclude_post_types)) {
@@ -475,108 +388,291 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 	}
 
 	public function show_field_postType_fields( $id, $field ) {
-		$post_type = 'post'; // Replace with dynamic post type if needed
-	
-		// Group post fields by meta keys
+		// BugFu::log("show_field_postType_fields init");
+
+		// BugFu::log($field, false);
+		
+		// Lets group contact fields by integration if we can
 		$field_groups = array(
-			'post_meta_fields' => array(
-				'title'  => __( 'Post Meta Fields', 'wp-fusion-lite' ),
-				'fields' => format_post_meta_keys( $post_type ),
+			'wp' => array(
+				'title'  => __( 'Standard WordPress Fields', 'wp-fusion-lite' ),
+				'fields' => array(),
 			),
 		);
-	
+
+		$field_groups = apply_filters( 'wpf_meta_field_groups', $field_groups );
+
+		$field_groups['custom'] = array(
+			'title'  => __( 'Custom Field Keys (Added Manually)', 'wp-fusion-lite' ),
+			'fields' => array(),
+		);
+
+		// Append ungrouped fields.
+		$field_groups['extra'] = array(
+			'title'  => __( 'Additional <code>wp_usermeta</code> Table Fields (For Developers)', 'wp-fusion-lite' ),
+			'fields' => array(),
+			'url'    => 'https://wpfusion.com/documentation/getting-started/syncing-contact-fields/#additional-fields',
+		);
+
+		/**
+		 * Filters the available meta fields.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @link https://wpfusion.com/documentation/filters/wpf_meta_fields
+		 *
+		 * @param array $fields    Tags to be removed from the user
+		 */
+
+		
+		$field['choices'] = apply_filters( 'wpf_post_meta_fields', $field['choices'] );
+		// BugFu::log($field['choices']);
+
+		foreach ( wpf_get_option( 'post_fields', array() ) as $key => $data ) {
+
+			if ( ! isset( $field['choices'][ $key ] ) ) {
+				$field['choices'][ $key ] = $data;
+			}
+		}
+
 		if ( empty( $this->options[ $id ] ) ) {
 			$this->options[ $id ] = array();
 		}
-	
+
 		// Set some defaults to prevent notices, and then rebuild fields array into group structure.
-	
-		foreach ( $field_groups['post_meta_fields']['fields'] as $meta_key => $data ) {
+
+		foreach ( $field['choices'] as $meta_key => $data ) {
+
 			if ( empty( $this->options[ $id ][ $meta_key ] ) || ! isset( $this->options[ $id ][ $meta_key ]['crm_field'] ) || ! isset( $this->options[ $id ][ $meta_key ]['active'] ) ) {
 				$this->options[ $id ][ $meta_key ] = array(
 					'active'    => false,
+					'pull'      => false,
 					'crm_field' => false,
 				);
 			}
+
+			// Set Pull to on by default.
+
+			if ( ! empty( $this->options[ $id ][ $meta_key ] ) && ! empty( $this->options[ $id ][ $meta_key ]['active'] ) && ! isset( $this->options[ $id ][ $meta_key ]['pull'] ) && empty( $data['pseudo'] ) ) {
+				$this->options[ $id ][ $meta_key ]['pull'] = true;
+			}
+
+			if ( ! empty( $this->options['custom_metafields'] ) && in_array( $meta_key, $this->options['custom_metafields'] ) ) {
+
+				$field_groups['custom']['fields'][ $meta_key ] = $data;
+
+			} elseif ( isset( $data['group'] ) && isset( $field_groups[ $data['group'] ] ) ) {
+
+				$field_groups[ $data['group'] ]['fields'][ $meta_key ] = $data;
+
+			} else {
+
+				$field_groups['extra']['fields'][ $meta_key ] = $data;
+
+			}
 		}
-	
+
+		if ( wp_fusion()->crm->hide_additional ) {
+
+			foreach ( $field_groups['extra']['fields'] as $key => $data ) {
+
+				if ( ! isset( $data['active'] ) || $data['active'] != true ) {
+					unset( $field_groups['extra']['fields'][ $key ] );
+				}
+			}
+		}
+
+		/**
+		 * This filter is used in the CRM integrations to link up default field
+		 * pairings. We used to use wpf_initialize_options but that doesn't work
+		 * since it runs before any new fields are added by the wpf_meta_fields
+		 * filter (above). This filter will likely be removed in a future update
+		 * when we standardize how standard fields are managed.
+		 *
+		 * @since 3.37.24
+		 *
+		 * @param array $options The WP Fusion options.
+		 */
+
+		$this->options = apply_filters( 'wpf_initialize_options_post_fields', $this->options );
+
+		// These fields should be turned on by default
+
+		if ( empty( $this->options['contact_fields']['user_email']['active'] ) ) {
+			$this->options['contact_fields']['first_name']['active'] = true;
+			$this->options['contact_fields']['last_name']['active']  = true;
+			$this->options['contact_fields']['user_email']['active'] = true;
+		}
+
+		$field_types = array( 'text', 'date', 'multiselect', 'checkbox', 'state', 'country', 'int', 'raw', 'tel' );
+
+		$field_types = apply_filters( 'wpf_meta_field_types', $field_types );
+
 		echo '<p>' . sprintf( esc_html__( 'For more information on these settings, %1$ssee our documentation%2$s.', 'wp-fusion-lite' ), '<a href="https://wpfusion.com/documentation/getting-started/syncing-contact-fields/" target="_blank">', '</a>' ) . '</p>';
 		echo '<br />';
-	
+
 		// Display contact fields table.
 		echo '<table id="contact-fields-table" class="table table-hover">';
 
 		echo '<thead>';
 		echo '<tr>';
-		echo '<th class="sync">' . esc_html__( 'Sync', 'wp-fusion' ) . '</th>';
-		echo '<th>' . esc_html__( 'Names', 'wp-fusion' ) . '</th>';
-		echo '<th>' . esc_html__( 'Meta Field', 'wp-fusion' ) . '</th>';
-		echo '<th>' . esc_html__( 'Type', 'wp-fusion' ) . '</th>';
-		echo '<th>' . sprintf( esc_html__( '%s Field', 'wp-fusion' ), esc_html( wp_fusion()->crm->name ) ) . '</th>';
+		echo '<th class="sync">' . esc_html__( 'Sync', 'wp-fusion-lite' ) . '</th>';
+		// echo '<th class="sync">' . esc_html__( 'Pull', 'wp-fusion-lite' ) . '</th>'; @TODO.
+		echo '<th>' . esc_html__( 'Name', 'wp-fusion-lite' ) . '</th>';
+		echo '<th>' . esc_html__( 'Meta Field', 'wp-fusion-lite' ) . '</th>';
+		echo '<th>' . esc_html__( 'Type', 'wp-fusion-lite' ) . '</th>';
+		echo '<th>' . sprintf( esc_html__( '%s Field', 'wp-fusion-lite' ), esc_html( wp_fusion()->crm->name ) ) . '</th>';
 		echo '</tr>';
 		echo '</thead>';
-	
+
+		if ( empty( $this->options['table_headers'] ) ) {
+			$this->options['table_headers'] = array();
+		}
+
 		foreach ( $field_groups as $group => $group_data ) {
-			if ( empty( $group_data['fields'] ) ) {
+
+			if ( empty( $group_data['fields'] ) && $group != 'extra' ) {
 				continue;
 			}
-	
+
 			// Output group section headers.
 			if ( empty( $group_data['title'] ) ) {
 				$group_data['title'] = 'none';
 			}
-	
-			echo '<tbody class="labels">';
-			echo '<tr class="group-header"><td colspan="5">';
-			echo '<label for="' . esc_attr( $group ) . '" class="group-header-title">';
-			echo wp_kses_post( $group_data['title'] );
-			echo '<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></label>';
-			echo '</td></tr>';
-			echo '</tbody>';
-	
-			echo '<tbody class="table-collapse">';
-	
-			foreach ( $group_data['fields'] as $meta_key => $data ) {
-				echo '<tr' . ( $this->options[ $id ][ $meta_key ]['active'] == true ? ' class="success"' : '' ) . '>';
-				echo '<td><input class="checkbox" type="checkbox" id="wpf_cb_' . esc_attr( $meta_key ) . '" name="wpf_options[' . esc_attr( $id ) . '][' . esc_attr( $meta_key ) . '][active]" value="1" ' . checked( $this->options[ $id ][ $meta_key ]['active'], 1, false ) . '/></td>';
-				echo '<td class="wp_field_label">' . esc_html( $data['label'] ) . '</td>';
-				echo '<td><span class="label label-default">' . esc_html( $meta_key ) . '</span></td>';
+
+			$group_slug = strtolower( str_replace( ' ', '-', $group_data['title'] ) );
+
+			if ( ! isset( $this->options['table_headers'][ $group_slug ] ) ) {
+				$this->options['table_headers'][ $group_slug ] = false;
+			}
+
+			if ( 'standard-wordpress-fields' !== $group_slug ) { // Skip the first one
+
+				echo '<tbody class="labels">';
+				echo '<tr class="group-header"><td colspan="5">';
+				echo '<label for="' . esc_attr( $group_slug ) . '" class="group-header-title ' . ( $this->options['table_headers'][ $group_slug ] == true ? 'collapsed' : '' ) . '">';
+				echo wp_kses_post( $group_data['title'] );
+
+				if ( isset( $group_data['url'] ) ) {
+					echo '<a class="table-header-docs-link" href="' . esc_url( $group_data['url'] ) . '" target="_blank">' . esc_html__( 'View documentation', 'wp-fusion-lite' ) . ' &rarr;</a>';
+				}
+
+				echo '<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></label><input type="checkbox" ' . checked( $this->options['table_headers'][ $group_slug ], true, false ) . ' name="wpf_options[table_headers][' . $group_slug . ']" id="' . $group_slug . '" data-toggle="toggle">';
+				echo '</td></tr>';
+				echo '</tbody>';
+
+			}
+
+			$table_class = 'table-collapse';
+
+			if ( $this->options['table_headers'][ $group_slug ] == true ) {
+				$table_class .= ' hide';
+			}
+
+			if ( ! empty( $group_data['disabled'] ) ) {
+				$table_class .= ' disabled';
+			}
+
+			echo '<tbody class="' . esc_attr( $table_class ) . '">';
+
+			foreach ( $group_data['fields'] as $user_meta => $data ) {
+
+				if ( ! is_array( $data ) ) {
+					$data = array();
+				}
+
+				// Allow hiding for internal fields.
+				if ( isset( $data['hidden'] ) ) {
+					continue;
+				}
+
+				echo '<tr' . ( $this->options[ $id ][ $user_meta ]['active'] == true ? ' class="success" ' : '' ) . '>';
+				echo '<td><input class="checkbox contact-fields-checkbox"' . ( empty( $this->options[ $id ][ $user_meta ]['crm_field'] ) || 'user_email' == $user_meta ? ' disabled' : '' ) . ' type="checkbox" id="wpf_cb_' . esc_attr( $user_meta ) . '" name="wpf_options[' . esc_attr( $id ) . '][' . esc_attr( $user_meta ) . '][active]" value="1" ' . checked( $this->options[ $id ][ $user_meta ]['active'], 1, false ) . '/></td>';
+				// echo '<td><input class="checkbox"' . ( empty( $this->options[ $id ][ $user_meta ]['crm_field'] ) || ! empty( $data['pseudo'] ) ? ' disabled' : '' ) . ' type="checkbox" id="wpf_cb_pull_' . esc_attr( $user_meta ) . '" name="wpf_options[' . esc_attr( $id ) . '][' . esc_attr( $user_meta ) . '][pull]" value="1" ' . checked( $this->options[ $id ][ $user_meta ]['pull'], 1, false ) . '/></td>';
+				echo '<td class="wp_field_label">' . ( isset( $data['label'] ) ? esc_html( wp_strip_all_tags( $data['label'] ) ) : '' );
+
+				if ( 'user_pass' === $user_meta ) {
+
+					$pass_message  = 'It is <em>strongly</em> recommended to leave this field disabled from sync. If it\'s enabled: <br /><br />';
+					$pass_message .= '1. Real user passwords will be synced in plain text to ' . wp_fusion()->crm->name . ' when a user registers or changes their password. This is a security issue and may be illegal in your jurisdiction.<br /><br />';
+					$pass_message .= '2. User passwords will be loaded from ' . wp_fusion()->crm->name . ' when webhooks are received. If not set up correctly this could result in your users\' passwords being unexpectedly reset, and/or password reset links failing to work.<br /><br />';
+					$pass_message .= 'If you are importing users from ' . wp_fusion()->crm->name . ' via a webhook and wish to store their auto-generated password in a custom field, it is sufficient to check the box for <strong>Return Password</strong> on the General settings tab. You can leave this field disabled from syncing.';
+
+					echo ' <i class="fa fa-question-circle wpf-tip wpf-tip-right" data-tip="' . esc_attr( $pass_message ) . '"></i>';
+				}
+
+				// Tooltips
+
+				if ( isset( $data['tooltip'] ) ) {
+					echo ' <i class="fa fa-question-circle wpf-tip wpf-tip-right" data-tip="' . esc_attr( $data['tooltip'] ) . '"></i>';
+				}
+
+				// Track custom registered fields.
+
+				if ( ! empty( $this->options['custom_metafields'] ) && in_array( $user_meta, $this->options['custom_metafields'] ) ) {
+					echo ' (' . esc_html__( 'Added by user', 'wp-fusion-lite' ) . ')';
+				}
+
+				echo '</td>';
+				echo '<td><span class="label label-default">' . esc_html( $user_meta ) . '</span></td>';
 				echo '<td class="wp_field_type">';
-	
-				echo '<select class="wpf_type" name="wpf_options[' . esc_attr( $id ) . '][' . esc_attr( $meta_key ) . '][type]">';
-				$field_types = array( 'text', 'date', 'multiselect', 'checkbox', 'state', 'country', 'int', 'raw', 'tel' );
+
+				if ( ! isset( $data['type'] ) ) {
+					$data['type'] = 'text';
+				}
+
+				// Allow overriding types via dropdown.
+				if ( ! empty( $this->options['contact_fields'][ $user_meta ]['type'] ) ) {
+					$data['type'] = $this->options['contact_fields'][ $user_meta ]['type'];
+				}
+
+				if ( ! in_array( $data['type'], $field_types ) ) {
+					$field_types[] = $data['type'];
+				}
+
+				asort( $field_types );
+
+				echo '<select class="wpf_type" name="wpf_options[' . esc_attr( $id ) . '][' . esc_attr( $user_meta ) . '][type]">';
+
 				foreach ( $field_types as $type ) {
 					echo '<option value="' . esc_attr( $type ) . '" ' . selected( $data['type'], $type, false ) . '>' . esc_html( $type ) . '</option>';
 				}
-				echo '</select>';
-	
+
 				echo '<td>';
-				wpf_render_post_field_select( $this->options[ $id ][ $meta_key ]['crm_field'], 'wpf_options', $id, $meta_key, $post_type );
+
+				wpf_render_post_field_select( $this->options[ $id ][ $user_meta ]['crm_field'], 'wpf_options', 'contact_fields', $user_meta );
+
+				// Indicate pseudo-fields that should only be synced one way.
+				if ( isset( $data['pseudo'] ) ) {
+					echo '<input type="hidden" name="wpf_options[' . esc_attr( $id ) . '][' . esc_attr( $user_meta ) . '][pseudo]" value="1">';
+				}
+
 				echo '</td>';
-	
+
 				echo '</tr>';
+
 			}
-	
-			echo '</tbody>';
 		}
-	
-		// Add new field row.
+
+		// Add new.
 		echo '<tr>';
-		echo '<td><input class="checkbox contact-fields-checkbox" type="checkbox" disabled id="wpf_cb_new_field" name="wpf_options[' . esc_attr( $id ) . '][new_field][active]" value="1" /></td>';
+		echo '<td><input class="checkbox contact-fields-checkbox" type="checkbox" disabled id="wpf_cb_new_field" name="wpf_options[contact_fields][new_field][active]" value="1" /></td>';
 		echo '<td class="wp_field_label">Add new field</td>';
-		echo '<td><input type="text" id="wpf-add-new-field" name="wpf_options[' . esc_attr( $id ) . '][new_field][key]" placeholder="New Field Key" /></td>';
+		echo '<td><input type="text" id="wpf-add-new-field" name="wpf_options[contact_fields][new_field][key]" placeholder="New Field Key" /></td>';
 		echo '<td class="wp_field_type">';
-	
-		echo '<select class="wpf_type" name="wpf_options[' . esc_attr( $id ) . '][new_field][type]">';
+
+		echo '<select class="wpf_type" name="wpf_options[contact_fields][new_field][type]">';
+
 		foreach ( $field_types as $type ) {
-			echo '<option value="' . esc_attr( $type ) . '">' . esc_html( $type ) . '</option>';
+			echo '<option value="' . esc_attr( $type ) . '" ' . selected( 'text', $type, false ) . '>' . esc_html( $type ) . '</option>';
 		}
-		echo '</select>';
-	
+
 		echo '<td>';
-		wpf_render_post_field_select( false, 'wpf_options', $id, 'new_field', $post_type );
+
+		wpf_render_crm_field_select( false, 'wpf_options', 'contact_fields', 'new_field' );
+
 		echo '</td>';
-	
+
 		echo '</tr>';
 
 		echo '</tbody>';
@@ -584,6 +680,72 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		echo '</table>';
 
 	}
+
+
+
+	/**
+	 * Filters out internal WordPress fields from showing up in syncable meta fields list and sets labels and types for built in fields
+	 *
+	 * @since 1.0
+	 * @return array
+	 */
+
+	 public function prepare_post_meta_fields( $meta_fields ) {
+		// Load the reference of standard WP field names and types.
+		include __DIR__ . '/wordpress-post-fields.php';
+	
+		// Sets field types and labels for all built in fields.
+		foreach ( $wp_fields as $key => $data ) {
+			if ( ! isset( $data['group'] ) ) {
+				$data['group'] = 'wp';
+			}
+			$meta_fields[ $key ] = $data;
+		}
+	
+		// Get any additional wp_usermeta data.
+		$all_fields = get_post_meta_keys('post');
+		// BugFu::log($all_fields);
+	
+		// Some fields we can exclude via partials.
+		$exclude_fields_partials = array(
+			'metaboxhidden_',
+			'meta-box-order_',
+			'screen_layout_',
+			'closedpostboxes_',
+			'_contact_id',
+			'_tags',
+		);
+	
+		foreach ( $exclude_fields_partials as $partial ) {
+			foreach ( $all_fields as $field => $data ) {
+				if ( strpos( $field, $partial ) !== false ) {
+					unset( $all_fields[ $field ] );
+				}
+			}
+		}
+	
+		// Sets field types and labels for all built in fields.
+		foreach ( $all_fields as $key ) {
+			// Skip hidden fields.
+			if ( substr( $key, 0, 1 ) === '_' || substr( $key, 0, 5 ) === 'hide_' || substr( $key, 0, 3 ) === 'wp_' ) {
+				continue;
+			}
+	
+			if ( ! isset( $meta_fields[ $key ] ) ) {
+				$meta_fields[ $key ] = array(
+					'label' => ucwords( str_replace( '_', ' ', $key ) ),
+					'group' => 'extra',
+					'type'  => 'text',
+				);
+			}
+		}
+	
+		return $meta_fields;
+	}
+	
+
+
+
 
 	public function show_field_sync_button( $id, $field ) {
 		$post_type = $field['attributes']['data-post_type'];
@@ -651,7 +813,19 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 	public function sync_post_type_fields($post_type) {
 		BugFu::log("sync_post_type_fields init");
+
+		// Load built in fields first
+		// require dirname( __FILE__ ) . '/monday-fields.php';
+
+		$built_in_fields = array();
+
+		// foreach ( $monday_fields as $index => $data ) {
+		// 	$built_in_fields[ $data['crm_field'] ] = $data['crm_label'];
+		// }
+
+		// asort( $built_in_fields );
         // Fetch the API key
+
         $api_key = wpf_get_option('monday_key');
         if (empty($api_key)) {
             return new WP_Error('no_api_key', __('No API key provided.', 'wp-fusion'));
@@ -692,6 +866,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
         }
 
         $body = json_decode(wp_remote_retrieve_body($response), true);
+		BugFu::log($body);
 
         // Check for errors in the response
         if (isset($body['errors']) && !empty($body['errors'])) {
@@ -706,18 +881,53 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		
 
         // Process the columns
-        $fields = array();
+        $custom_fields = array();
+		
 
         foreach ($body['data']['boards'][0]['columns'] as $column) {
-            $fields[$column['id']] = $column['title'];
+            $custom_fields[$column['id']] = $column['title'];
         }
+		BugFu::log($custom_fields);
 
-		BugFu::log($fields);
+		$post_fields = array(
+			'Standard Fields' => $built_in_fields,
+			'Custom Fields'   => $custom_fields,
+		);
+		
+		// 'wpf_set_setting_' . $key fired
 
-        wp_fusion()->settings->set('post_type_fields_' . $post_type, $fields);
+        wp_fusion()->settings->set($post_type.'_fields', $post_fields);
 
         return true;
     }
+
+	public function handle_post_type_fields_update( $value ) {
+		BugFu::log("handle_post_type_fields_update init");
+		// if ( strpos( $key, 'post_type_fields_' ) === 0 ) {
+		// 	// Extract post type from the key.
+		// 	$post_type = str_replace( 'post_type_fields_', '', $key );
+	
+		// 	// Update the specific option for the post type fields.
+		// 	update_option( 'post_type_fields_post' . $post_type, $value, false );
+		// }
+		update_option( 'wpf_post_fields', $value, false );
+	
+		return $value;
+	}
+
+	public function handle_get_post_fields( $value ) {
+		BugFu::log("handle_get_post_fields init");
+		BugFu::log($value);
+		// Check if the post fields option is already set in the value.
+		if ( !empty( $value ) ) {
+			return $value;
+		}
+	
+		// Retrieve the setting from the custom option.
+		$setting = get_option( 'wpf_post_fields', array() );
+	
+		return ! empty( $setting ) ? $setting : $value;
+	}
 	
 
 

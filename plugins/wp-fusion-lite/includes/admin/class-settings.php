@@ -203,6 +203,7 @@ class WPF_Settings {
 	 * @return mixed
 	 */
 	public function get( $key, $default = false ) {
+		
 
 		// Special fields first.
 
@@ -221,14 +222,18 @@ class WPF_Settings {
 
 			}
 		} elseif ( 'crm_fields' == $key && empty( $this->options['crm_fields'] ) ) {
+			BugFu::log("get crm_fields");
+			BugFu::log($setting);
 
 			$setting = get_option( 'wpf_crm_fields', array() );
 
 			if ( ! empty( $setting ) ) {
+				BugFu::log("setting not empty");
 
 				$this->options['crm_fields'] = $setting;
 
 			} elseif ( empty( $setting ) && empty( $this->options ) ) {
+				BugFu::log("get wpf_options");
 
 				// Fallback in case the data hasn't been moved yet (pre 3.37).
 				$this->options = get_option( 'wpf_options', array() );
@@ -292,6 +297,7 @@ class WPF_Settings {
 	 * @param mixed  $value  The settings value.
 	 */
 	public function set( $key, $value ) {
+		BugFu::log("set init");
 
 		$value = apply_filters( 'wpf_set_setting_' . $key, $value );
 
@@ -2517,7 +2523,7 @@ class WPF_Settings {
 	 */
 
 	public function show_field_crm_field( $id, $field ) {
-		BugFu::log("show_field_crm_field init");
+		// BugFu::log("show_field_crm_field init");
 
 		$setting = $this->get( $id );
 
@@ -2562,6 +2568,8 @@ class WPF_Settings {
 	 */
 
 	public function show_field_contact_fields( $id, $field ) {
+		// BugFu::log("show_field_contact_fields init");
+		// BugFu::log($field, false);
 
 		// Lets group contact fields by integration if we can
 		$field_groups = array(
@@ -2595,6 +2603,7 @@ class WPF_Settings {
 		 * @param array $fields    Tags to be removed from the user
 		 */
 		$field['choices'] = apply_filters( 'wpf_meta_fields', $field['choices'] );
+		// BugFu::log($field, false);
 
 		foreach ( $this->get( 'contact_fields', array() ) as $key => $data ) {
 
@@ -3198,7 +3207,9 @@ class WPF_Settings {
 	 * @return mixed
 	 */
 	public function validate_field_contact_fields( $input, $setting, $options_class ) {
-		// BugFu::log("validate_field_contact_fields init");
+		BugFu::log("validate_field_contact_fields init");
+
+		// BugFu::log($input);
 
 		// Unset the empty ones.
 		foreach ( $input as $field => $data ) {
@@ -3211,6 +3222,8 @@ class WPF_Settings {
 				unset( $input[ $field ] );
 			}
 		}
+
+		//BugFu::log($input);
 
 		// New fields.
 		if ( ! empty( $input['new_field']['key'] ) ) {

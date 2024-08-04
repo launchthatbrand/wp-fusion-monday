@@ -243,8 +243,8 @@ function wpf_render_tag_multiselect( $args = array() ) {
  */
 
 function wpf_render_crm_field_select( $setting, $meta_name, $field_id = false, $field_sub_id = false ) {
-	BugFu::log("wpf_render_crm_field_select init");
-	BugFu::log($setting);
+	// BugFu::log("wpf_render_crm_field_select init");
+	// BugFu::log($setting);
 
 	if ( doing_action( 'show_field_crm_field' ) ) {
 		// Settings page.

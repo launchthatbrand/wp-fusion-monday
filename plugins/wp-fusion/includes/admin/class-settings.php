@@ -2473,6 +2473,9 @@ class WPF_Settings {
 
 	public function show_field_contact_fields( $id, $field ) {
 
+		BugFu::log("show_field_contact_fields init");
+		BugFu::log($field, false);
+
 		// Lets group contact fields by integration if we can
 		$field_groups = array(
 			'wp' => array(
@@ -3025,6 +3028,7 @@ class WPF_Settings {
 	 */
 	public function validate_field_contact_fields( $input, $setting, $options_class ) {
 		BugFu::log("validate_field_contact_fields init");
+		BugFu::log($input));
 
 		// Unset the empty ones.
 		foreach ( $input as $field => $data ) {

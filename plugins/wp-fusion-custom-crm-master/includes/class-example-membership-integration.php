@@ -107,6 +107,10 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		return $settings;
 	}
 
+
+
+	
+
 	public function show_field_post_fields( $id, $field ) {
 		$post_type = 'post'; // Replace with dynamic post type if needed
 	
@@ -177,6 +181,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 				echo '<td class="wp_field_type">';
 	
 				echo '<select class="wpf_type" name="wpf_options[' . esc_attr( $id ) . '][' . esc_attr( $meta_key ) . '][type]">';
+				
 				$field_types = array( 'text', 'date', 'multiselect', 'checkbox', 'state', 'country', 'int', 'raw', 'tel' );
 				foreach ( $field_types as $type ) {
 					echo '<option value="' . esc_attr( $type ) . '" ' . selected( $data['type'], $type, false ) . '>' . esc_html( $type ) . '</option>';
