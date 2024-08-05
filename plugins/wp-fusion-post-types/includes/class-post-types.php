@@ -47,7 +47,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 
 		// Validation.
-		add_filter( 'validate_field_post_fields', array( $this, 'validate_field_post_fields' ), 10, 3 );
+		add_filter( 'validate_field_postType_post_fields', array( $this, 'validate_field_post_fields' ), 10, 3 );
 
 		add_filter( 'wpf_set_setting_post_fields', array( $this, 'handle_post_type_fields_update' ), 10, 2 );
 		add_filter( 'wpf_get_setting_post_fields', array( $this, 'handle_get_post_fields' ) );
@@ -75,8 +75,8 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 			if (isset($options['post_type_sync_' . $post_type->name]) && !empty($options['post_type_sync_' . $post_type->name])) {
 
 				// WPF Post Type Fields Table Rendering
-				add_action("show_field_{$post_type->name}_fields", array($this, 'show_field_postType_fields'), 15, 2);
-				add_action("show_field_{$post_type->name}_fields_begin", array($this, 'show_field_postType_fields_begin'), 15, 2);
+				add_action("show_field_postType_{$post_type->name}_fields", array($this, 'show_field_postType_fields'), 15, 2);
+				add_action("show_field_postType_{$post_type->name}_fields_begin", array($this, 'show_field_postType_fields_begin'), 15, 2);
 				add_filter( "wpf_{$post_type->name}_meta_fields", array( $this, "prepare_{$post_type->name}_meta_fields" ), 60 );
 
 				// add_filter( "wpf_set_setting_post_type_fields_{$post_type->name}", array( $this, "handle_post_type_fields_update" ), 10, 2 );
@@ -102,8 +102,8 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 	 * @return mixed
 	 */
 	public function validate_field_post_fields( $input, $setting, $options_class ) {
-		BugFu::log("validate_field_post_fields init");
-		// BugFu::log($input);
+		//BugFu::log("validate_field_post_fields init");
+		BugFu::log($input);
 
 		// Unset the empty ones.
 		foreach ( $input as $field => $data ) {
@@ -376,8 +376,8 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 			);
 		}
 
-        $settings['post_fields'] = array(
-			'title'   => __( 'Contact Fields2', 'wp-fusion-lite' ),
+        $settings['postType_post_fields'] = array(
+			'title'   => __( 'Post Fields', 'wp-fusion-lite' ),
 			'std'     => array(),
 			'type'    => 'post-fields',
 			'section' => 'post-fields',
@@ -640,7 +640,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 				echo '<td>';
 
-				wpf_render_post_field_select( $this->options[ $id ][ $user_meta ]['crm_field'], 'wpf_options', 'contact_fields', $user_meta );
+				wpf_render_post_field_select( $this->options[ $id ][ $user_meta ]['crm_field'], 'wpf_options', 'postType_post_fields', $user_meta );
 
 				// Indicate pseudo-fields that should only be synced one way.
 				if ( isset( $data['pseudo'] ) ) {
@@ -915,17 +915,17 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		return $value;
 	}
 
-	public function handle_get_post_fields( $value ) {
+	public function handle_get_post_fields( $fields ) {
 		BugFu::log("handle_get_post_fields init");
-		BugFu::log($value);
+		BugFu::log($fields);
 		// Check if the post fields option is already set in the value.
-		if ( !empty( $value ) ) {
-			return $value;
-		}
+		// if ( !empty( $value ) ) {
+		// 	return $value;
+		// }
 	
 		// Retrieve the setting from the custom option.
 		$setting = get_option( 'wpf_post_fields', array() );
-	
+		BugFu::log($setting);
 		return ! empty( $setting ) ? $setting : $value;
 	}
 	

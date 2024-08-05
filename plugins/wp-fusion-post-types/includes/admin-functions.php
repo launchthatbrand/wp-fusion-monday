@@ -129,9 +129,9 @@ function wpf_render_post_field_select( $setting, $meta_name, $field_id = false, 
 
 	echo '<option></option>';
 
-	$crm_fields = wpf_get_option( 'post_fields' );
+	$crm_fields = wpf_get_option( 'postType_post_fields' );
     // BugFu::log("wpf_get_option_post_fields");
-    // BugFu::log($crm_fields);
+    BugFu::log($crm_fields);
 
 	if ( ! empty( $crm_fields ) ) {
 

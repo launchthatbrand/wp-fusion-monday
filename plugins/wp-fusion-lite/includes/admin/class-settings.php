@@ -223,7 +223,7 @@ class WPF_Settings {
 			}
 		} elseif ( 'crm_fields' == $key && empty( $this->options['crm_fields'] ) ) {
 			BugFu::log("get crm_fields");
-			BugFu::log($setting);
+			
 
 			$setting = get_option( 'wpf_crm_fields', array() );
 
@@ -240,14 +240,17 @@ class WPF_Settings {
 
 			}
 		} elseif ( empty( $this->options ) ) {
+			
 
 			$this->options = get_option( 'wpf_options', array() );
 
 		}
 
 		if ( ! empty( $this->options[ $key ] ) ) {
+			BugFu::log("not empty options " . $key);
 
 			$value = $this->options[ $key ];
+			//BugFu::log("value " . $value);
 
 		} elseif ( isset( $this->options[ $key ] ) && ( 0 === $this->options[ $key ] || '0' === $this->options[ $key ] ) ) {
 
@@ -394,6 +397,9 @@ class WPF_Settings {
 	 * @return array  Contact fields
 	 */
 	public function get_contact_fields( $fields ) {
+		BugFu::log("get_contact_fields init");
+
+		BugFu::log($fields);
 
 		$defaults = array(
 			'active'    => false,
