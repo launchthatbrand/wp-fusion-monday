@@ -222,18 +222,21 @@ class WPF_Settings {
 
 			}
 		} elseif ( 'crm_fields' == $key && empty( $this->options['crm_fields'] ) ) {
-			BugFu::log("get crm_fields");
+			//BugFu::log("get crm_fields");
+			
 			
 
 			$setting = get_option( 'wpf_crm_fields', array() );
+			//BugFu::log($setting);
 
 			if ( ! empty( $setting ) ) {
-				BugFu::log("setting not empty");
+				//BugFu::log("setting not empty");
+				// BugFu::log($setting);
 
 				$this->options['crm_fields'] = $setting;
 
 			} elseif ( empty( $setting ) && empty( $this->options ) ) {
-				BugFu::log("get wpf_options");
+				//BugFu::log("get wpf_options");
 
 				// Fallback in case the data hasn't been moved yet (pre 3.37).
 				$this->options = get_option( 'wpf_options', array() );
@@ -247,7 +250,7 @@ class WPF_Settings {
 		}
 
 		if ( ! empty( $this->options[ $key ] ) ) {
-			BugFu::log("not empty options " . $key);
+			// BugFu::log("not empty options " . $key);
 
 			$value = $this->options[ $key ];
 			//BugFu::log("value " . $value);
@@ -268,14 +271,19 @@ class WPF_Settings {
 
 		}
 
+		// BugFu::log($value);
+
 		if ( is_array( $value ) ) {
+			//BugFu::log("value is array");
 
 			// $value = array_filter( $value ); // Can't array filter here since it removes un-checked checkboxes.
 
 			// Fix for pre-3.40.33 Select CRM Field dropdowns.
 
 			if ( isset( $value['crm_field'] ) ) {
+				//BugFu::log("value['crm_field'] set");
 				$value = $value['crm_field'];
+				//BugFu::log($value);
 			}
 		} elseif ( is_string( $value ) && preg_match( '/^[0-9]+$/', $value ) ) {
 
@@ -300,7 +308,7 @@ class WPF_Settings {
 	 * @param mixed  $value  The settings value.
 	 */
 	public function set( $key, $value ) {
-		BugFu::log("set init");
+		//BugFu::log("set init");
 
 		$value = apply_filters( 'wpf_set_setting_' . $key, $value );
 
@@ -397,9 +405,9 @@ class WPF_Settings {
 	 * @return array  Contact fields
 	 */
 	public function get_contact_fields( $fields ) {
-		BugFu::log("get_contact_fields init");
+		//BugFu::log("get_contact_fields init");
 
-		BugFu::log($fields);
+		//BugFu::log($fields);
 
 		$defaults = array(
 			'active'    => false,
@@ -2822,6 +2830,7 @@ class WPF_Settings {
 				}
 
 				echo '<td>';
+				//BugFu::log($this->options[ $id ]);
 
 				wpf_render_crm_field_select( $this->options[ $id ][ $user_meta ]['crm_field'], 'wpf_options', 'contact_fields', $user_meta );
 
@@ -3213,7 +3222,7 @@ class WPF_Settings {
 	 * @return mixed
 	 */
 	public function validate_field_contact_fields( $input, $setting, $options_class ) {
-		BugFu::log("validate_field_contact_fields init");
+		//BugFu::log("validate_field_contact_fields init");
 
 		// BugFu::log($input);
 

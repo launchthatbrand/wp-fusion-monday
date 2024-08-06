@@ -179,7 +179,7 @@ class WP_Fusion_Options {
 			// work on the settings page.
 
 			foreach ( $this->options as $id => $value ) {
-				BugFu::log("wpf_get_setting_" . $id);
+				//BugFu::log("wpf_get_setting_" . $id);
 				$this->options[ $id ] = apply_filters( 'wpf_get_setting_' . $id, $value );
 			}
 
@@ -216,7 +216,7 @@ class WP_Fusion_Options {
 
 	private function save_options() {
 
-		BugFu::log("save_options init");
+		//BugFu::log("save_options init");
 		$nonce = $_POST[ $this->setup['project_slug'] . '_nonce' ];
 
 		if ( ! isset( $_POST[ $this->setup['project_slug'] . '_nonce' ] ) ) {
@@ -237,8 +237,8 @@ class WP_Fusion_Options {
 		// For each settings field, run the input through it's defined validation function
 
 		$settings = $this->settings;
-		BugFu::log($settings);
-		BugFu::log($this->post_data);
+		//BugFu::log($settings);
+		//BugFu::log($this->post_data);
 
 		// Beydefault $_POST ignores checkboxes with no value set, so we need to
 		// iterate through all defined checkboxes and set their value to 0 if
@@ -282,7 +282,7 @@ class WP_Fusion_Options {
 			
 
 			if ( isset( $this->post_data[ $id ] ) && $this->post_data[ $id ] !== $this->options[ $id ] ) {
-				BugFu::log( "ID: " . $id );
+				//::log( "ID: " . $id );
 				// BugFu::log( $this->post_data[ $id ] );
 				// BugFu::log( $setting );
 
@@ -400,7 +400,7 @@ class WP_Fusion_Options {
 
 		if ( has_filter( 'validate_field_' . $id ) ) {
 			// validate_fields_contact_fields fired here
-			BugFu::log("validate_field_" . $id);
+			//BugFu::log("validate_field_" . $id);
 
 
 			// If there's a validation function for this particular field ID

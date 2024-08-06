@@ -2065,6 +2065,7 @@ class WPF_User {
 	 */
 
 	public function push_user_meta( $user_id, $user_meta = false ) {
+		BugFu::log("push_user_meta init");
 
 		if ( ! wpf_get_option( 'push' ) || ! wp_fusion()->crm ) {
 			return false;
@@ -2077,6 +2078,8 @@ class WPF_User {
 		if ( false === $user_meta ) {
 			$user_meta = $this->get_user_meta( $user_id );
 		}
+
+		BugFu::log($user_meta);
 
 		$user_meta = apply_filters( 'wpf_user_update', $user_meta, $user_id );
 
@@ -2094,6 +2097,7 @@ class WPF_User {
 		}
 
 		wpf_log( 'info', $user_id, 'Pushing meta data to ' . wp_fusion()->crm->name . ': ', array( 'meta_array' => $user_meta ) );
+		BugFu::log($user_meta);
 
 		$result = wp_fusion()->crm->update_contact( $contact_id, $user_meta );
 

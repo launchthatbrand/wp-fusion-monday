@@ -1,18 +1,350 @@
-[05-Aug-2024 01:08:56 UTC] PHP Warning:  Array to string conversion in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php on line 253
-[05-Aug-2024 01:08:56 UTC] PHP Warning:  Array to string conversion in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php on line 253
-[05-Aug-2024 01:08:56 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php:253) in /var/www/html/wp-login.php on line 508
-[05-Aug-2024 01:08:56 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php:253) in /var/www/html/wp-login.php on line 524
-[05-Aug-2024 01:08:56 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php:253) in /var/www/html/wp-includes/functions.php on line 7108
-[05-Aug-2024 01:08:59 UTC] PHP Warning:  Array to string conversion in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php on line 253
-[05-Aug-2024 01:09:00 UTC] PHP Warning:  Array to string conversion in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php on line 253
-[05-Aug-2024 01:09:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php:253) in /var/www/html/wp-login.php on line 508
-[05-Aug-2024 01:09:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php:253) in /var/www/html/wp-login.php on line 524
-[05-Aug-2024 01:09:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php:253) in /var/www/html/wp-includes/functions.php on line 7108
-[05-Aug-2024 01:09:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php:253) in /var/www/html/wp-includes/pluggable.php on line 1093
-[05-Aug-2024 01:09:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php:253) in /var/www/html/wp-includes/pluggable.php on line 1094
-[05-Aug-2024 01:09:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php:253) in /var/www/html/wp-includes/pluggable.php on line 1095
-[05-Aug-2024 01:09:04 UTC] PHP Warning:  Array to string conversion in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php on line 253
-[05-Aug-2024 01:09:04 UTC] PHP Warning:  Array to string conversion in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php on line 253
-[05-Aug-2024 01:09:11 UTC] PHP Warning:  Array to string conversion in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php on line 253
-[05-Aug-2024 01:09:12 UTC] PHP Warning:  Array to string conversion in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/class-settings.php on line 253
-[05-Aug-2024 01:10:13 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 21:23:17 UTC] PHP Parse error:  Unclosed '{' on line 396 does not match ')' in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 405
+[05-Aug-2024 21:23:18 UTC] PHP Parse error:  Unclosed '{' on line 396 does not match ')' in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 405
+[05-Aug-2024 21:23:49 UTC] PHP Warning:  Undefined variable $post_data in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 460
+[05-Aug-2024 21:23:49 UTC] PHP Warning:  Undefined variable $board_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 529
+[05-Aug-2024 21:23:49 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Error could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:529
+Stack trace:
+#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
+#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
+#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
+#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
+#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#8 /var/www/html/wp-admin/post.php(227): edit_post()
+#9 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 529
+[05-Aug-2024 21:24:03 UTC] PHP Warning:  Undefined variable $board_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 528
+[05-Aug-2024 21:24:03 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Error could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:528
+Stack trace:
+#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
+#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
+#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
+#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
+#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#8 /var/www/html/wp-admin/post.php(227): edit_post()
+#9 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 528
+[05-Aug-2024 21:24:58 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Error could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:528
+Stack trace:
+#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
+#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
+#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
+#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
+#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#8 /var/www/html/wp-admin/post.php(227): edit_post()
+#9 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 528
+[05-Aug-2024 21:25:33 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Error could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:530
+Stack trace:
+#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
+#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
+#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
+#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
+#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#8 /var/www/html/wp-admin/post.php(227): edit_post()
+#9 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 530
+[05-Aug-2024 21:25:58 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Error could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:531
+Stack trace:
+#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
+#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
+#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
+#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
+#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#8 /var/www/html/wp-admin/post.php(227): edit_post()
+#9 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 531
+[05-Aug-2024 21:31:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method WPF_Post_Type_Sync_Integration::get_selected_board() in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:302
+Stack trace:
+#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(462): WPF_Post_Type_Sync_Integration->add_post(Array)
+#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
+#2 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
+#3 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
+#4 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#5 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#6 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
+#7 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#8 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#9 /var/www/html/wp-admin/post.php(227): edit_post()
+#10 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 302
+[05-Aug-2024 21:33:55 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function WPF_Post_Type_Sync_Integration::add_post(), 1 passed in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 462 and at least 2 expected in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:297
+Stack trace:
+#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(462): WPF_Post_Type_Sync_Integration->add_post(Array)
+#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
+#2 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
+#3 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
+#4 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#5 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#6 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
+#7 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#8 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#9 /var/www/html/wp-admin/post.php(227): edit_post()
+#10 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 297
+[05-Aug-2024 21:34:17 UTC] PHP Warning:  Undefined variable $contact_data in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 313
+[05-Aug-2024 21:34:17 UTC] PHP Warning:  Undefined variable $board_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 333
+[05-Aug-2024 21:34:17 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 333
+[05-Aug-2024 21:34:17 UTC] GraphQL Mutation: mutation {
+			create_item (board_id: , item_name: "", column_values: "[]") {
+				id
+			}
+		}
+[05-Aug-2024 21:34:18 UTC] API response body: {"errors":[{"message":"Parse error on \":\" (COLON) at [3, 38]","locations":[{"line":3,"column":38}]}],"account_id":20627268}
+[05-Aug-2024 21:34:18 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:313) in /var/www/html/wp-includes/pluggable.php on line 1435
+[05-Aug-2024 21:34:18 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:313) in /var/www/html/wp-includes/pluggable.php on line 1438
+[05-Aug-2024 21:38:04 UTC] PHP Warning:  Undefined variable $board_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 333
+[05-Aug-2024 21:38:04 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 333
+[05-Aug-2024 21:38:04 UTC] GraphQL Mutation: mutation {
+			create_item (board_id: , item_name: "", column_values: "[]") {
+				id
+			}
+		}
+[05-Aug-2024 21:38:04 UTC] API response body: {"errors":[{"message":"Parse error on \":\" (COLON) at [3, 38]","locations":[{"line":3,"column":38}]}],"account_id":20627268}
+[05-Aug-2024 21:38:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:333) in /var/www/html/wp-includes/pluggable.php on line 1435
+[05-Aug-2024 21:38:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:333) in /var/www/html/wp-includes/pluggable.php on line 1438
+[05-Aug-2024 21:38:20 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 333
+[05-Aug-2024 21:38:20 UTC] GraphQL Mutation: mutation {
+			create_item (board_id: 7110768751, item_name: "", column_values: "[]") {
+				id
+			}
+		}
+[05-Aug-2024 21:38:20 UTC] API response body: {"error_message":"item_name cannot be empty. Item names must be at least 1 character long.","error_code":"InvalidItemNameException","error_data":{"item_name":""},"status_code":200,"account_id":20627268}
+[05-Aug-2024 21:38:21 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:333) in /var/www/html/wp-includes/pluggable.php on line 1435
+[05-Aug-2024 21:38:21 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:333) in /var/www/html/wp-includes/pluggable.php on line 1438
+[05-Aug-2024 21:38:23 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 333
+[05-Aug-2024 21:38:23 UTC] GraphQL Mutation: mutation {
+			create_item (board_id: 7110768751, item_name: "", column_values: "[]") {
+				id
+			}
+		}
+[05-Aug-2024 21:38:24 UTC] API response body: {"error_message":"item_name cannot be empty. Item names must be at least 1 character long.","error_code":"InvalidItemNameException","error_data":{"item_name":""},"status_code":200,"account_id":20627268}
+[05-Aug-2024 21:38:24 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:333) in /var/www/html/wp-includes/pluggable.php on line 1435
+[05-Aug-2024 21:38:24 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:333) in /var/www/html/wp-includes/pluggable.php on line 1438
+[05-Aug-2024 21:38:47 UTC] GraphQL Mutation: mutation {
+			create_item (board_id: 7110768751, item_name: "aaaa", column_values: "[]") {
+				id
+			}
+		}
+[05-Aug-2024 21:38:48 UTC] API response body: {"data":{"create_item":{"id":"7166044886"}},"account_id":20627268}
+[05-Aug-2024 21:39:41 UTC] GraphQL Mutation: mutation {
+			create_item (board_id: 7110768751, item_name: "qweqwe", column_values: "[]") {
+				id
+			}
+		}
+[05-Aug-2024 21:39:42 UTC] API response body: {"data":{"create_item":{"id":"7166048964"}},"account_id":20627268}
+[05-Aug-2024 21:41:02 UTC] GraphQL Mutation: mutation {
+			create_item (board_id: 7110768751, item_name: "qweqwe", column_values: "[]") {
+				id
+			}
+		}
+[05-Aug-2024 21:41:02 UTC] API response body: {"data":{"create_item":{"id":"7166058934"}},"account_id":20627268}
+[05-Aug-2024 22:29:31 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 218
+[05-Aug-2024 22:29:31 UTC] GraphQL Mutation: mutation {
+			create_item (board_id: 7110768751, item_name: "qweqwe", column_values: "[]") {
+				id
+			}
+		}
+[05-Aug-2024 22:29:32 UTC] API response body: {"data":{"create_item":{"id":"7166322233"}},"account_id":20627268}
+[05-Aug-2024 22:29:32 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:218) in /var/www/html/wp-includes/pluggable.php on line 1435
+[05-Aug-2024 22:29:32 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:218) in /var/www/html/wp-includes/pluggable.php on line 1438
+[05-Aug-2024 22:30:33 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 218
+[05-Aug-2024 22:30:33 UTC] GraphQL Mutation: mutation {
+			create_item (board_id: 7110768751, item_name: "qweqwe", column_values: "[]") {
+				id
+			}
+		}
+[05-Aug-2024 22:30:34 UTC] API response body: {"data":{"create_item":{"id":"7166326992"}},"account_id":20627268}
+[05-Aug-2024 22:30:34 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:218) in /var/www/html/wp-includes/pluggable.php on line 1435
+[05-Aug-2024 22:30:34 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:218) in /var/www/html/wp-includes/pluggable.php on line 1438
+[05-Aug-2024 22:30:41 UTC] PHP Warning:  Undefined variable $contact_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 537
+[05-Aug-2024 22:30:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method WPF_Post_Type_Sync_Integration::update_item() in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:546
+Stack trace:
+#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(310): WPF_Post_Type_Sync_Integration->update_post(24, 'post', '7110768751', Array)
+#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(218): WPF_Post_Type_Sync_Integration->push_post_meta(24, Array)
+#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(24, Array, Object(WP_Post))
+#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 24, Object(WP_Post), Object(WP_Post))
+#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#8 /var/www/html/wp-admin/post.php(227): edit_post()
+#9 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 546
+[05-Aug-2024 22:31:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method WPF_Post_Type_Sync_Integration::update_item() in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:546
+Stack trace:
+#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(310): WPF_Post_Type_Sync_Integration->update_post(24, 'post', '7110768751', Array)
+#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(218): WPF_Post_Type_Sync_Integration->push_post_meta(24, Array)
+#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(24, Array, Object(WP_Post))
+#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 24, Object(WP_Post), Object(WP_Post))
+#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#8 /var/www/html/wp-admin/post.php(227): edit_post()
+#9 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 546
+[05-Aug-2024 22:48:29 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 449
+[05-Aug-2024 22:48:29 UTC] PHP Warning:  Undefined variable $post_meta in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 455
+[05-Aug-2024 22:48:29 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:449) in /var/www/html/wp-includes/pluggable.php on line 1435
+[05-Aug-2024 22:48:29 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:449) in /var/www/html/wp-includes/pluggable.php on line 1438
+[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined variable $post_meta in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 461
+[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined variable $post_type in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 461
+[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 484
+[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 496
+[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 507
+[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined variable $post_type in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 507
+[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 375
+[05-Aug-2024 22:49:00 UTC] GraphQL Mutation: mutation {
+			create_item (board_id: 7110768751, item_name: "", column_values: "[]") {
+				id
+			}
+		}
+[05-Aug-2024 22:49:01 UTC] API response body: {"error_message":"item_name cannot be empty. Item names must be at least 1 character long.","error_code":"InvalidItemNameException","error_data":{"item_name":""},"status_code":200,"account_id":20627268}
+[05-Aug-2024 22:49:01 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 516
+[05-Aug-2024 22:49:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:461) in /var/www/html/wp-includes/pluggable.php on line 1435
+[05-Aug-2024 22:49:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:461) in /var/www/html/wp-includes/pluggable.php on line 1438
+[05-Aug-2024 22:53:05 UTC] GraphQL Mutation: mutation {
+			change_multiple_column_values (board_id: 6950913950, item_id: 7119035140, column_values: "{\"email\":{\"email\":\"admin@localhost.com\",\"text\":\"admin@localhost.com\"},\"l_name\":\"Devvvv\",\"name\":\"Devs\"}") {
+				id
+			}
+		}
+[05-Aug-2024 22:53:05 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7119035140"}},"account_id":20627268}
+[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_meta in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 461
+[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_type in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 461
+[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 484
+[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 496
+[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 507
+[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_type in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 507
+[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 375
+[05-Aug-2024 22:55:47 UTC] GraphQL Mutation: mutation {
+			create_item (board_id: 7110768751, item_name: "", column_values: "[]") {
+				id
+			}
+		}
+[05-Aug-2024 22:55:47 UTC] API response body: {"error_message":"item_name cannot be empty. Item names must be at least 1 character long.","error_code":"InvalidItemNameException","error_data":{"item_name":""},"status_code":200,"account_id":20627268}
+[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 516
+[05-Aug-2024 22:55:47 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:461) in /var/www/html/wp-includes/pluggable.php on line 1435
+[05-Aug-2024 22:55:47 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:461) in /var/www/html/wp-includes/pluggable.php on line 1438
+[05-Aug-2024 22:57:37 UTC] PHP Warning:  Undefined variable $post_meta in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 463
+[05-Aug-2024 22:57:37 UTC] PHP Warning:  Undefined variable $post_meta in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 470
+[05-Aug-2024 22:57:37 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 470
+[05-Aug-2024 22:57:37 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 486
+[05-Aug-2024 22:57:37 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 498
+[05-Aug-2024 22:57:37 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 509
+[05-Aug-2024 22:57:37 UTC] PHP Warning:  Undefined variable $post_meta in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 509
+[05-Aug-2024 22:57:37 UTC] PHP Warning:  Trying to access array offset on value of type null in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 375
+[05-Aug-2024 22:57:37 UTC] GraphQL Mutation: mutation {
+			create_item (board_id: 7110768751, item_name: "", column_values: "[]") {
+				id
+			}
+		}
+[05-Aug-2024 22:57:38 UTC] API response body: {"error_message":"item_name cannot be empty. Item names must be at least 1 character long.","error_code":"InvalidItemNameException","error_data":{"item_name":""},"status_code":200,"account_id":20627268}
+[05-Aug-2024 22:57:38 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 518
+[05-Aug-2024 22:57:38 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:463) in /var/www/html/wp-includes/pluggable.php on line 1435
+[05-Aug-2024 22:57:38 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:463) in /var/www/html/wp-includes/pluggable.php on line 1438
+[05-Aug-2024 22:58:15 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 486
+[05-Aug-2024 22:58:15 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 498
+[05-Aug-2024 22:58:15 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 509
+[05-Aug-2024 22:58:15 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 375
+[05-Aug-2024 22:58:15 UTC] GraphQL Mutation: mutation {
+			create_item (board_id: 7110768751, item_name: "", column_values: "{\"name\":\"qweqwe\"}") {
+				id
+			}
+		}
+[05-Aug-2024 22:58:16 UTC] API response body: {"error_message":"item_name cannot be empty. Item names must be at least 1 character long.","error_code":"InvalidItemNameException","error_data":{"item_name":""},"status_code":200,"account_id":20627268}
+[05-Aug-2024 22:58:16 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 518
+[05-Aug-2024 22:58:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:486) in /var/www/html/wp-includes/pluggable.php on line 1435
+[05-Aug-2024 22:58:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:486) in /var/www/html/wp-includes/pluggable.php on line 1438
+[05-Aug-2024 22:58:53 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 541
+[05-Aug-2024 22:58:53 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:541) in /var/www/html/wp-includes/pluggable.php on line 1435
+[05-Aug-2024 22:58:53 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:541) in /var/www/html/wp-includes/pluggable.php on line 1438
+[05-Aug-2024 23:05:45 UTC] GraphQL Mutation: mutation {
+			change_multiple_column_values (board_id: 7110768751, item_id: 7166058934, column_values: "{\"name\":\"qweqwes\"}") {
+				id
+			}
+		}
+[05-Aug-2024 23:05:45 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7166058934"}},"account_id":20627268}
+[05-Aug-2024 23:06:07 UTC] GraphQL Mutation: mutation {
+			change_multiple_column_values (board_id: 7110768751, item_id: 7166058934, column_values: "{\"name\":\"qweqwesasdawd\"}") {
+				id
+			}
+		}
+[05-Aug-2024 23:06:07 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7166058934"}},"account_id":20627268}
+[05-Aug-2024 23:06:23 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 23:06:28 UTC] GraphQL Mutation: mutation {
+			change_multiple_column_values (board_id: 7110768751, item_id: , column_values: "{\"name\":\"asdasdasd\"}") {
+				id
+			}
+		}
+[05-Aug-2024 23:06:28 UTC] API response body: {"errors":[{"message":"Parse error on \":\" (COLON) at [3, 81]","locations":[{"line":3,"column":81}]}],"account_id":20627268}
+[05-Aug-2024 23:15:20 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 23:23:03 UTC] PHP Parse error:  syntax error, unexpected token ";" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 201
+[05-Aug-2024 23:23:04 UTC] PHP Parse error:  syntax error, unexpected token ";" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 201
+[05-Aug-2024 23:23:09 UTC] PHP Parse error:  syntax error, unexpected token ";" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 201
+[05-Aug-2024 23:23:10 UTC] PHP Parse error:  syntax error, unexpected token ";" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 201
+[05-Aug-2024 23:23:23 UTC] PHP Warning:  Undefined variable $post_ID in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 200
+[05-Aug-2024 23:23:23 UTC] PHP Warning:  Undefined variable $post_ID in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 213
+[05-Aug-2024 23:23:23 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:200) in /var/www/html/wp-includes/pluggable.php on line 1435
+[05-Aug-2024 23:23:23 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:200) in /var/www/html/wp-includes/pluggable.php on line 1438
+[05-Aug-2024 23:24:00 UTC] PHP Warning:  Undefined variable $post in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 206
+[05-Aug-2024 23:24:00 UTC] PHP Warning:  Attempt to read property "post_status" on null in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 206
+[05-Aug-2024 23:24:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:206) in /var/www/html/wp-admin/admin-header.php on line 9
+[05-Aug-2024 23:24:00 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 23:24:31 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 23:24:46 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 23:28:10 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 23:29:23 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 23:29:45 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 23:31:11 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 23:31:47 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 23:36:15 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 23:36:20 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 23:48:36 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[05-Aug-2024 23:49:18 UTC] PHP Fatal error:  Uncaught Error: Cannot use object of type WP_Post as array in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:300
+Stack trace:
+#0 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(77, Object(WP_Post), Object(WP_Post))
+#1 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#2 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 77, Object(WP_Post), Object(WP_Post))
+#4 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#5 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#6 /var/www/html/wp-admin/post.php(227): edit_post()
+#7 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 300
+[05-Aug-2024 23:50:47 UTC] PHP Fatal error:  Uncaught Error: Cannot use object of type WP_Post as array in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:302
+Stack trace:
+#0 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(77, Object(WP_Post), Object(WP_Post))
+#1 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#2 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 77, Object(WP_Post), Object(WP_Post))
+#4 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#5 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#6 /var/www/html/wp-admin/post.php(227): edit_post()
+#7 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 302
+[05-Aug-2024 23:51:53 UTC] PHP Fatal error:  Uncaught Error: Cannot use object of type WP_Post as array in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:294
+Stack trace:
+#0 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(77, Object(WP_Post), Object(WP_Post))
+#1 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#2 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 77, Object(WP_Post), Object(WP_Post))
+#4 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
+#5 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
+#6 /var/www/html/wp-admin/post.php(227): edit_post()
+#7 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 294

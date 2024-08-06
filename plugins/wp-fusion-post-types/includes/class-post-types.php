@@ -14,7 +14,14 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 	public $name = 'Post Type Sync';
 
+	
+
 	public function init() {
+
+		$this->options = get_option( 'wpf_options', array() ); // load the options into memory.
+
+		// Set the constants for the usermeta keys.
+		$this->set_constants();
 
 		// Initialize custom JS
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ), 20 );
@@ -59,6 +66,33 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		$this->register_dynamic_actions();
 	}
 
+	/**
+	 * Sets the constants for the postmeta keys.
+	 *
+	 * @since 3.38.25
+	 * @since 3.41.35 Moved from wpf_crm_init hook to constructor.
+	 */
+	public function set_constants() {
+
+		$slug = wpf_get_option( 'crm' );
+
+		// if ( wpf_get_option( 'multisite_prefix_keys' ) ) {
+
+		// 	global $wpdb;
+		// 	$slug = $wpdb->get_blog_prefix() . $slug;
+
+		// }
+
+		if ( ! defined( 'WPF_ITEM_ID_META_KEY' ) ) {
+			define( 'WPF_ITEM_ID_META_KEY', $slug . '_item_id' );
+		}
+
+		// if ( ! defined( 'WPF_TAGS_META_KEY' ) ) {
+		// 	define( 'WPF_TAGS_META_KEY', $slug . '_tags' );
+		// }
+
+	}
+
 	public function admin_scripts() {
 		// Define the path to the JavaScript file using the constant
 		$script_url = WPF_CPT_DIR_URL . 'assets/js/wpf-post-types.js';
@@ -85,7 +119,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 				// add_action( "save_post_{$post_type->name}", array( $this, 'postType_updated' ), 10 );
 
 				// Load the field mapping into memory.
-				$this->{$post_type->name . '_fields'} = wpf_get_option( $post_type->name . '_fields', array() );
+				$this->{$post_type->name . '_fields'} = wpf_get_option( 'postType_' . $post_type->name . '_fields', array() );
 			}
 		}
 	}
@@ -103,14 +137,14 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 	 */
 	public function validate_field_post_fields( $input, $setting, $options_class ) {
 		//BugFu::log("validate_field_post_fields init");
-		BugFu::log($input);
+		// BugFu::log($input);
 
 		// Unset the empty ones.
 		foreach ( $input as $field => $data ) {
 
 			if ( 'new_field' === $field ) {
 				continue;
-				BugFu::log("PASS 1");
+				// BugFu::log("PASS 1");
 			}
 
 			if ( empty( $data['active'] ) && empty( $data['crm_field'] ) ) {
@@ -121,7 +155,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 		// New fields.
 		if ( ! empty( $input['new_field']['key'] ) ) {
-			BugFu::log("new_field not empty");
+			// BugFu::log("new_field not empty");
 
 			$input[ $input['new_field']['key'] ] = array(
 				'active'    => true,
@@ -147,46 +181,287 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		return wpf_clean( $input );
 
 	}
-	
-	
 
-	public function post_updated($post_id, $post, $post_before) {
 
-		$bypass = apply_filters( 'wpf_bypass_post_updated', false, wpf_clean( wp_unslash( $_REQUEST ) ) );
+	// /**
+	//  * Triggered when post updates.
+	//  *
+	//  * @since 1.0.0
+	//  *
+	//  * @param int     $user_id       User ID.
+	//  * @param WP_User $old_user_data Object containing user's data prior to update.
+	//  * @param array   $userdata      The raw array of data passed to wp_insert_user().
+	//  */
+	// public function post_updated( $post_id, $post_data, $old_post_data ) {
+	// 	BugFu::log("post_updated init");
 
-		// This doesn't need to run twice on a page load.
-		// remove_action( 'profile_update', array( $this, 'profile_update' ), 10, 2 );
+	// 	 // Avoid infinite loops
+	// 	remove_action('post_updated', 'post_updated', 10, 3);
 
-		if ( ! empty( $_POST ) && false === $bypass ) {
+	// 	// Check post type and exclude revisions
+	// 	if (wp_is_post_revision($post_id)) {
+	// 		add_action('post_updated', 'post_updated', 10, 3);
+	// 		return;
+	// 	}
 
-			BugFu::log("send post data");
+	// 	// Check if this is a new post (creation)
+	// 	if ($old_post_data->post_status == 'auto-draft') {
+	// 		// Your code to handle post creation
+	// 		//error_log('Post Created: ' . $post_ID);
+	// 		BugFu::log('Post Created: ' . $post_id);
+	// 	} else {
+	// 		// Your code to handle post update
+	// 		//error_log('Post Updated: ' . $post_ID);
+	// 		BugFu::log('Post Updated: ' . $post_id);
+	// 	}
 
-			$post_data = wpf_clean( wp_unslash( $_POST ) );
+	// 	$bypass = apply_filters( 'wpf_bypass_post_updated', false, wpf_clean( wp_unslash( $_REQUEST ) ) );
 
-			//BugFu::log($post_data);
+	// 	// This doesn't need to run twice on a page load.
+	// 	remove_action( 'post_updated', array( $this, 'post_updated' ), 10, 2 );
 
-			$this->push_post_meta( $post_id, $post_data );
+	// 	// if ( did_action( 'retrieve_password' ) ) {
+	// 	// 	return; // don't do this when a password reset is requested.
+	// 	// }
 
+	// 	if ( ! empty( $_POST ) && false === $bypass ) {
+
+	// 		$post_data = wpf_clean( wp_unslash( $_POST ) );
+
+	// 		// Maybe detect email address changes.
+
+	// 		// if ( isset( $userdata['user_email'] ) && is_a( $old_user_data, 'WP_User' ) && strtolower( $userdata['user_email'] ) !== strtolower( $old_user_data->user_email ) ) {
+	// 		// 	$post_data['user_email']          = $userdata['user_email'];
+	// 		// 	$post_data['previous_user_email'] = $old_user_data->user_email;
+	// 		// }
+
+	// 		$this->push_post_meta( $post_id, $post_data );
+
+	// 	}
+
+	// }
+
+
+	/**
+	 * User register.
+	 *
+	 * Triggered when a new user is registered. Creates the user in the CRM and
+	 * stores the user's CRM contact ID for later reference.
+	 *
+	 * @since  1.0.0
+	 *
+	 * @param int   $user_id   The user ID.
+	 * @param array $post_data The registration data.
+	 * @param bool  $force     Whether or not to override role limitations.
+	 * @return string|bool The contact ID of the new contact or false on failure.
+	 */
+	public function post_updated( $post_id, $post_data, $old_post_data ) {
+
+		BugFu::log("post_updated init");
+
+		 // Avoid infinite loops
+		//remove_action('post_updated', 'post_updated', 10, 3);
+
+
+		do_action( 'wpf_post_updated_start', $post_id, $post_data );
+
+		// Get posted data from the registration form.
+		if ( empty( $post_data ) && ! empty( $_POST ) && is_array( $_POST ) ) {
+			$post_data = (array) wpf_clean( wp_unslash( $_POST ) );
+		} elseif ( empty( $post_data ) ) {
+			$post_data = array();
 		}
 
+		// $user_meta = $this->get_user_meta( $user_id );
 
-        // BugFu::log("post_updated_init");
-	
-		// $options = get_option('wpf_options');
+		// // Merge what's in the database with what was submitted on the form.
+		// $post_data = array_merge( $user_meta, $post_data );
 
-		// if (isset($options['post_type_sync_' . get_post_type( $post )]) && !empty($options['post_type_sync_' . get_post_type( $post )])) {
-		// 	BugFu::log("Post type registered");
-		// 	// wp_fusion()->crm->connect();
-		// 	$test = wp_fusion()->crm->test();
-        // 	BugFu::log($test);
+		/**
+		 * Allow modification of the registration data.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @see   WPF_User::maybe_set_first_last_name()
+		 * @see   WPF_User_Profile::filter_form_fields()
+		 * @link  https://wpfusion.com/documentation/filters/wpf_user_register/
+		 *
+		 * @param array|null $post_data The registration data.
+		 * @param int        $user_id   The user ID.
+		 */
+
+		$post_data = apply_filters( 'wpf_post_updated', $post_data, $post_id );
+		BugFu::log($post_data->post_title);
+
+
+		// Allows for cancelling of registration via filter.
+		if ( null === $post_data ) {
+			return false;
+		}
+
+		if ( empty( $post_data->post_title ) ) {
+
+			wpf_log(
+				'notice',
+				$post_id,
+				/* translators: %s: CRM Name */
+				sprintf( __( 'Post not synced to %s because Post Title wasn\'t detected in the submitted data.', 'wp-fusion-lite' ), wp_fusion()->crm->name ),
+				array(
+					'source'              => 'user-register',
+					// 'meta_array_nofilter' => $post_data,
+				)
+			);
+
+			return false;
+		}
+
+		// Check if contact already exists in CRM.
+		$item_id = $this->get_item_id( $post_id, true );
+		BugFu::log($item_id);
+
+		// if ( ! wpf_get_option( 'create_users' ) && false === $force && empty( $contact_id ) ) {
+
+		// 	wpf_log(
+		// 		'notice',
+		// 		$user_id,
+		// 		/* translators: %s: CRM Name */
+		// 		sprintf( __( 'User registration not synced to %s because "Create Contacts" is disabled in the WP Fusion settings. You will not be able to apply tags to this user.', 'wp-fusion-lite' ), wp_fusion()->crm->name )
+		// 	);
+
+		// 	return false;
+
 		// }
 
-		
+		// // Get any lists to add.
+		// $assign_lists = wpf_get_option( 'assign_lists' );
 
-    }
+		// if ( ! empty( $assign_lists ) ) {
+		// 	$post_data['lists'] = $assign_lists;
+		// }
+
+		// if ( empty( $contact_id ) ) {
+
+		// 	// Contact does not exist in the CRM.
+
+		// 	// See if user role is elligible for being created as a contact.
+
+		// 	$valid_roles = wpf_get_option( 'user_roles', array() );
+
+		// 	$valid_roles = apply_filters( 'wpf_register_valid_roles', $valid_roles, $user_id, $post_data );
+
+		// 	if ( ! empty( $valid_roles ) && ! in_array( $post_data['role'], $valid_roles ) && false === $force ) {
+
+		// 		wpf_log(
+		// 			'notice',
+		// 			$user_id,
+		// 			/* translators: %1$s: CRM Name, %2$s New user's role slug */
+		// 			sprintf( __( 'User not added to %1$s because role %2$s isn\'t enabled for contact creation.', 'wp-fusion-lite' ), wp_fusion()->crm->name, '<strong>' . $post_data['role'] . '</strong>' )
+		// 		);
+		// 		return false;
+
+		// 	}
+
+		// 	// Log what's about to happen.
+
+		// 	wpf_log(
+		// 		'info',
+		// 		$user_id,
+		// 		/* translators: %s: CRM Name */
+		// 		sprintf( __( 'New user registration. Adding contact to %s:', 'wp-fusion-lite' ), wp_fusion()->crm->name ),
+		// 		array(
+		// 			'source'     => 'user-register',
+		// 			'meta_array' => $post_data,
+		// 		)
+		// 	);
+
+		// 	// Add the contact to the CRM.
+
+		// 	$contact_id = wp_fusion()->crm->add_contact( $post_data );
+
+		// 	if ( is_wp_error( $contact_id ) ) {
+
+		// 		// Error logging.
+
+		// 		wpf_log(
+		// 			$contact_id->get_error_code(),
+		// 			$user_id,
+		// 			/* translators: %s: Error message */
+		// 			sprintf( __( 'Error adding contact: %s', 'wp-fusion-lite' ), $contact_id->get_error_message() ),
+		// 			array(
+		// 				'source' => 'user-register',
+		// 			)
+		// 		);
+
+		// 		return false;
+
+		// 	}
+
+		// 	$contact_id = sanitize_text_field( $contact_id );
+
+		// 	update_user_meta( $user_id, WPF_CONTACT_ID_META_KEY, $contact_id );
+
+		// } else {
+
+		// 	// Contact already exists in the CRM, update them.
+
+		// 	wpf_log(
+		// 		'info',
+		// 		$user_id,
+		// 		/* translators: %1$s: Existing contact ID, %2$s CRM name */
+		// 		sprintf( __( 'New user registration. Updating contact #%1$s in %2$s:', 'wp-fusion-lite' ), $contact_id, wp_fusion()->crm->name ),
+		// 		array(
+		// 			'source'     => 'user-register',
+		// 			'meta_array' => $post_data,
+		// 		)
+		// 	);
+
+		// 	// Send the update data.
+
+		// 	$result = wp_fusion()->crm->update_contact( $contact_id, $post_data );
+
+		// 	if ( is_wp_error( $result ) ) {
+
+		// 		// If update failed.
+
+		// 		wpf_log(
+		// 			$result->get_error_code(),
+		// 			$user_id,
+		// 			/* translators: %s: Error message */
+		// 			sprintf( __( 'Error updating contact: %s', 'wp-fusion-lite' ), $result->get_error_message() ),
+		// 			array(
+		// 				'source' => 'user-register',
+		// 			)
+		// 		);
+
+		// 		return false;
+
+		// 	}
+
+		// 	// Load the tags from the existing contact record.
+
+		// 	$this->get_tags( $user_id, true, false );
+
+		// }
+
+		// // Assign any tags specified in the WPF settings page.
+		// $assign_tags = wpf_get_option( 'assign_tags' );
+
+		// if ( ! empty( $assign_tags ) ) {
+		// 	wp_fusion()->logger->add_source( 'general-settings' );
+		// 	$this->apply_tags( $assign_tags, $user_id );
+		// }
+
+		// do_action( 'wpf_user_created', $user_id, $contact_id, $post_data );
+
+		// return $contact_id;
+
+	}
+	
+
 
 	public function push_post_meta( $post_id, $post_meta = false ) {
 		BugFu::log("push_post_meta init");
+		BugFu::log($post_id);
 
 		// if ( ! wpf_get_option( 'push' ) ) {
 		// 	return;
@@ -199,6 +474,8 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		if ( false === $post_meta ) {
 			$post_meta = $this->get_post_meta( $post_id );
 		}
+
+		BugFu::log($post_meta);
 
 		$post_meta = apply_filters( 'wpf_post_update', $post_meta, $post_id );
 		// BugFu::log($post_meta);
@@ -213,8 +490,6 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		// get connected post type board
 		$post_type = get_post_type( $post_id );
 		$options = get_option('wpf_options');
-		
-	
 
 		// Check if the post_type_sync_ key exists and its value
 		if (isset($options['post_type_sync_' . $post_type])) {
@@ -224,13 +499,19 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		
 
 		if ( empty( $post_meta ) || empty( $associated_crm_object_id ) ) {
-			BugFu::log("no post meta or associated_crm_object_id");
+			// BugFu::log("no post meta or associated_crm_object_id");
 			return;
 		}
+		BugFu::log("PASS");
+
+		wpf_log( 'notice', 0, 'TEST' );
 
 		wpf_log( 'info', $post_id, 'Pushing meta data to ' . wp_fusion()->crm->name . ': ', array( 'meta_array' => $post_meta ) );
 
-		$result = $this->update_post( $post_id, $post_type, $associated_crm_object_id, $post_meta );
+		// Check if contact already exists in CRM.
+		$item_id = $this->get_item_id( $post_id, true );
+
+		$result = $this->update_post( $item_id, $post_type, $associated_crm_object_id, $post_meta );
 
 		if ( is_wp_error( $result ) ) {
 
@@ -250,6 +531,105 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 	}
 
+	/**
+	 * Adds a new post
+	 *
+	 * @access public
+	 * @return int|WP_Error Item ID or WP_Error.
+	 */
+	public function add_post( $post_id, $post_type, $associated_crm_object_id, $post_meta, $map_meta_fields = true ) {
+		BugFu::log("add_post init");
+
+		// Ensure the API key and board ID are available
+		$api_key = wpf_get_option('monday_key');
+		// $board_id = $this->get_selected_board();
+
+		// BugFu::log($api_key);
+		// BugFu::log($board_id);
+	
+		if ( empty($api_key) || empty($associated_crm_object_id) ) {
+			return new WP_Error('missing_api_key_or_associated_crm_object_id', __('API key or associated_crm_object_id is missing.', 'wp-fusion'));
+		}
+	
+		// If set to true, WP Fusion will convert the field keys from WordPress meta keys into the field names in the CRM.
+		if ( $map_meta_fields ) {
+			$item_data = $this->map_post_meta_fields( $post_meta, $post_type );
+		}
+	
+		// Prepare the column values in JSON format dynamically
+		$column_values = array();
+		foreach ( $item_data as $key => $value ) {
+			if ( $key === 'email' ) {
+				$column_values[$key] = array(
+					'email' => $value,
+					'text' => $value
+				);
+			} else {
+				$column_values[$key] = $value;
+			}
+		}
+	
+		$column_values_json = json_encode( $column_values, JSON_UNESCAPED_SLASHES );
+	
+		// Prepare the GraphQL mutation
+		$mutation = 'mutation {
+			create_item (board_id: ' . $associated_crm_object_id . ', item_name: "' . esc_js( $post_meta['name'] ) . '", column_values: "' . addslashes( $column_values_json ) . '") {
+				id
+			}
+		}';
+
+
+	
+		// Log the mutation for debugging
+		error_log('GraphQL Mutation: ' . $mutation);
+	
+		// Make the request to the Monday.com API
+		$response = wp_safe_remote_post(
+			'https://api.monday.com/v2',
+			array(
+				'method'  => 'POST',
+				'headers' => array(
+					'Authorization' => $api_key,
+					'Content-Type'  => 'application/json',
+				),
+				'body'    => wp_json_encode(array('query' => $mutation)),
+			)
+		);
+	
+		// Handle the response
+		if ( is_wp_error( $response ) ) {
+			error_log('API request error: ' . $response->get_error_message());
+			return $response;
+		}
+	
+		$body = wp_remote_retrieve_body( $response );
+		error_log('API response body: ' . $body);
+	
+		$body_json = json_decode( $body, true );
+	
+		// Check if the body or data is null or empty
+		if ( is_null( $body_json ) || !isset( $body_json['data'] ) ) {
+			return new WP_Error('api_error', __('API error: Invalid response', 'wp-fusion'));
+		}
+	
+		// Check for errors in the response
+		if ( isset($body_json['errors']) && !empty($body_json['errors']) ) {
+			$error_message = isset($body_json['errors'][0]['message']) ? $body_json['errors'][0]['message'] : 'Unknown error';
+			return new WP_Error('api_error', __('API error: ', 'wp-fusion') . $error_message);
+		}
+	
+		// Ensure the expected data structure is present
+		if ( !isset( $body_json['data']['create_item']['id'] ) ) {
+			return new WP_Error('api_error', __('API error: Missing item ID in response', 'wp-fusion'));
+		}
+	
+		// Get new item ID out of response
+		return $body_json['data']['create_item']['id'];
+	}
+
+
+	
+
 
 
 	/**
@@ -259,87 +639,310 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 	 * @return bool
 	 */
 
-	 public function update_post( $post_id, $post_type, $associated_crm_object_id, $post_meta, $map_meta_fields = true ) {
+	 public function update_post( $item_id, $post_type, $associated_crm_object_id, $post_meta, $map_meta_fields = true ) {
 		BugFu::log("update_post init");
+		BugFu::log($item_id);
+		BugFu::log($post_type);
+		BugFu::log($associated_crm_object_id);
+		BugFu::log($post_meta);
 		// Ensure the API key and board ID are available
 		$api_key = wpf_get_option('monday_key');
-		$board_id = wp_fusion()->crm->get_selected_board();
+
+		// // Check if contact already exists in CRM.
+		// $item_id = $this->get_item_id( $post_id, true );
 	
-		if ( empty($api_key) || empty($board_id) ) {
-			return new WP_Error('missing_api_key_or_board_id', __('API key or board ID is missing.', 'wp-fusion'));
+		if ( empty($api_key) ) {
+			return new WP_Error('missing_api_key', __('API key is missing.', 'wp-fusion'));
+			wpf_log( 'notice', 0, 'missing_api_key' );
+		}
+
+		// no item ID, no update
+		if ( empty($item_id) ) {
+			return;
 		}
 	
-		// // If set to true, WP Fusion will convert the field keys from WordPress meta keys into the field names in the CRM.
-		// if ( $map_meta_fields ) {
-		// 	$post_meta = $this->map_post_meta_fields( $post_type, $post_meta );
+		// no data
+		if ( ! is_array( $post_meta ) || empty( $post_meta ) ) {
+			return array();
+		}
+	
+		// If set to true, WP Fusion will convert the field keys from WordPress meta keys into the field names in the CRM.
+		if ( $map_meta_fields ) {
+			$data = $this->map_post_meta_fields( $post_meta, $post_type );
+		}
+
+		
+	
+		// Prepare the column values in JSON format dynamically
+		$column_values = array();
+		foreach ( $data as $key => $value ) {
+			if ( $key === 'email' ) {
+				$column_values[$key] = array(
+					'email' => $value,
+					'text' => $value
+				);
+			} else {
+				$column_values[$key] = $value;
+			}
+		}
+	
+		$column_values_json = json_encode( $column_values, JSON_UNESCAPED_SLASHES );
+		BugFu::log($column_values_json);
+
+
+		$board_id = $associated_crm_object_id;
+	
+		// Prepare the GraphQL mutation
+		$mutation = 'mutation {
+			change_multiple_column_values (board_id: ' . $board_id . ', item_id: ' . $item_id . ', column_values: "' . addslashes( $column_values_json ) . '") {
+				id
+			}
+		}';
+	
+		// Log the mutation for debugging
+		error_log('GraphQL Mutation: ' . $mutation);
+	
+		// Make the request to the Monday.com API
+		$response = wp_safe_remote_post(
+			'https://api.monday.com/v2',
+			array(
+				'method'  => 'POST',
+				'headers' => array(
+					'Authorization' => $api_key,
+					'Content-Type'  => 'application/json',
+				),
+				'body'    => wp_json_encode(array('query' => $mutation)),
+			)
+		);
+	
+		// Handle the response
+		if ( is_wp_error( $response ) ) {
+			error_log('API request error: ' . $response->get_error_message());
+			return $response;
+		}
+	
+		$body = wp_remote_retrieve_body( $response );
+		error_log('API response body: ' . $body);
+	
+		$body_json = json_decode( $body, true );
+	
+		// Check if the body or data is null or empty
+		if ( is_null( $body_json ) || !isset( $body_json['data'] ) ) {
+			return new WP_Error('api_error', __('API error: Invalid response', 'wp-fusion'));
+		}
+	
+		// Check for errors in the response
+		if ( isset($body_json['errors']) && !empty($body_json['errors']) ) {
+			$error_message = isset($body_json['errors'][0]['message']) ? $body_json['errors'][0]['message'] : 'Unknown error';
+			return new WP_Error('api_error', __('API error: ', 'wp-fusion') . $error_message);
+		}
+	
+		// Ensure the expected data structure is present
+		if ( !isset( $body_json['data']['change_multiple_column_values']['id'] ) ) {
+			return new WP_Error('api_error', __('API error: Missing contact ID in response', 'wp-fusion'));
+		}
+	
+		return true;
+	}
+
+	/**
+	 * Maps local fields to CRM field names
+	 *
+	 * @access public
+	 * @return array
+	 */
+
+	 public function map_post_meta_fields( $user_meta, $post_type ) {
+		BugFu::log("map_post_meta_fields init");
+		BugFu::log($post_type);
+
+		if ( ! is_array( $user_meta ) || empty( $user_meta ) ) {
+			return array();
+		}
+
+		$update_data = array();
+
+		// Lists pass straight through unless mapped.
+
+		if ( ! empty( $user_meta['lists'] ) ) {
+			$update_data['lists'] = $user_meta['lists'];
+		}
+
+		foreach ( $this->{$post_type . '_fields'} as $field => $field_data ) {
+			BugFu::log($field);
+
+			if ( empty( $field_data['active'] ) || empty( $field_data['crm_field'] ) ) {
+				continue;
+			}
+			//BugFu::log("map_meta_fields PASS 1");
+
+			// Don't send add_tag_ fields to the CRM as fields.
+			if ( strpos( $field_data['crm_field'], 'add_tag_' ) !== false ) {
+				continue;
+			}
+
+			// If field exists in form and sync is active.
+			if ( array_key_exists( $field, $user_meta ) ) {
+
+				if ( empty( $field_data['type'] ) ) {
+					$field_data['type'] = 'text';
+				}
+
+				$field_data['crm_field'] = strval( $field_data['crm_field'] );
+
+				if ( 'datepicker' === $field_data['type'] ) {
+
+					// We'd been using date and datepicker interchangeably up until
+					// 3.38.11, which is confusing. We'll just use "date" going forward.
+
+					$field_data['type'] = 'date';
+				}
+
+				/**
+				 * Format field value.
+				 *
+				 * @since 1.0.0
+				 *
+				 * @link  https://wpfusion.com/documentation/filters/wpf_format_field_value/
+				 *
+				 * @param mixed  $value     The field value.
+				 * @param string $type      The field type.
+				 * @param string $crm_field The field ID in the CRM.
+				 */
+
+				$value = apply_filters( 'wpf_format_field_value', $user_meta[ $field ], $field_data['type'], $field_data['crm_field'] );
+
+				if ( 'raw' === $field_data['type'] ) {
+
+					// Allow overriding the empty() check by setting the field type to raw.
+
+					$update_data[ $field_data['crm_field'] ] = $value;
+
+				} elseif ( is_null( $value ) ) {
+
+					// Allow overriding empty() check by returning null from wpf_format_field_value.
+
+					$update_data[ $field_data['crm_field'] ] = '';
+
+				} elseif ( false === $value ) {
+
+					// Some CRMs (i.e. Sendinblue) need to be able to sync false as a value to clear checkboxes.
+
+					$update_data[ $field_data['crm_field'] ] = false;
+
+				} elseif ( 0 === $value || '0' === $value ) {
+
+					$update_data[ $field_data['crm_field'] ] = 0;
+
+				} elseif ( empty( $value ) && ! empty( $user_meta[ $field ] ) && 'date' === $field_data['type'] ) {
+
+					// Date conversion failed.
+					wpf_log( 'notice', wpf_get_current_user_id(), 'Failed to create timestamp from value <code>' . $user_meta[ $field ] . '</code>. Try setting the field type to <code>text</code> instead, or fixing the format of the input date.' );
+
+				} elseif ( ! empty( $value ) ) {
+
+					$update_data[ $field_data['crm_field'] ] = $value;
+
+				}
+			}
+		}
+
+		$update_data = apply_filters( 'wpf_map_post_meta_fields', $update_data, $user_meta );
+
+		return $update_data;
+
+	}
+
+	/**
+	 * Gets item ID from post ID.
+	 *
+	 * @since  1.0.0
+	 *
+	 * @param  int|bool $post_id      The post ID or false to use current post.
+	 * @param  bool     $force_update Whether or not to force-check the contact
+	 *                                ID by making an API call to the CRM.
+	 * @return bool|string Contact ID or false if not found.
+	 */
+	public function get_item_id( $post_id, $force_update = false ) {
+
+	
+		if ( empty( $post_id ) ) {
+			return false;
+		}
+
+		do_action( 'wpf_get_item_id_start', $post_id );
+
+		$item_id = get_post_meta( $post_id, WPF_ITEM_ID_META_KEY, true );
+
+		if ( empty( $item_id ) ) {
+			$item_id = false;
+		}
+
+		// If the contact was created in staging mode and we're no longer in staging mode.
+		if ( 0 === strpos( $item_id, 'staging_' ) && ! wpf_is_staging_mode() && 'staging' !== wp_fusion()->crm->slug ) {
+			$item_id = false;
+		}
+
+		// We need the email address for the wpf_get_contact_id_email filter.
+
+		// $user = get_user_by( 'id', $user_id );
+
+		// if ( ! empty( $user ) ) {
+		// 	$email_address = $user->user_email;
+		// } elseif ( doing_wpf_auto_login() ) {
+		// 	$email_address = get_user_meta( $user_id, 'user_email', true );
+		// } else {
+		// 	$email_address = false;
 		// }
-	
-		// // Prepare the column values in JSON format dynamically
-		// $column_values = array();
-		// foreach ( $contact_data as $key => $value ) {
-		// 	if ( $key === 'email' ) {
-		// 		$column_values[$key] = array(
-		// 			'email' => $value,
-		// 			'text' => $value
-		// 		);
-		// 	} else {
-		// 		$column_values[$key] = $value;
-		// 	}
+
+		// // Allow filtering the email used for lookups.
+		// $email_address = apply_filters( 'wpf_get_contact_id_email', $email_address, $user_id );
+
+		// if ( empty( $contact_id ) && empty( $email_address ) ) {
+		// 	// We don't know the user or contact ID, so quit.
+		// 	return false;
 		// }
-	
-		// $column_values_json = json_encode( $column_values, JSON_UNESCAPED_SLASHES );
-	
-		// // Prepare the GraphQL mutation
-		// $mutation = 'mutation {
-		// 	change_multiple_column_values (board_id: ' . $board_id . ', item_id: ' . $contact_id . ', column_values: "' . addslashes( $column_values_json ) . '") {
-		// 		id
-		// 	}
-		// }';
-	
-		// // Log the mutation for debugging
-		// error_log('GraphQL Mutation: ' . $mutation);
-	
-		// // Make the request to the Monday.com API
-		// $response = wp_safe_remote_post(
-		// 	'https://api.monday.com/v2',
-		// 	array(
-		// 		'method'  => 'POST',
-		// 		'headers' => array(
-		// 			'Authorization' => $api_key,
-		// 			'Content-Type'  => 'application/json',
-		// 		),
-		// 		'body'    => wp_json_encode(array('query' => $mutation)),
-		// 	)
-		// );
-	
-		// // Handle the response
-		// if ( is_wp_error( $response ) ) {
-		// 	error_log('API request error: ' . $response->get_error_message());
-		// 	return $response;
+
+		// If contact ID is already set.
+		// if ( false === $force_update ) {
+		// 	return apply_filters( 'wpf_contact_id', $contact_id, $email_address );
 		// }
-	
-		// $body = wp_remote_retrieve_body( $response );
-		// error_log('API response body: ' . $body);
-	
-		// $body_json = json_decode( $body, true );
-	
-		// // Check if the body or data is null or empty
-		// if ( is_null( $body_json ) || !isset( $body_json['data'] ) ) {
-		// 	return new WP_Error('api_error', __('API error: Invalid response', 'wp-fusion'));
+
+		// // If no user email set, don't bother with an API call.
+		// if ( ! is_email( $email_address ) ) {
+		// 	return false;
 		// }
-	
-		// // Check for errors in the response
-		// if ( isset($body_json['errors']) && !empty($body_json['errors']) ) {
-		// 	$error_message = isset($body_json['errors'][0]['message']) ? $body_json['errors'][0]['message'] : 'Unknown error';
-		// 	return new WP_Error('api_error', __('API error: ', 'wp-fusion') . $error_message);
+
+		// $loaded_contact_id = wp_fusion()->crm->get_contact_id( $email_address );
+
+		// if ( is_wp_error( $loaded_contact_id ) ) {
+
+		// 	wpf_log( $loaded_contact_id->get_error_code(), $user_id, 'Error getting contact ID for <strong>' . $email_address . '</strong>: ' . $loaded_contact_id->get_error_message() );
+		// 	return $contact_id; // in case there was a contact ID already cached.
+
 		// }
-	
-		// // Ensure the expected data structure is present
-		// if ( !isset( $body_json['data']['change_multiple_column_values']['id'] ) ) {
-		// 	return new WP_Error('api_error', __('API error: Missing contact ID in response', 'wp-fusion'));
-		// }
-	
-		// return true;
+
+		// $contact_id = apply_filters( 'wpf_contact_id', $loaded_contact_id, $email_address );
+
+		if ( empty( $item_id ) ) {
+
+			// Error logging.
+			wpf_log( 'info', $post_id, 'No item found in ' . wp_fusion()->crm->name . ' for <strong>Post:' . $post_id . '</strong>' );
+			delete_post_meta( $post_id, WPF_ITEM_ID_META_KEY, $item_id );
+			//delete_post_meta( $post_id, WPF_TAGS_META_KEY, $contact_id );
+
+		} else {
+
+			$item_id = sanitize_text_field( $item_id );
+
+			// Save it for later.
+			update_post_meta( $post_id, WPF_ITEM_ID_META_KEY, $item_id );
+		}
+
+		do_action( 'wpf_got_item_id', $post_id, $item_id );
+
+		return $item_id;
+
 	}
 
 	
@@ -428,7 +1031,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		$field['choices'] = apply_filters( 'wpf_post_meta_fields', $field['choices'] );
 		// BugFu::log($field['choices']);
 
-		foreach ( wpf_get_option( 'post_fields', array() ) as $key => $data ) {
+		foreach ( wpf_get_option( 'postType_post_fields', array() ) as $key => $data ) {
 
 			if ( ! isset( $field['choices'][ $key ] ) ) {
 				$field['choices'][ $key ] = $data;
@@ -436,10 +1039,13 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		}
 
 		if ( empty( $this->options[ $id ] ) ) {
+			
 			$this->options[ $id ] = array();
 		}
 
 		// Set some defaults to prevent notices, and then rebuild fields array into group structure.
+
+		
 
 		foreach ( $field['choices'] as $meta_key => $data ) {
 
@@ -639,6 +1245,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 				}
 
 				echo '<td>';
+				
 
 				wpf_render_post_field_select( $this->options[ $id ][ $user_meta ]['crm_field'], 'wpf_options', 'postType_post_fields', $user_meta );
 
@@ -787,7 +1394,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 
 	public function ajax_sync_post_type_fields() {
-		BugFu::log("ajax_sync_post_type_fields init");
+		//BugFu::log("ajax_sync_post_type_fields init");
 		check_ajax_referer('wpf_sync_post_type_fields', '_ajax_nonce');
 	
 		$post_type = isset($_POST['post_type']) ? sanitize_text_field($_POST['post_type']) : '';
@@ -797,7 +1404,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 			return;
 		}
 
-		BugFu::log("calling sync_post_type_fields");
+		//BugFu::log("calling sync_post_type_fields");
 		$result = $this->sync_post_type_fields($post_type);
 	
 		if (true === $result) {
@@ -812,7 +1419,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 	}
 
 	public function sync_post_type_fields($post_type) {
-		BugFu::log("sync_post_type_fields init");
+		//BugFu::log("sync_post_type_fields init");
 
 		// Load built in fields first
 		// require dirname( __FILE__ ) . '/monday-fields.php';
@@ -838,7 +1445,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 			$board = $options['post_type_sync_' . $post_type];
 		}
 
-		BugFu::log("selected board: " . $board);
+		//BugFu::log("selected board: " . $board);
 
         if (empty($board)) {
             return new WP_Error('no_board_selected', __('No board selected for this post type.', 'wp-fusion'));
@@ -866,7 +1473,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
         }
 
         $body = json_decode(wp_remote_retrieve_body($response), true);
-		BugFu::log($body);
+		//BugFu::log($body);
 
         // Check for errors in the response
         if (isset($body['errors']) && !empty($body['errors'])) {
@@ -887,7 +1494,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
         foreach ($body['data']['boards'][0]['columns'] as $column) {
             $custom_fields[$column['id']] = $column['title'];
         }
-		BugFu::log($custom_fields);
+		//BugFu::log($custom_fields);
 
 		$post_fields = array(
 			'Standard Fields' => $built_in_fields,
@@ -902,7 +1509,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
     }
 
 	public function handle_post_type_fields_update( $value ) {
-		BugFu::log("handle_post_type_fields_update init");
+		//BugFu::log("handle_post_type_fields_update init");
 		// if ( strpos( $key, 'post_type_fields_' ) === 0 ) {
 		// 	// Extract post type from the key.
 		// 	$post_type = str_replace( 'post_type_fields_', '', $key );
@@ -916,16 +1523,16 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 	}
 
 	public function handle_get_post_fields( $fields ) {
-		BugFu::log("handle_get_post_fields init");
-		BugFu::log($fields);
+		//BugFu::log("handle_get_post_fields init");
+		//BugFu::log($fields);
 		// Check if the post fields option is already set in the value.
-		// if ( !empty( $value ) ) {
-		// 	return $value;
-		// }
+		if ( !empty( $fields ) ) {
+			return $fields;
+		}
 	
 		// Retrieve the setting from the custom option.
 		$setting = get_option( 'wpf_post_fields', array() );
-		BugFu::log($setting);
+		//BugFu::log($setting);
 		return ! empty( $setting ) ? $setting : $value;
 	}
 	

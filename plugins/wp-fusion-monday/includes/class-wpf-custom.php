@@ -970,6 +970,8 @@ class WPF_Monday {
 		if ( $map_meta_fields ) {
 			$contact_data = wp_fusion()->crm_base->map_meta_fields( $contact_data );
 		}
+
+		BugFu::log($contact_data);
 	
 		// Prepare the column values in JSON format dynamically
 		$column_values = array();

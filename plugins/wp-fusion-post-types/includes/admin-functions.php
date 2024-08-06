@@ -129,9 +129,9 @@ function wpf_render_post_field_select( $setting, $meta_name, $field_id = false, 
 
 	echo '<option></option>';
 
-	$crm_fields = wpf_get_option( 'postType_post_fields' );
+	$crm_fields = wpf_get_option( 'post_fields' );
     // BugFu::log("wpf_get_option_post_fields");
-    BugFu::log($crm_fields);
+    // BugFu::log($crm_fields);
 
 	if ( ! empty( $crm_fields ) ) {
 
@@ -200,7 +200,7 @@ function wpf_render_post_field_select( $setting, $meta_name, $field_id = false, 
 
 		// Check to see if new custom fields have been added.
 		if ( ! empty( $setting ) && ! isset( $field_check[ $setting ] ) ) {
-			BugFu::log($setting);
+			// BugFu::log($setting);
 
 			echo '<option value="' . esc_attr( $setting ) . '" selected="selected">' . esc_html( $setting ) . '</option>';
 

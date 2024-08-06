@@ -59,6 +59,7 @@ abstract class WPF_Integrations_Base {
 	 */
 
 	protected function map_meta_fields( $meta_fields, $field_map ) {
+		BugFu::log("map_meta_fields init");
 
 		foreach ( $field_map as $key => $field ) {
 

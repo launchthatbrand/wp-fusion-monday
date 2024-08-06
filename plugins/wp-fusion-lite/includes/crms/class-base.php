@@ -781,8 +781,10 @@ class WPF_CRM_Base {
 	 */
 
 	public function map_meta_fields( $user_meta ) {
+		BugFu::log("map_meta_fields init");
 
 		if ( ! is_array( $user_meta ) || empty( $user_meta ) ) {
+			BugFu::log("not array or empty");
 			return array();
 		}
 
@@ -799,7 +801,7 @@ class WPF_CRM_Base {
 			if ( empty( $field_data['active'] ) || empty( $field_data['crm_field'] ) ) {
 				continue;
 			}
-			BugFu::log("map_meta_fields PASS 1");
+			//BugFu::log("map_meta_fields PASS 1");
 
 			// Don't send add_tag_ fields to the CRM as fields.
 			if ( strpos( $field_data['crm_field'], 'add_tag_' ) !== false ) {
