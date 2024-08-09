@@ -4,7 +4,7 @@
 Plugin Name: WP Fusion - Post Types Integration
 Description: Boostrap for adding a new plugin integration module to WP Fusion
 Plugin URI: https://wpfusion.com/
-Version: 1.1.1
+Version: 1.0
 Author: Very Good Plugins
 Author URI: https://verygoodplugins.com/
 */

@@ -1,0 +1,1 @@
+npx @wp-now/wp-now start --blueprint=blueprint.json

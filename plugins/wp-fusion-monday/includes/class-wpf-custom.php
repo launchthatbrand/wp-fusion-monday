@@ -29,6 +29,12 @@ class WPF_Monday {
 	public $supports = array( 'add_tags', 'lists', 'events' );
 
 	/**
+	 * Lets outside functions override the object type (Leads for example)
+	 */
+
+	public $object_type = 0;
+
+	/**
 	 * HTTP API parameters
 	 */
 
@@ -38,7 +44,7 @@ class WPF_Monday {
 	 * API url for the account
 	 */
 
-	public $api_url;
+	public $api_url = 'https://api.monday.com/v2';
 
 	/**
 	 * API key for the account
@@ -53,7 +59,9 @@ class WPF_Monday {
 	 * @since 3.36.5
 	 */
 
-	public $edit_url = '';
+	 // TODO: Call monday api to get account slug dynamically https://developer.monday.com/api-reference/reference/account
+
+	public $edit_url = 'https://desmondtatilians-team.monday.com/%s';
 
 	/**
 	 * Get things started
@@ -64,7 +72,9 @@ class WPF_Monday {
 
 	public function __construct() {
 
-		$this->api_url = trailingslashit( wpf_get_option( 'monday_url' ) );
+		// $this->api_url = trailingslashit( wpf_get_option( 'monday_url' ) );
+
+		$this->init();
 
 		if ( is_admin() ) {
 			require_once __DIR__ . '/class-admin.php';
@@ -81,6 +91,7 @@ class WPF_Monday {
 	 * @return void
 	 */
 	public function init() {
+		// BugFu::log("WPF_Monday::init()");
 
 		$this->get_params();
 
@@ -108,6 +119,22 @@ class WPF_Monday {
 	 */
 
 	public function format_post_data( $post_data ) {
+		BugFu::log("format_post_data_init");
+		$raw_input = file_get_contents('php://input');
+
+		// Decode the JSON input
+		$payload = json_decode($raw_input, true);
+    	error_log('Custom filter raw input: ' . $raw_input);
+
+		// If there's valid JSON input, merge it with the $post_data
+		if (!empty($payload)) {
+			$payload = wpf_clean($payload);
+			$post_data = array_merge($post_data, $payload);
+		}
+
+		if ( isset( $post_data['challenge'] ) ) {
+			$post_data['contact_id'] = $post_data['challenge'];
+		}
 
 		if ( isset( $post_data['contact']['id'] ) ) {
 			$post_data['contact_id'] = $post_data['contact']['id'];
@@ -382,9 +409,10 @@ class WPF_Monday {
 
 		$this->connect();
 
-		$this->sync_tags();
-		$this->sync_lists();
-		$this->sync_crm_fields();
+		//$this->sync_tags();
+		$this->sync_workspaces();
+		// $this->sync_lists();
+		//$this->sync_crm_fields();
 
 		do_action( 'wpf_sync' );
 
@@ -461,65 +489,139 @@ class WPF_Monday {
 		return $available_tags;
 	}
 
+
+
 	/**
-	 * Gets all available lists and saves them to options
+	 * Gets all available workspaces and saves them to options
+	 *
+	 * @access public
+	 * @return array Lists
+	 */
+
+	 public function sync_workspaces() {
+		BugFu::log("sync_workspaces init");
+	
+		$api_key = $this->api_key;
+	
+		if (empty($api_key)) {
+			return array();
+		}
+	
+		$query = '{"query": "{ workspaces (limit:150) { id name } }"}';
+		$response = wp_safe_remote_post(
+			'https://api.monday.com/v2',
+			array(
+				'method' => 'POST',
+				'headers' => array(
+					'Authorization' => $api_key,
+					'Content-Type' => 'application/json',
+				),
+				'body' => $query,
+			)
+		);
+	
+		if (is_wp_error($response)) {
+			return array();
+		}
+	
+		// Decode the JSON with the JSON_BIGINT_AS_STRING option to handle large integers
+		$body = json_decode(wp_remote_retrieve_body($response), true, 512, JSON_BIGINT_AS_STRING);
+
+		BugFu::log($body);
+	
+		if (empty($body['data']['workspaces'])) {
+			return array();
+		}
+	
+		$workspaces = array();
+
+		if (!empty($body['data']['workspaces'])) {
+			foreach ($body['data']['workspaces'] as $workspace) {
+				$workspace_id = $workspace['id'];
+				$workspace_name = $workspace['name'];
+				$workspaces[$workspace_id] = $workspace_name;
+			}
+		}
+
+		natcasesort($workspaces);
+		BugFu::log($workspaces);
+
+		wp_fusion()->settings->set('available_workspaces', $workspaces);
+	
+
+		BugFu::log($workspaces, false);
+	
+		return $boards;
+	}
+
+
+	
+
+	/**
+	 * Gets all available lists/workspaces and saves them to options
 	 *
 	 * @access public
 	 * @return array Lists
 	 */
 
 	 public function sync_lists() {
-
 		BugFu::log("sync_lists_init");
-
+	
 		$api_key = $this->api_key;
-
 		BugFu::log($api_key, false);
-
-		if ( empty( $api_key ) ) {
+	
+		if (empty($api_key)) {
 			return array();
 		}
-
-		$query = '{"query": "{ boards { id name } }"}';
+	
+		$query = '{"query": "{ boards { id name workspace { id name } } }"}';
 		$response = wp_safe_remote_post(
 			'https://api.monday.com/v2',
 			array(
-				'method'  => 'POST',
+				'method' => 'POST',
 				'headers' => array(
 					'Authorization' => $api_key,
-					'Content-Type'  => 'application/json',
+					'Content-Type' => 'application/json',
 				),
-				'body'    => $query,
+				'body' => $query,
 			)
 		);
-
-		if ( is_wp_error( $response ) ) {
+	
+		if (is_wp_error($response)) {
 			return array();
 		}
-
+	
 		// Decode the JSON with the JSON_BIGINT_AS_STRING option to handle large integers
 		$body = json_decode(wp_remote_retrieve_body($response), true, 512, JSON_BIGINT_AS_STRING);
-
+	
 		BugFu::log($body, false);
-
-		if ( empty( $body['data']['boards'] ) ) {
+	
+		if (empty($body['data']['boards'])) {
 			return array();
 		}
-
+	
 		$boards = array();
-
-		foreach ( $body['data']['boards'] as $board ) {
-			$boards[ $board['id'] ] = $board['name'];
+		$workspaces = array();
+	
+		foreach ($body['data']['boards'] as $board) {
+			$boards[$board['id']] = $board['name'];
+			$workspace_id = $board['workspace']['id'];
+			$workspace_name = $board['workspace']['name'];
+			$workspaces[$workspace_id] = $workspace_name;
 		}
-
-		natcasesort( $boards );
-
-		wp_fusion()->settings->set( 'available_lists', $boards );
-
+	
+		natcasesort($boards);
+		natcasesort($workspaces);
+	
+		wp_fusion()->settings->set('available_lists', $boards);
+		wp_fusion()->settings->set('available_workspaces', $workspaces);
+	
 		BugFu::log($boards, false);
-
+		BugFu::log($workspaces, false);
+	
 		return $boards;
 	}
+	
 
 
 	/**
@@ -860,22 +962,29 @@ class WPF_Monday {
 	 */
 	public function add_contact( $contact_data, $map_meta_fields = true ) {
 		BugFu::log("add_contact_init");
+		BugFu::log($contact_data);
+		BugFu::log(wp_fusion()->crm->object_type);
 
 		// Ensure the API key and board ID are available
 		$api_key = wpf_get_option('monday_key');
 		$board_id = $this->get_selected_board();
 
-		BugFu::log($api_key);
-		BugFu::log($board_id);
+		// BugFu::log($api_key);
+		// BugFu::log($board_id);
 	
 		if ( empty($api_key) || empty($board_id) ) {
 			return new WP_Error('missing_api_key_or_board_id', __('API key or board ID is missing.', 'wp-fusion'));
 		}
+
+		
 	
 		// If set to true, WP Fusion will convert the field keys from WordPress meta keys into the field names in the CRM.
 		if ( $map_meta_fields ) {
+			BugFu::log("map_meta_fields");
 			$contact_data = wp_fusion()->crm_base->map_meta_fields( $contact_data );
 		}
+
+		BugFu::log($contact_data);
 	
 		// Prepare the column values in JSON format dynamically
 		$column_values = array();
@@ -892,60 +1001,60 @@ class WPF_Monday {
 	
 		$column_values_json = json_encode( $column_values, JSON_UNESCAPED_SLASHES );
 	
-		// Prepare the GraphQL mutation
-		$mutation = 'mutation {
-			create_item (board_id: ' . $board_id . ', item_name: "' . esc_js( $contact_data['name'] ) . '", column_values: "' . addslashes( $column_values_json ) . '") {
-				id
-			}
-		}';
+		// // Prepare the GraphQL mutation
+		// $mutation = 'mutation {
+		// 	create_item (board_id: ' . $board_id . ', item_name: "' . esc_js( $contact_data['name'] ) . '", column_values: "' . addslashes( $column_values_json ) . '") {
+		// 		id
+		// 	}
+		// }';
 
 
 	
-		// Log the mutation for debugging
-		error_log('GraphQL Mutation: ' . $mutation);
+		// // Log the mutation for debugging
+		// error_log('GraphQL Mutation: ' . $mutation);
 	
-		// Make the request to the Monday.com API
-		$response = wp_safe_remote_post(
-			'https://api.monday.com/v2',
-			array(
-				'method'  => 'POST',
-				'headers' => array(
-					'Authorization' => $api_key,
-					'Content-Type'  => 'application/json',
-				),
-				'body'    => wp_json_encode(array('query' => $mutation)),
-			)
-		);
+		// // Make the request to the Monday.com API
+		// $response = wp_safe_remote_post(
+		// 	'https://api.monday.com/v2',
+		// 	array(
+		// 		'method'  => 'POST',
+		// 		'headers' => array(
+		// 			'Authorization' => $api_key,
+		// 			'Content-Type'  => 'application/json',
+		// 		),
+		// 		'body'    => wp_json_encode(array('query' => $mutation)),
+		// 	)
+		// );
 	
-		// Handle the response
-		if ( is_wp_error( $response ) ) {
-			error_log('API request error: ' . $response->get_error_message());
-			return $response;
-		}
+		// // Handle the response
+		// if ( is_wp_error( $response ) ) {
+		// 	error_log('API request error: ' . $response->get_error_message());
+		// 	return $response;
+		// }
 	
-		$body = wp_remote_retrieve_body( $response );
-		error_log('API response body: ' . $body);
+		// $body = wp_remote_retrieve_body( $response );
+		// error_log('API response body: ' . $body);
 	
-		$body_json = json_decode( $body, true );
+		// $body_json = json_decode( $body, true );
 	
-		// Check if the body or data is null or empty
-		if ( is_null( $body_json ) || !isset( $body_json['data'] ) ) {
-			return new WP_Error('api_error', __('API error: Invalid response', 'wp-fusion'));
-		}
+		// // Check if the body or data is null or empty
+		// if ( is_null( $body_json ) || !isset( $body_json['data'] ) ) {
+		// 	return new WP_Error('api_error', __('API error: Invalid response', 'wp-fusion'));
+		// }
 	
-		// Check for errors in the response
-		if ( isset($body_json['errors']) && !empty($body_json['errors']) ) {
-			$error_message = isset($body_json['errors'][0]['message']) ? $body_json['errors'][0]['message'] : 'Unknown error';
-			return new WP_Error('api_error', __('API error: ', 'wp-fusion') . $error_message);
-		}
+		// // Check for errors in the response
+		// if ( isset($body_json['errors']) && !empty($body_json['errors']) ) {
+		// 	$error_message = isset($body_json['errors'][0]['message']) ? $body_json['errors'][0]['message'] : 'Unknown error';
+		// 	return new WP_Error('api_error', __('API error: ', 'wp-fusion') . $error_message);
+		// }
 	
-		// Ensure the expected data structure is present
-		if ( !isset( $body_json['data']['create_item']['id'] ) ) {
-			return new WP_Error('api_error', __('API error: Missing contact ID in response', 'wp-fusion'));
-		}
+		// // Ensure the expected data structure is present
+		// if ( !isset( $body_json['data']['create_item']['id'] ) ) {
+		// 	return new WP_Error('api_error', __('API error: Missing contact ID in response', 'wp-fusion'));
+		// }
 	
-		// Get new contact ID out of response
-		return $body_json['data']['create_item']['id'];
+		// // Get new contact ID out of response
+		// return $body_json['data']['create_item']['id'];
 	}
 
 
@@ -1522,4 +1631,255 @@ class WPF_Monday {
 
 		return true;
 	}
+
+
+	/**
+	 * Creates a new custom object.
+	 *
+	 * @since 3.38.30
+	 *
+	 * @param array  $properties     The properties.
+	 * @param string $object_type_id The object type ID.
+	 * @return int|WP_Error Object ID if success, WP_Error if failed.
+	 */
+	public function add_object( $properties, $object_type_id, $map_meta_fields = true ) {
+		BugFu::log("add_object custom init");
+		$object_type_id = strtolower($object_type_id);
+
+		// Convert the WP_Post object to an array
+		$post_meta_array = get_object_vars($properties);	
+		
+		BugFu::log($object_type_id);
+
+		$options = get_option('wpf_options');
+		$associated_crm_object_id = $options['post_type_sync_' . $object_type_id];
+
+		// Ensure the API key and board ID are available
+		$api_key = wpf_get_option('monday_key');
+		if ( empty($api_key) || empty($associated_crm_object_id) ) {
+			return new WP_Error('missing_api_key_or_associated_crm_object_id', __('API key or associated_crm_object_id is missing.', 'wp-fusion'));
+		}
+
+		//BugFu::log($options['post_type_sync_' . $object_type_id]);
+
+		// TODO: Get all monday.com object types which would be a list of all boards
+		$boards = wp_fusion()->settings->get( 'available_lists', array() );
+		//$this->log_crm_methods();
+		//BugFu::log(wp_fusion_postTypes()->crm);
+
+		// BugFu::log(wp_fusion_postTypes()->crm_base->test());
+
+		// If set to true, WP Fusion will convert the field keys from WordPress meta keys into the field names in the CRM.
+		if ($map_meta_fields && method_exists(wp_fusion_postTypes()->crm_base, 'map_post_meta_fields') && is_callable(array(wp_fusion_postTypes()->crm_base, 'map_post_meta_fields'))) {
+            $item_data = wp_fusion_postTypes()->crm_base->map_post_meta_fields( $post_meta_array, $object_type_id );
+            BugFu::log($item_data);
+        } else {
+            BugFu::log('map_post_meta_fields method is not available.');
+        }
+
+		// Prepare the column values in JSON format dynamically
+		$column_values = array();
+		foreach ( $item_data as $key => $value ) {
+			if ( $key === 'email' ) {
+				$column_values[$key] = array(
+					'email' => $value,
+					'text' => $value
+				);
+			} else {
+				$column_values[$key] = $value;
+			}
+		}
+	
+		$column_values_json = json_encode( $column_values, JSON_UNESCAPED_SLASHES );
+	
+		// Prepare the GraphQL mutation
+		$mutation = 'mutation {
+			create_item (board_id: ' . $associated_crm_object_id . ', item_name: "' . esc_js( $item_data['name'] ) . '", column_values: "' . addslashes( $column_values_json ) . '") {
+				id
+			}
+		}';
+
+		// Log the mutation for debugging
+		BugFu::log('GraphQL Mutation: ' . $mutation);
+
+	
+		// Make the request to the Monday.com API
+		$response = wp_safe_remote_post(
+			'https://api.monday.com/v2',
+			array(
+				'method'  => 'POST',
+				'headers' => array(
+					'Authorization' => $api_key,
+					'Content-Type'  => 'application/json',
+				),
+				'body'    => wp_json_encode(array('query' => $mutation)),
+			)
+		);
+	
+		// Handle the response
+		if ( is_wp_error( $response ) ) {
+			BugFu::log('API request error: ' . $response->get_error_message());
+			return $response;
+		}
+	
+		$body = wp_remote_retrieve_body( $response );
+		BugFu::log('API response body: ' . $body);
+	
+		$body_json = json_decode( $body, true );
+	
+		// Check if the body or data is null or empty
+		if ( is_null( $body_json ) || !isset( $body_json['data'] ) ) {
+			return new WP_Error('api_error', __('API error: Invalid response', 'wp-fusion'));
+		}
+	
+		// Check for errors in the response
+		if ( isset($body_json['errors']) && !empty($body_json['errors']) ) {
+			$error_message = isset($body_json['errors'][0]['message']) ? $body_json['errors'][0]['message'] : 'Unknown error';
+			return new WP_Error('api_error', __('API error: ', 'wp-fusion') . $error_message);
+		}
+	
+		// Ensure the expected data structure is present
+		if ( !isset( $body_json['data']['create_item']['id'] ) ) {
+			return new WP_Error('api_error', __('API error: Missing item ID in response', 'wp-fusion'));
+		}
+	
+		// Get new item ID out of response
+		return $body_json['data']['create_item']['id'];
+	}
+
+	/**
+	 * Updates an existing custom object.
+	 *
+	 * @since 3.38.30
+	 *
+	 * @param array  $properties     The properties.
+	 * @param string $object_type_id The object type ID.
+	 * @return int|WP_Error Object ID if success, WP_Error if failed.
+	 */
+	public function update_object( $item_id, $properties, $object_type_id, $map_meta_fields = true ) {
+		BugFu::log("aupdate_object custom init");
+		$object_type_id = strtolower($object_type_id);
+
+		// Convert the WP_Post object to an array
+		$post_meta_array = get_object_vars($properties);	
+		
+		BugFu::log($object_type_id);
+
+		$options = get_option('wpf_options');
+		$associated_crm_object_id = $options['post_type_sync_' . $object_type_id];
+
+		// Ensure the API key and board ID are available
+		$api_key = wpf_get_option('monday_key');
+		if ( empty($api_key) || empty($associated_crm_object_id) ) {
+			return new WP_Error('missing_api_key_or_associated_crm_object_id', __('API key or associated_crm_object_id is missing.', 'wp-fusion'));
+		}
+
+		//BugFu::log($options['post_type_sync_' . $object_type_id]);
+
+		// TODO: Get all monday.com object types which would be a list of all boards
+		$boards = wp_fusion()->settings->get( 'available_lists', array() );
+		//$this->log_crm_methods();
+		//BugFu::log(wp_fusion_postTypes()->crm);
+
+		// BugFu::log(wp_fusion_postTypes()->crm_base->test());
+
+		// If set to true, WP Fusion will convert the field keys from WordPress meta keys into the field names in the CRM.
+		if ($map_meta_fields && method_exists(wp_fusion_postTypes()->crm_base, 'map_post_meta_fields') && is_callable(array(wp_fusion_postTypes()->crm_base, 'map_post_meta_fields'))) {
+            $item_data = wp_fusion_postTypes()->crm_base->map_post_meta_fields( $post_meta_array, $object_type_id );
+            BugFu::log($item_data);
+        } else {
+            BugFu::log('map_post_meta_fields method is not available.');
+        }
+
+		// Prepare the column values in JSON format dynamically
+		$column_values = array();
+		foreach ( $item_data as $key => $value ) {
+			if ( $key === 'email' ) {
+				$column_values[$key] = array(
+					'email' => $value,
+					'text' => $value
+				);
+			} else {
+				$column_values[$key] = $value;
+			}
+		}
+	
+		$column_values_json = json_encode( $column_values, JSON_UNESCAPED_SLASHES );
+	
+		// Prepare the GraphQL mutation
+		$mutation = 'mutation {
+			change_multiple_column_values (item_id: ' . $item_id . ', board_id: ' . $associated_crm_object_id . ', column_values: "' . addslashes( $column_values_json ) . '") {
+				id
+			}
+		}';
+
+		// Log the mutation for debugging
+		BugFu::log('GraphQL Mutation: ' . $mutation);
+
+	
+		// Make the request to the Monday.com API
+		$response = wp_safe_remote_post(
+			'https://api.monday.com/v2',
+			array(
+				'method'  => 'POST',
+				'headers' => array(
+					'Authorization' => $api_key,
+					'Content-Type'  => 'application/json',
+				),
+				'body'    => wp_json_encode(array('query' => $mutation)),
+			)
+		);
+	
+		// Handle the response
+		if ( is_wp_error( $response ) ) {
+			BugFu::log('API request error: ' . $response->get_error_message());
+			return $response;
+		}
+	
+		$body = wp_remote_retrieve_body( $response );
+		BugFu::log('API response body: ' . $body);
+	
+		$body_json = json_decode( $body, true );
+	
+		// Check if the body or data is null or empty
+		if ( is_null( $body_json ) || !isset( $body_json['data'] ) ) {
+			return new WP_Error('api_error', __('API error: Invalid response', 'wp-fusion'));
+		}
+	
+		// Check for errors in the response
+		if ( isset($body_json['errors']) && !empty($body_json['errors']) ) {
+			$error_message = isset($body_json['errors'][0]['message']) ? $body_json['errors'][0]['message'] : 'Unknown error';
+			return new WP_Error('api_error', __('API error: ', 'wp-fusion') . $error_message);
+		}
+	
+		// Ensure the expected data structure is present
+		if ( !isset( $body_json['data']['create_item']['id'] ) ) {
+			return new WP_Error('api_error', __('API error: Missing item ID in response', 'wp-fusion'));
+		}
+	
+		// Get new item ID out of response
+		return $body_json['data']['create_item']['id'];
+	}
+
+
+	public function log_crm_methods() {
+		if (!isset(wp_fusion()->crm)) {
+			BugFu::log("CRM object is not set.");
+			return;
+		}
+	
+		$crm_methods = get_class_methods(wp_fusion()->crm);
+	
+		if (empty($crm_methods)) {
+			BugFu::log("No methods found for the CRM object.");
+			return;
+		}
+	
+		foreach ($crm_methods as $method) {
+			BugFu::log("CRM Method: " . $method);
+		}
+	}
+	
 }
+
+

@@ -158,6 +158,10 @@ class WPF_CRM_Base {
 	 * @return mixed  The API result or WP_Error if failed.
 	 */
 	public function __call( $method, $args ) {
+		BugFu::log("__call init");
+		BugFu::log("method: ". $method);
+		BugFu::log("args:");
+		BugFu::log($args, false);
 
 		if ( 'init' === $method ) {
 			return $this->init();
@@ -192,6 +196,7 @@ class WPF_CRM_Base {
 		// Convert the meta field keys between WordPress fields and CRM fields, and apply formatting.
 
 		if ( 'add_contact' === $method && ( ! isset( $args[1] ) || true === $args[1] ) ) {
+			BugFu::log('add_contact method');
 
 			// Add contact.
 			$args[0] = $this->map_meta_fields( $args[0] );
@@ -240,6 +245,9 @@ class WPF_CRM_Base {
 			return $error;
 		}
 
+		BugFu::log("PASS");
+		BugFu::log($args);
+
 		// If the CRM supports custom objects, bypass the queue and call it.
 
 		// This routes calls like wp_fusion()->crm->add_object( $data, 'Lead' ) to
@@ -247,11 +255,15 @@ class WPF_CRM_Base {
 		// the object type to "Lead".
 		//
 		// @link https://wpfusion.com/documentation/functions/add_object/.
+		// BugFu::log(isset( $this->crm->object_type ));
 
 		if ( false !== strpos( $method, '_object' ) && isset( $this->crm->object_type ) && ! method_exists( $this->crm, $method ) ) {
+			BugFu::log($args);
 
 			$method      = str_replace( '_object', '', $method );
 			$object_type = array_pop( $args );
+			BugFu::log($method);
+			BugFu::log($object_type);
 
 			// Switch the object type for the API call.
 			add_filter(
@@ -781,7 +793,7 @@ class WPF_CRM_Base {
 	 */
 
 	public function map_meta_fields( $user_meta ) {
-		BugFu::log("map_meta_fields init");
+		BugFu::log("public map_meta_fields init");
 
 		if ( ! is_array( $user_meta ) || empty( $user_meta ) ) {
 			BugFu::log("not array or empty");

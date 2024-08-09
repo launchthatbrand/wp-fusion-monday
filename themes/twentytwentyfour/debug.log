@@ -1,350 +1,464 @@
-[05-Aug-2024 21:23:17 UTC] PHP Parse error:  Unclosed '{' on line 396 does not match ')' in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 405
-[05-Aug-2024 21:23:18 UTC] PHP Parse error:  Unclosed '{' on line 396 does not match ')' in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 405
-[05-Aug-2024 21:23:49 UTC] PHP Warning:  Undefined variable $post_data in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 460
-[05-Aug-2024 21:23:49 UTC] PHP Warning:  Undefined variable $board_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 529
-[05-Aug-2024 21:23:49 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Error could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:529
+[08-Aug-2024 22:25:24 UTC] Getting contact ID out of payload
+[08-Aug-2024 22:25:24 UTC] Array
+(
+    [access_key] => 2ffbf1ad
+    [wpf_action] => add_object
+)
+
+[08-Aug-2024 22:25:24 UTC] Post data before wpf_crm_post_data filter:Array
+(
+    [access_key] => 2ffbf1ad
+    [wpf_action] => add_object
+)
+
+[08-Aug-2024 22:25:24 UTC] Custom filter raw input: {"challenge":"Ur83_GRRJav-CKIzfWOvydk4yzjv596HU774UK-MDRnpm4vZSDtV2a9ibUJalwvaiciQjRkxAFbtGt4zXN6NAQ"}
+[08-Aug-2024 22:25:24 UTC] Post data after wpf_crm_post_data filter:Array
+(
+    [access_key] => 2ffbf1ad
+    [wpf_action] => add_object
+    [challenge] => Ur83_GRRJav-CKIzfWOvydk4yzjv596HU774UK-MDRnpm4vZSDtV2a9ibUJalwvaiciQjRkxAFbtGt4zXN6NAQ
+    [contact_id] => Ur83_GRRJav-CKIzfWOvydk4yzjv596HU774UK-MDRnpm4vZSDtV2a9ibUJalwvaiciQjRkxAFbtGt4zXN6NAQ
+)
+
+[08-Aug-2024 22:25:24 UTC] Doing action wp_ajax_nopriv_wpf_add_object
+[08-Aug-2024 22:25:24 UTC] WPF_API::add_object()
+[08-Aug-2024 22:25:24 UTC] Challenge detected
+[08-Aug-2024 22:26:41 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:28:43 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:30:44 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:32:44 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:34:45 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:36:46 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:38:47 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:40:49 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:41:31 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:41:32 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:41:52 UTC] Getting contact ID out of payload
+[08-Aug-2024 22:41:52 UTC] Array
+(
+    [access_key] => 2ffbf1ad
+    [wpf_action] => update_object
+)
+
+[08-Aug-2024 22:41:52 UTC] Post data before wpf_crm_post_data filter:Array
+(
+    [access_key] => 2ffbf1ad
+    [wpf_action] => update_object
+)
+
+[08-Aug-2024 22:41:52 UTC] Custom filter raw input: {"challenge":"U2gRGyVoLf-O9Ugab_V8M2V08Nj51bA_pbd4qbrllYlo9ayw2vmsa96Wcup1MWs0EWJc71OvKlFXcQOHBxqQgg"}
+[08-Aug-2024 22:41:52 UTC] Post data after wpf_crm_post_data filter:Array
+(
+    [access_key] => 2ffbf1ad
+    [wpf_action] => update_object
+    [challenge] => U2gRGyVoLf-O9Ugab_V8M2V08Nj51bA_pbd4qbrllYlo9ayw2vmsa96Wcup1MWs0EWJc71OvKlFXcQOHBxqQgg
+    [contact_id] => U2gRGyVoLf-O9Ugab_V8M2V08Nj51bA_pbd4qbrllYlo9ayw2vmsa96Wcup1MWs0EWJc71OvKlFXcQOHBxqQgg
+)
+
+[08-Aug-2024 22:41:52 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:42:31 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:42:32 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:42:49 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:43:24 UTC] Getting contact ID out of payload
+[08-Aug-2024 22:43:24 UTC] Array
+(
+    [access_key] => 2ffbf1ad
+    [wpf_action] => update_object
+)
+
+[08-Aug-2024 22:43:24 UTC] Post data before wpf_crm_post_data filter:Array
+(
+    [access_key] => 2ffbf1ad
+    [wpf_action] => update_object
+)
+
+[08-Aug-2024 22:43:24 UTC] Custom filter raw input: {"challenge":"AboZQkAaYDnAg9GqbXQ9WH0j04KN6vn_OVrWf-cSMRN8s-GyCum27nl6_MJMJVkmcejvcl9iNU0p3FTZuwU3bA"}
+[08-Aug-2024 22:43:24 UTC] Post data after wpf_crm_post_data filter:Array
+(
+    [access_key] => 2ffbf1ad
+    [wpf_action] => update_object
+    [challenge] => AboZQkAaYDnAg9GqbXQ9WH0j04KN6vn_OVrWf-cSMRN8s-GyCum27nl6_MJMJVkmcejvcl9iNU0p3FTZuwU3bA
+    [contact_id] => AboZQkAaYDnAg9GqbXQ9WH0j04KN6vn_OVrWf-cSMRN8s-GyCum27nl6_MJMJVkmcejvcl9iNU0p3FTZuwU3bA
+)
+
+[08-Aug-2024 22:43:24 UTC] Doing action wp_ajax_nopriv_wpf_update_object
+[08-Aug-2024 22:43:24 UTC] Challenge detected
+[08-Aug-2024 22:43:31 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:43:31 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:44:50 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:45:31 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:45:31 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:46:51 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:47:31 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:47:31 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:48:52 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:48:59 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:49:00 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:49:24 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:49:25 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:49:59 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:50:00 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:50:53 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:50:59 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:51:00 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:51:59 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:52:00 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:52:54 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:53:08 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:53:09 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:53:55 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:54:08 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:54:09 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:55:56 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:56:09 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:56:10 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:57:57 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:58:10 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:58:11 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 22:59:58 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:00:11 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:00:12 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:01:59 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:02:12 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:02:13 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:03:33 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:04:34 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:06:34 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:06:39 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:06:39 UTC] PHP Warning:  Undefined property: WPF_Monday_Admin::$api_url in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-admin.php on line 99
+[08-Aug-2024 23:06:39 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-admin.php:99) in /var/www/html/wp-admin/includes/misc.php on line 1438
+[08-Aug-2024 23:06:39 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-admin.php:99) in /var/www/html/wp-includes/functions.php on line 7108
+[08-Aug-2024 23:06:39 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-admin.php:99) in /var/www/html/wp-admin/admin-header.php on line 9
+[08-Aug-2024 23:07:42 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:07:43 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:08:42 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:09:05 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:09:27 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:09:35 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:09:36 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:09:39 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:09:41 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:09:42 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:09:45 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:10:19 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:10:22 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:10:59 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:11:02 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:11:25 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:11:27 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:11:43 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:11:45 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:12:45 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:12:46 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:12:46 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:12:49 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:13:48 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:13:49 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:13:52 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:13:54 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:13:56 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:13:59 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:14:07 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:14:09 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:14:58 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:15:01 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:16:00 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:16:01 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:16:59 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:17:00 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:17:00 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:17:01 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:17:01 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:17:02 UTC] API response body: {"data":{"tags":[{"id":"13588460","name":"Setup"},{"id":"13588461","name":"developers_platform"},{"id":"13588462","name":"Integration"},{"id":"13588463","name":"Notification"},{"id":"13588464","name":"Onboarding"},{"id":"13969910","name":"Retention"},{"id":"13969914","name":"Recruitment"},{"id":"13970482","name":"EmployeeRetention"},{"id":"14888287","name":"Contract"},{"id":"14888309","name":"Branding"},{"id":"14888313","name":"PublicInformation"},{"id":"14888325","name":"Media"},{"id":"14917394","name":"CEI"},{"id":"14917404","name":"Design"},{"id":"14917405","name":"PD\u0026E"},{"id":"14917414","name":"AllTypesConstructionServices"},{"id":"15489566","name":"CommunicationStrategies"},{"id":"16008468","name":"newlocation"},{"id":"16008469","name":"positive"},{"id":"16008470","name":"Food"},{"id":"16123560","name":"District-Six-Districtwide-Communications-Programs-And-Special-Projects"},{"id":"16123561","name":"Fire-Prevention-Campaign"},{"id":"16123562","name":"Marketing"},{"id":"16123563","name":"-Media-Planning-\u0026-Buying"},{"id":"16123564","name":"State-Forest-Recreation-Marketing"},{"id":"16123565","name":"Districtwide-Public-Communications"},{"id":"16123566","name":"CSC-for-Public-Outreach-and-Safety-Technical-Support"},{"id":"16123567","name":"Traffic-Operations"},{"id":"16123568","name":"-Safety-Unit-Communications"},{"id":"16123569","name":"Marketing-Services-Pre-Qualification-Pool"},{"id":"16123570","name":"List-of-GECs"},{"id":"16123571","name":"Workforce-Development"},{"id":"16906456","name":"Aviation"},{"id":"17240391","name":"BikesandPeds"},{"id":"17240393","name":"Citygovernment"},{"id":"17240399","name":"Countygovernment"},{"id":"17240405","name":"FDOT/FTE"},{"id":"17240410","name":"HousingAuthority"},{"id":"17240413","name":"Institutions"},{"id":"17240414","name":"MPO/TPO"},{"id":"17240416","name":"PortsandSpaceports"},{"id":"17240419","name":"PrivateSector"},{"id":"17240422","name":"SchoolSystem"},{"id":"17240424","name":"SolidWaste/Recycling"},{"id":"17240426","name":"Stategovernment"},{"id":"17240430","name":"TollwaysAuthority"},{"id":"17240433","name":"Transit/Rail"},{"id":"17240436","name":"WaterAuthority"},{"id":"17240439","name":"Veterans'Affairs"},{"id":"17240448","name":"AgricultureDeptofFlorida"},{"id":"17240455","name":"ADACompliance"},{"id":"17240460","name":"Advertising"},{"id":"17240463","name":"Animation"},{"id":"17240467","name":"AudioVisual"},{"id":"17240469","name":"Communications"},{"id":"17240474","name":"ConstructionEngineeringandInspection"},{"id":"17240475","name":"CreativeDesignServices"},{"id":"17240480","name":"CrisisCommuncation/Management"},{"id":"17240482","name":"CrisisCommunication/Management"},{"id":"17240497","name":"Design/Build"},{"id":"17240500","name":"Drone"},{"id":"17240502","name":"Education"},{"id":"17240505","name":"EmergencyAwareness"},{"id":"17240506","name":"Evaluations"},{"id":"17240508","name":"EventPlanning"},{"id":"17240510","name":"FocusGroups"},{"id":"17240513","name":"GeneralEngineeringConsultant"},{"id":"17240515","name":"GISservices"},{"id":"17240518","name":"GrantManagement"},{"id":"17240519","name":"HealthServices"},{"id":"17240527","name":"IT/Innovation"},{"id":"17240528","name":"NoiseConsulting"},{"id":"17240534","name":"MarketResearch"},{"id":"17240537","name":"Marketing/CommunicationService"},{"id":"17240567","name":"OperationsAnalysis"},{"id":"17240574","name":"PD\u0026E/Design"},{"id":"17240575","name":"Photography"},{"id":"17240576","name":"Planning/FeasibilityStudy"},{"id":"17240582","name":"PoliticalCampaign"},{"id":"17240583","name":"Printing"},{"id":"17240585","name":"PublicInvolvement"},{"id":"17240587","name":"Publicrelations"},{"id":"17240588","name":"RCSCompliance"},{"id":"17240590","name":"SafetyEducation"},{"id":"17240592","name":"SocialMedia"},{"id":"17240594","name":"StrategicIntermodalSystems(SIS)"},{"id":"17240595","name":"StrategicPlanning"},{"id":"17240597","name":"Survey"},{"id":"17240599","name":"Training"},{"id":"17240600","name":"Video"},{"id":"17240602","name":"Website"},{"id":"17240603","name":"WorkingGroups"},{"id":"17240604","name":"WorkForceDevelopment"},{"id":"17240630","name":"EmergencyManagement"},{"id":"17240632","name":"Finance/Admin"},{"id":"17240633","name":"Turnpike"},{"id":"17240634","name":"Freight"},{"id":"17240635","name":"Rail"},{"id":"17240659","name":"Operations/Maintenance"},{"id":"17240661","name":"Seaports"},{"id":"17240666","name":"Planning"},{"id":"17240667","name":"Transit"},{"id":"17240668","name":"Spaceports"},{"id":"17240683","name":"OperationsMaintenance"},{"id":"17240688","name":"PIO"},{"id":"17240692","name":"Utilities"},{"id":"17240694","name":"Safety"},{"id":"17240702","name":"Research"},{"id":"17240707","name":"TrafficEngineering/Ops"},{"id":"17240708","name":"TransportationTechnology"},{"id":"17240709","name":"GIS"},{"id":"17240715","name":"TransportationData\u0026Analytics"},{"id":"17240718","name":"TransportationInnovation"},{"id":"17240719","name":"FDOTD1"},{"id":"17240721","name":"FDOTD2"},{"id":"17240723","name":"FDOTD3"},{"id":"17240724","name":"FDOTD4"},{"id":"17240725","name":"FDOTD5"},{"id":"17240726","name":"FDOTD6"},{"id":"17240729","name":"FDOTD7"},{"id":"17240731","name":"FLTurnpikeEnterprise"},{"id":"17240734","name":"MediaPlanning/Buying"},{"id":"17240735","name":"CTST"},{"id":"17240736","name":"SafeMobilityForLife"},{"id":"17240741","name":"Multi-modalMobility"},{"id":"17240742","name":"Tourism"},{"id":"17240744","name":"EconomicDevelopment"},{"id":"17240746","name":"ElectricVehicle"},{"id":"17240747","name":"LawEnforcement"},{"id":"17240748","name":"Veterans"},{"id":"17240750","name":"Bicycle/Pedestrian"},{"id":"17240751","name":"Creative/BrandingService"},{"id":"17240753","name":"CommunityOutreach"},{"id":"17240754","name":"DroneServices"},{"id":"17240755","name":"PhotographyServices"},{"id":"17240756","name":"Newsletters"},{"id":"17240757","name":"Surveys/FocusGroups"},{"id":"17240759","name":"EducationalCampaigns"},{"id":"17240762","name":"SocialMediaManagement"},{"id":"17240763","name":"WebsiteServices"},{"id":"17240765","name":"StrategicMKTG\u0026COMMs"},{"id":"17240767","name":"SocialMediaMGMT"},{"id":"17240769","name":"DatabaseMGMT"},{"id":"17240772","name":"Animation/3D"},{"id":"17240774","name":"VoiceoverServices"},{"id":"17240776","name":"EventsSupport"},{"id":"17240778","name":"MediaRelations"},{"id":"17240780","name":"PublicAffairsServices"},{"id":"17240781","name":"Stakeholder/PartnerOutreach"},{"id":"17240782","name":"PublicWorks"},{"id":"17240783","name":"StatewideAgency"},{"id":"17240784","name":"GovernmentAgency"},{"id":"17240785","name":"Nonprofit"},{"id":"17240786","name":"Association"},{"id":"17240788","name":"CrisisCOMMS"},{"id":"17250528","name":"EngineeringFirm"},{"id":"17250535","name":"PADOT"},{"id":"17250543","name":"Transportation"},{"id":"17250589","name":"FDOTCO"},{"id":"18052602","name":"Graphics"},{"id":"18052623","name":"WebDesign"},{"id":"18193313","name":"General-Engineering"},{"id":"18193314","name":"Public-Relations"},{"id":"18194865","name":"MKTG/Comms"},{"id":"18195483","name":"Creative"},{"id":"18383506","name":"GEC"},{"id":"18383507","name":"6.1—-Traffic-Engineering-Studies"},{"id":"18383508","name":"CSC"},{"id":"18383509","name":"PD\u0026E---CSC"},{"id":"18383510","name":"Construction"},{"id":"18383511","name":"Design-Build"},{"id":"18383512","name":"Design\u0026Misc/Services"},{"id":"18383513","name":"Engineering"},{"id":"18383514","name":"Design-/-Contruction"},{"id":"18383515","name":"Design-construction"},{"id":"18383516","name":"13.7—-Transportation-Statistics"},{"id":"18383517","name":"Project-Management"},{"id":"18383518","name":"Study"},{"id":"18383519","name":"-Compliance"},{"id":"18383520","name":"Consulting"},{"id":"18383521","name":"13.3—-Policy-Planning"},{"id":"18383522","name":"13.4—-Systems-Planning"},{"id":"18383523","name":"13.5—-Subarea/Corridor-Planning"},{"id":"18383524","name":"11.0—-Engineering-Contract-Admin.-and-Management"},{"id":"18383525","name":"Design-\u0026-CEI"},{"id":"18383526","name":"Design-\u0026-Construction"},{"id":"18383528","name":"Public-Involvement"},{"id":"18383529","name":"Public-Information"},{"id":"18383530","name":"Public-Outreach"},{"id":"18383531","name":"Admin"},{"id":"18383532","name":"Public-Engagement"},{"id":"18383533","name":"Compliance"},{"id":"18383534","name":"Process-Facilitator-/-Content-Writer"},{"id":"18383535","name":"Community-Engagement"},{"id":"18383536","name":"Public-Outreach-/-Information"},{"id":"18383537","name":"Public-Education-\u0026-Outreach"},{"id":"18383538","name":"Public-Involvement-\u0026-Compliance"},{"id":"18383539","name":"ADA-Compliance"},{"id":"18383540","name":"Public-Information-\u0026-Compliance"},{"id":"18383541","name":"Outreach-and-Education"},{"id":"18383542","name":"RCS"},{"id":"18383543","name":"CSS"},{"id":"18383577","name":"Architecture"},{"id":"18383578","name":"Compl"},{"id":"18383579","name":"Secretary/Clerical"},{"id":"18383580","name":"Graphic-Design"},{"id":"18899611","name":"OnBoard4Jobs"},{"id":"18899616","name":"SWWFD"},{"id":"18908969","name":"SWFD"},{"id":"19375778","name":"[[\\"},{"id":"19375780","name":"Veterans\\]"},{"id":"19375781","name":"]"},{"id":"19375782","name":"Employment-Opportunity\\,\\"},{"id":"19375783","name":"Event-Attendance\\]"},{"id":"19375784","name":"Employment-Opportunity\\]"},{"id":"19375785","name":"Indeed-Posting\\,\\"},{"id":"19375786","name":"Training-class-\\]"},{"id":"19375787","name":"Event-Attendance\\,\\"},{"id":"19375788","name":"Indeed-Posting\\]"},{"id":"19375789","name":"Florida-Road-Jobs\\,\\"},{"id":"19375790","name":"Roads-to-Jobs-Skills-Program\\]"},{"id":"19375791","name":"Summer-internship\\]"},{"id":"19375792","name":"Learning-new-skills-\\]"},{"id":"19375793","name":"Certificate-program"},{"id":"19375794","name":"Equipment-operatior\\]"},{"id":"19376248","name":"Employ"},{"id":"19409884","name":"FloridaRoadJobs"},{"id":"19409886","name":"RoadstoJobsSkillsProgram"},{"id":"19409888","name":"EmploymentOpportunity"},{"id":"19409890","name":"IndeedPosting"},{"id":"19409895","name":"EventAttendance"},{"id":"19409899","name":"Certificateprogram"},{"id":"19409911","name":"EquipmentOperator"},{"id":"19410681","name":"StudentInternship"},{"id":"19410687","name":"LearningNewSkills"},{"id":"19410688","name":"TrainingClass"},{"id":"19629893","name":"Internship"},{"id":"19757483","name":"Job-Readiness"},{"id":"19791976","name":"OJT"},{"id":"19851921","name":"CCA"},{"id":"19878387","name":"TIM"},{"id":"19878390","name":"CVO"},{"id":"19918481","name":"JobReadiness"},{"id":"19918548","name":"Re-Entry"},{"id":"19918688","name":"Women"},{"id":"20059874","name":"Mailinglist"},{"id":"20388686","name":"County/Municipal"},{"id":"20553619","name":"Design-PI"},{"id":"20553638","name":"Public-Involvement-/-Multimedia"},{"id":"20553639","name":"Public-Involvement-/-Compliance"},{"id":"20553640","name":"Public-Ivolvement"},{"id":"20655437","name":"Multimedia"},{"id":"20881262","name":"AlertToday"},{"id":"21008350","name":"CEI-(PIO-\u0026-RCS)"},{"id":"21008351","name":"Maintenance"},{"id":"21008352","name":"Design/-CEI"},{"id":"21008353","name":"Mkt"},{"id":"21008354","name":"Planning-\u0026-Engineering"},{"id":"21008355","name":"Design---Build"},{"id":"21359092","name":"WF"},{"id":"21359093","name":"Analysis"},{"id":"21359094","name":"GPC"},{"id":"21359095","name":"Videos"},{"id":"21359928","name":"Outreach-/-Mkt"},{"id":"21679400","name":"VTA"},{"id":"21689326","name":"Reentry"},{"id":"21764951","name":"WomeninConstruction"},{"id":"22240800","name":"Davids-Possesion"},{"id":"22240801","name":"Currently-Lost/Broke"},{"id":"22240802","name":"Media-Closet-HQ"},{"id":"22679525","name":"Test-info"},{"id":"22778626","name":"Hired"},{"id":"22778631","name":"JobOffer"},{"id":"22798772","name":"Interview"},{"id":"23227715","name":"SWFFD"},{"id":"23594173","name":"Placed"},{"id":"23595984","name":"Bi-Weekly"}]},"account_id":11070499}
+[08-Aug-2024 23:17:02 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method WPF_Monday::sync_workspaces() in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php:413
 Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
-#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
-#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
-#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
-#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
-#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
-#8 /var/www/html/wp-admin/post.php(227): edit_post()
-#9 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 529
-[05-Aug-2024 21:24:03 UTC] PHP Warning:  Undefined variable $board_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 528
-[05-Aug-2024 21:24:03 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Error could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:528
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
-#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
-#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
-#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
-#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
-#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
-#8 /var/www/html/wp-admin/post.php(227): edit_post()
-#9 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 528
-[05-Aug-2024 21:24:58 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Error could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:528
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
-#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
-#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
-#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
-#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
-#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
-#8 /var/www/html/wp-admin/post.php(227): edit_post()
-#9 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 528
-[05-Aug-2024 21:25:33 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Error could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:530
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
-#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
-#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
-#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
-#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
-#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
-#8 /var/www/html/wp-admin/post.php(227): edit_post()
-#9 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 530
-[05-Aug-2024 21:25:58 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Error could not be converted to string in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:531
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
-#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
-#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
-#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
-#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
-#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
-#8 /var/www/html/wp-admin/post.php(227): edit_post()
-#9 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 531
-[05-Aug-2024 21:31:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method WPF_Post_Type_Sync_Integration::get_selected_board() in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:302
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(462): WPF_Post_Type_Sync_Integration->add_post(Array)
-#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
-#2 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
-#3 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
-#4 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#0 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/crms/class-base.php(435): WPF_Monday->sync()
+#1 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/crms/class-base.php(307): WPF_CRM_Base->request('sync', Array)
+#2 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/crms/class-base.php(768): WPF_CRM_Base->__call('sync', Array)
+#3 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_CRM_Base->ajax_sync('')
+#4 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
 #5 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#6 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
-#7 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
-#8 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
-#9 /var/www/html/wp-admin/post.php(227): edit_post()
-#10 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 302
-[05-Aug-2024 21:33:55 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function WPF_Post_Type_Sync_Integration::add_post(), 1 passed in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 462 and at least 2 expected in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:297
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(462): WPF_Post_Type_Sync_Integration->add_post(Array)
-#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(271): WPF_Post_Type_Sync_Integration->update_post(33, 'post', '7110768751', Array)
-#2 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(202): WPF_Post_Type_Sync_Integration->push_post_meta(33, Array)
-#3 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(33, Object(WP_Post), Object(WP_Post))
-#4 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#5 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#6 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 33, Object(WP_Post), Object(WP_Post))
-#7 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
-#8 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
-#9 /var/www/html/wp-admin/post.php(227): edit_post()
-#10 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 297
-[05-Aug-2024 21:34:17 UTC] PHP Warning:  Undefined variable $contact_data in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 313
-[05-Aug-2024 21:34:17 UTC] PHP Warning:  Undefined variable $board_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 333
-[05-Aug-2024 21:34:17 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 333
-[05-Aug-2024 21:34:17 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: , item_name: "", column_values: "[]") {
-				id
-			}
-		}
-[05-Aug-2024 21:34:18 UTC] API response body: {"errors":[{"message":"Parse error on \":\" (COLON) at [3, 38]","locations":[{"line":3,"column":38}]}],"account_id":20627268}
-[05-Aug-2024 21:34:18 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:313) in /var/www/html/wp-includes/pluggable.php on line 1435
-[05-Aug-2024 21:34:18 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:313) in /var/www/html/wp-includes/pluggable.php on line 1438
-[05-Aug-2024 21:38:04 UTC] PHP Warning:  Undefined variable $board_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 333
-[05-Aug-2024 21:38:04 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 333
-[05-Aug-2024 21:38:04 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: , item_name: "", column_values: "[]") {
-				id
-			}
-		}
-[05-Aug-2024 21:38:04 UTC] API response body: {"errors":[{"message":"Parse error on \":\" (COLON) at [3, 38]","locations":[{"line":3,"column":38}]}],"account_id":20627268}
-[05-Aug-2024 21:38:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:333) in /var/www/html/wp-includes/pluggable.php on line 1435
-[05-Aug-2024 21:38:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:333) in /var/www/html/wp-includes/pluggable.php on line 1438
-[05-Aug-2024 21:38:20 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 333
-[05-Aug-2024 21:38:20 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: 7110768751, item_name: "", column_values: "[]") {
-				id
-			}
-		}
-[05-Aug-2024 21:38:20 UTC] API response body: {"error_message":"item_name cannot be empty. Item names must be at least 1 character long.","error_code":"InvalidItemNameException","error_data":{"item_name":""},"status_code":200,"account_id":20627268}
-[05-Aug-2024 21:38:21 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:333) in /var/www/html/wp-includes/pluggable.php on line 1435
-[05-Aug-2024 21:38:21 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:333) in /var/www/html/wp-includes/pluggable.php on line 1438
-[05-Aug-2024 21:38:23 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 333
-[05-Aug-2024 21:38:23 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: 7110768751, item_name: "", column_values: "[]") {
-				id
-			}
-		}
-[05-Aug-2024 21:38:24 UTC] API response body: {"error_message":"item_name cannot be empty. Item names must be at least 1 character long.","error_code":"InvalidItemNameException","error_data":{"item_name":""},"status_code":200,"account_id":20627268}
-[05-Aug-2024 21:38:24 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:333) in /var/www/html/wp-includes/pluggable.php on line 1435
-[05-Aug-2024 21:38:24 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:333) in /var/www/html/wp-includes/pluggable.php on line 1438
-[05-Aug-2024 21:38:47 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: 7110768751, item_name: "aaaa", column_values: "[]") {
-				id
-			}
-		}
-[05-Aug-2024 21:38:48 UTC] API response body: {"data":{"create_item":{"id":"7166044886"}},"account_id":20627268}
-[05-Aug-2024 21:39:41 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: 7110768751, item_name: "qweqwe", column_values: "[]") {
-				id
-			}
-		}
-[05-Aug-2024 21:39:42 UTC] API response body: {"data":{"create_item":{"id":"7166048964"}},"account_id":20627268}
-[05-Aug-2024 21:41:02 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: 7110768751, item_name: "qweqwe", column_values: "[]") {
-				id
-			}
-		}
-[05-Aug-2024 21:41:02 UTC] API response body: {"data":{"create_item":{"id":"7166058934"}},"account_id":20627268}
-[05-Aug-2024 22:29:31 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 218
-[05-Aug-2024 22:29:31 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: 7110768751, item_name: "qweqwe", column_values: "[]") {
-				id
-			}
-		}
-[05-Aug-2024 22:29:32 UTC] API response body: {"data":{"create_item":{"id":"7166322233"}},"account_id":20627268}
-[05-Aug-2024 22:29:32 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:218) in /var/www/html/wp-includes/pluggable.php on line 1435
-[05-Aug-2024 22:29:32 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:218) in /var/www/html/wp-includes/pluggable.php on line 1438
-[05-Aug-2024 22:30:33 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 218
-[05-Aug-2024 22:30:33 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: 7110768751, item_name: "qweqwe", column_values: "[]") {
-				id
-			}
-		}
-[05-Aug-2024 22:30:34 UTC] API response body: {"data":{"create_item":{"id":"7166326992"}},"account_id":20627268}
-[05-Aug-2024 22:30:34 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:218) in /var/www/html/wp-includes/pluggable.php on line 1435
-[05-Aug-2024 22:30:34 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:218) in /var/www/html/wp-includes/pluggable.php on line 1438
-[05-Aug-2024 22:30:41 UTC] PHP Warning:  Undefined variable $contact_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 537
-[05-Aug-2024 22:30:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method WPF_Post_Type_Sync_Integration::update_item() in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:546
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(310): WPF_Post_Type_Sync_Integration->update_post(24, 'post', '7110768751', Array)
-#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(218): WPF_Post_Type_Sync_Integration->push_post_meta(24, Array)
-#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(24, Array, Object(WP_Post))
-#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 24, Object(WP_Post), Object(WP_Post))
-#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
-#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
-#8 /var/www/html/wp-admin/post.php(227): edit_post()
-#9 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 546
-[05-Aug-2024 22:31:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method WPF_Post_Type_Sync_Integration::update_item() in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:546
-Stack trace:
-#0 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(310): WPF_Post_Type_Sync_Integration->update_post(24, 'post', '7110768751', Array)
-#1 /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php(218): WPF_Post_Type_Sync_Integration->push_post_meta(24, Array)
-#2 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(24, Array, Object(WP_Post))
-#3 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#4 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#5 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 24, Object(WP_Post), Object(WP_Post))
-#6 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
-#7 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
-#8 /var/www/html/wp-admin/post.php(227): edit_post()
-#9 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 546
-[05-Aug-2024 22:48:29 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 449
-[05-Aug-2024 22:48:29 UTC] PHP Warning:  Undefined variable $post_meta in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 455
-[05-Aug-2024 22:48:29 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:449) in /var/www/html/wp-includes/pluggable.php on line 1435
-[05-Aug-2024 22:48:29 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:449) in /var/www/html/wp-includes/pluggable.php on line 1438
-[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined variable $post_meta in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 461
-[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined variable $post_type in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 461
-[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 484
-[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 496
-[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 507
-[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined variable $post_type in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 507
-[05-Aug-2024 22:49:00 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 375
-[05-Aug-2024 22:49:00 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: 7110768751, item_name: "", column_values: "[]") {
-				id
-			}
-		}
-[05-Aug-2024 22:49:01 UTC] API response body: {"error_message":"item_name cannot be empty. Item names must be at least 1 character long.","error_code":"InvalidItemNameException","error_data":{"item_name":""},"status_code":200,"account_id":20627268}
-[05-Aug-2024 22:49:01 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 516
-[05-Aug-2024 22:49:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:461) in /var/www/html/wp-includes/pluggable.php on line 1435
-[05-Aug-2024 22:49:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:461) in /var/www/html/wp-includes/pluggable.php on line 1438
-[05-Aug-2024 22:53:05 UTC] GraphQL Mutation: mutation {
-			change_multiple_column_values (board_id: 6950913950, item_id: 7119035140, column_values: "{\"email\":{\"email\":\"admin@localhost.com\",\"text\":\"admin@localhost.com\"},\"l_name\":\"Devvvv\",\"name\":\"Devs\"}") {
-				id
-			}
-		}
-[05-Aug-2024 22:53:05 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7119035140"}},"account_id":20627268}
-[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_meta in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 461
-[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_type in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 461
-[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 484
-[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 496
-[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 507
-[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_type in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 507
-[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 375
-[05-Aug-2024 22:55:47 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: 7110768751, item_name: "", column_values: "[]") {
-				id
-			}
-		}
-[05-Aug-2024 22:55:47 UTC] API response body: {"error_message":"item_name cannot be empty. Item names must be at least 1 character long.","error_code":"InvalidItemNameException","error_data":{"item_name":""},"status_code":200,"account_id":20627268}
-[05-Aug-2024 22:55:47 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 516
-[05-Aug-2024 22:55:47 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:461) in /var/www/html/wp-includes/pluggable.php on line 1435
-[05-Aug-2024 22:55:47 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:461) in /var/www/html/wp-includes/pluggable.php on line 1438
-[05-Aug-2024 22:57:37 UTC] PHP Warning:  Undefined variable $post_meta in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 463
-[05-Aug-2024 22:57:37 UTC] PHP Warning:  Undefined variable $post_meta in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 470
-[05-Aug-2024 22:57:37 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 470
-[05-Aug-2024 22:57:37 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 486
-[05-Aug-2024 22:57:37 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 498
-[05-Aug-2024 22:57:37 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 509
-[05-Aug-2024 22:57:37 UTC] PHP Warning:  Undefined variable $post_meta in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 509
-[05-Aug-2024 22:57:37 UTC] PHP Warning:  Trying to access array offset on value of type null in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 375
-[05-Aug-2024 22:57:37 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: 7110768751, item_name: "", column_values: "[]") {
-				id
-			}
-		}
-[05-Aug-2024 22:57:38 UTC] API response body: {"error_message":"item_name cannot be empty. Item names must be at least 1 character long.","error_code":"InvalidItemNameException","error_data":{"item_name":""},"status_code":200,"account_id":20627268}
-[05-Aug-2024 22:57:38 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 518
-[05-Aug-2024 22:57:38 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:463) in /var/www/html/wp-includes/pluggable.php on line 1435
-[05-Aug-2024 22:57:38 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:463) in /var/www/html/wp-includes/pluggable.php on line 1438
-[05-Aug-2024 22:58:15 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 486
-[05-Aug-2024 22:58:15 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 498
-[05-Aug-2024 22:58:15 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 509
-[05-Aug-2024 22:58:15 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 375
-[05-Aug-2024 22:58:15 UTC] GraphQL Mutation: mutation {
-			create_item (board_id: 7110768751, item_name: "", column_values: "{\"name\":\"qweqwe\"}") {
-				id
-			}
-		}
-[05-Aug-2024 22:58:16 UTC] API response body: {"error_message":"item_name cannot be empty. Item names must be at least 1 character long.","error_code":"InvalidItemNameException","error_data":{"item_name":""},"status_code":200,"account_id":20627268}
-[05-Aug-2024 22:58:16 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 518
-[05-Aug-2024 22:58:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:486) in /var/www/html/wp-includes/pluggable.php on line 1435
-[05-Aug-2024 22:58:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:486) in /var/www/html/wp-includes/pluggable.php on line 1438
-[05-Aug-2024 22:58:53 UTC] PHP Warning:  Undefined variable $post_id in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 541
-[05-Aug-2024 22:58:53 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:541) in /var/www/html/wp-includes/pluggable.php on line 1435
-[05-Aug-2024 22:58:53 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:541) in /var/www/html/wp-includes/pluggable.php on line 1438
-[05-Aug-2024 23:05:45 UTC] GraphQL Mutation: mutation {
-			change_multiple_column_values (board_id: 7110768751, item_id: 7166058934, column_values: "{\"name\":\"qweqwes\"}") {
-				id
-			}
-		}
-[05-Aug-2024 23:05:45 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7166058934"}},"account_id":20627268}
-[05-Aug-2024 23:06:07 UTC] GraphQL Mutation: mutation {
-			change_multiple_column_values (board_id: 7110768751, item_id: 7166058934, column_values: "{\"name\":\"qweqwesasdawd\"}") {
-				id
-			}
-		}
-[05-Aug-2024 23:06:07 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7166058934"}},"account_id":20627268}
-[05-Aug-2024 23:06:23 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[05-Aug-2024 23:06:28 UTC] GraphQL Mutation: mutation {
-			change_multiple_column_values (board_id: 7110768751, item_id: , column_values: "{\"name\":\"asdasdasd\"}") {
-				id
-			}
-		}
-[05-Aug-2024 23:06:28 UTC] API response body: {"errors":[{"message":"Parse error on \":\" (COLON) at [3, 81]","locations":[{"line":3,"column":81}]}],"account_id":20627268}
-[05-Aug-2024 23:15:20 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[05-Aug-2024 23:23:03 UTC] PHP Parse error:  syntax error, unexpected token ";" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 201
-[05-Aug-2024 23:23:04 UTC] PHP Parse error:  syntax error, unexpected token ";" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 201
-[05-Aug-2024 23:23:09 UTC] PHP Parse error:  syntax error, unexpected token ";" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 201
-[05-Aug-2024 23:23:10 UTC] PHP Parse error:  syntax error, unexpected token ";" in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 201
-[05-Aug-2024 23:23:23 UTC] PHP Warning:  Undefined variable $post_ID in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 200
-[05-Aug-2024 23:23:23 UTC] PHP Warning:  Undefined variable $post_ID in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 213
-[05-Aug-2024 23:23:23 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:200) in /var/www/html/wp-includes/pluggable.php on line 1435
-[05-Aug-2024 23:23:23 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:200) in /var/www/html/wp-includes/pluggable.php on line 1438
-[05-Aug-2024 23:24:00 UTC] PHP Warning:  Undefined variable $post in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 206
-[05-Aug-2024 23:24:00 UTC] PHP Warning:  Attempt to read property "post_status" on null in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 206
-[05-Aug-2024 23:24:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:206) in /var/www/html/wp-admin/admin-header.php on line 9
-[05-Aug-2024 23:24:00 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[05-Aug-2024 23:24:31 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[05-Aug-2024 23:24:46 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[05-Aug-2024 23:28:10 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[05-Aug-2024 23:29:23 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[05-Aug-2024 23:29:45 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[05-Aug-2024 23:31:11 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[05-Aug-2024 23:31:47 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[05-Aug-2024 23:36:15 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[05-Aug-2024 23:36:20 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[05-Aug-2024 23:48:36 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[05-Aug-2024 23:49:18 UTC] PHP Fatal error:  Uncaught Error: Cannot use object of type WP_Post as array in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:300
-Stack trace:
-#0 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(77, Object(WP_Post), Object(WP_Post))
-#1 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#2 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#3 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 77, Object(WP_Post), Object(WP_Post))
-#4 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
-#5 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
-#6 /var/www/html/wp-admin/post.php(227): edit_post()
+#6 /var/www/html/wp-admin/admin-ajax.php(192): do_action('wp_ajax_wpf_syn...')
 #7 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 300
-[05-Aug-2024 23:50:47 UTC] PHP Fatal error:  Uncaught Error: Cannot use object of type WP_Post as array in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:302
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 413
+[08-Aug-2024 23:17:14 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:17:15 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:18:15 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:18:16 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:20:15 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:20:16 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:20:17 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:21:11 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:21:13 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:21:36 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:21:37 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:21:38 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:21:38 UTC] API response body: {"data":{"tags":[{"id":"13588460","name":"Setup"},{"id":"13588461","name":"developers_platform"},{"id":"13588462","name":"Integration"},{"id":"13588463","name":"Notification"},{"id":"13588464","name":"Onboarding"},{"id":"13969910","name":"Retention"},{"id":"13969914","name":"Recruitment"},{"id":"13970482","name":"EmployeeRetention"},{"id":"14888287","name":"Contract"},{"id":"14888309","name":"Branding"},{"id":"14888313","name":"PublicInformation"},{"id":"14888325","name":"Media"},{"id":"14917394","name":"CEI"},{"id":"14917404","name":"Design"},{"id":"14917405","name":"PD\u0026E"},{"id":"14917414","name":"AllTypesConstructionServices"},{"id":"15489566","name":"CommunicationStrategies"},{"id":"16008468","name":"newlocation"},{"id":"16008469","name":"positive"},{"id":"16008470","name":"Food"},{"id":"16123560","name":"District-Six-Districtwide-Communications-Programs-And-Special-Projects"},{"id":"16123561","name":"Fire-Prevention-Campaign"},{"id":"16123562","name":"Marketing"},{"id":"16123563","name":"-Media-Planning-\u0026-Buying"},{"id":"16123564","name":"State-Forest-Recreation-Marketing"},{"id":"16123565","name":"Districtwide-Public-Communications"},{"id":"16123566","name":"CSC-for-Public-Outreach-and-Safety-Technical-Support"},{"id":"16123567","name":"Traffic-Operations"},{"id":"16123568","name":"-Safety-Unit-Communications"},{"id":"16123569","name":"Marketing-Services-Pre-Qualification-Pool"},{"id":"16123570","name":"List-of-GECs"},{"id":"16123571","name":"Workforce-Development"},{"id":"16906456","name":"Aviation"},{"id":"17240391","name":"BikesandPeds"},{"id":"17240393","name":"Citygovernment"},{"id":"17240399","name":"Countygovernment"},{"id":"17240405","name":"FDOT/FTE"},{"id":"17240410","name":"HousingAuthority"},{"id":"17240413","name":"Institutions"},{"id":"17240414","name":"MPO/TPO"},{"id":"17240416","name":"PortsandSpaceports"},{"id":"17240419","name":"PrivateSector"},{"id":"17240422","name":"SchoolSystem"},{"id":"17240424","name":"SolidWaste/Recycling"},{"id":"17240426","name":"Stategovernment"},{"id":"17240430","name":"TollwaysAuthority"},{"id":"17240433","name":"Transit/Rail"},{"id":"17240436","name":"WaterAuthority"},{"id":"17240439","name":"Veterans'Affairs"},{"id":"17240448","name":"AgricultureDeptofFlorida"},{"id":"17240455","name":"ADACompliance"},{"id":"17240460","name":"Advertising"},{"id":"17240463","name":"Animation"},{"id":"17240467","name":"AudioVisual"},{"id":"17240469","name":"Communications"},{"id":"17240474","name":"ConstructionEngineeringandInspection"},{"id":"17240475","name":"CreativeDesignServices"},{"id":"17240480","name":"CrisisCommuncation/Management"},{"id":"17240482","name":"CrisisCommunication/Management"},{"id":"17240497","name":"Design/Build"},{"id":"17240500","name":"Drone"},{"id":"17240502","name":"Education"},{"id":"17240505","name":"EmergencyAwareness"},{"id":"17240506","name":"Evaluations"},{"id":"17240508","name":"EventPlanning"},{"id":"17240510","name":"FocusGroups"},{"id":"17240513","name":"GeneralEngineeringConsultant"},{"id":"17240515","name":"GISservices"},{"id":"17240518","name":"GrantManagement"},{"id":"17240519","name":"HealthServices"},{"id":"17240527","name":"IT/Innovation"},{"id":"17240528","name":"NoiseConsulting"},{"id":"17240534","name":"MarketResearch"},{"id":"17240537","name":"Marketing/CommunicationService"},{"id":"17240567","name":"OperationsAnalysis"},{"id":"17240574","name":"PD\u0026E/Design"},{"id":"17240575","name":"Photography"},{"id":"17240576","name":"Planning/FeasibilityStudy"},{"id":"17240582","name":"PoliticalCampaign"},{"id":"17240583","name":"Printing"},{"id":"17240585","name":"PublicInvolvement"},{"id":"17240587","name":"Publicrelations"},{"id":"17240588","name":"RCSCompliance"},{"id":"17240590","name":"SafetyEducation"},{"id":"17240592","name":"SocialMedia"},{"id":"17240594","name":"StrategicIntermodalSystems(SIS)"},{"id":"17240595","name":"StrategicPlanning"},{"id":"17240597","name":"Survey"},{"id":"17240599","name":"Training"},{"id":"17240600","name":"Video"},{"id":"17240602","name":"Website"},{"id":"17240603","name":"WorkingGroups"},{"id":"17240604","name":"WorkForceDevelopment"},{"id":"17240630","name":"EmergencyManagement"},{"id":"17240632","name":"Finance/Admin"},{"id":"17240633","name":"Turnpike"},{"id":"17240634","name":"Freight"},{"id":"17240635","name":"Rail"},{"id":"17240659","name":"Operations/Maintenance"},{"id":"17240661","name":"Seaports"},{"id":"17240666","name":"Planning"},{"id":"17240667","name":"Transit"},{"id":"17240668","name":"Spaceports"},{"id":"17240683","name":"OperationsMaintenance"},{"id":"17240688","name":"PIO"},{"id":"17240692","name":"Utilities"},{"id":"17240694","name":"Safety"},{"id":"17240702","name":"Research"},{"id":"17240707","name":"TrafficEngineering/Ops"},{"id":"17240708","name":"TransportationTechnology"},{"id":"17240709","name":"GIS"},{"id":"17240715","name":"TransportationData\u0026Analytics"},{"id":"17240718","name":"TransportationInnovation"},{"id":"17240719","name":"FDOTD1"},{"id":"17240721","name":"FDOTD2"},{"id":"17240723","name":"FDOTD3"},{"id":"17240724","name":"FDOTD4"},{"id":"17240725","name":"FDOTD5"},{"id":"17240726","name":"FDOTD6"},{"id":"17240729","name":"FDOTD7"},{"id":"17240731","name":"FLTurnpikeEnterprise"},{"id":"17240734","name":"MediaPlanning/Buying"},{"id":"17240735","name":"CTST"},{"id":"17240736","name":"SafeMobilityForLife"},{"id":"17240741","name":"Multi-modalMobility"},{"id":"17240742","name":"Tourism"},{"id":"17240744","name":"EconomicDevelopment"},{"id":"17240746","name":"ElectricVehicle"},{"id":"17240747","name":"LawEnforcement"},{"id":"17240748","name":"Veterans"},{"id":"17240750","name":"Bicycle/Pedestrian"},{"id":"17240751","name":"Creative/BrandingService"},{"id":"17240753","name":"CommunityOutreach"},{"id":"17240754","name":"DroneServices"},{"id":"17240755","name":"PhotographyServices"},{"id":"17240756","name":"Newsletters"},{"id":"17240757","name":"Surveys/FocusGroups"},{"id":"17240759","name":"EducationalCampaigns"},{"id":"17240762","name":"SocialMediaManagement"},{"id":"17240763","name":"WebsiteServices"},{"id":"17240765","name":"StrategicMKTG\u0026COMMs"},{"id":"17240767","name":"SocialMediaMGMT"},{"id":"17240769","name":"DatabaseMGMT"},{"id":"17240772","name":"Animation/3D"},{"id":"17240774","name":"VoiceoverServices"},{"id":"17240776","name":"EventsSupport"},{"id":"17240778","name":"MediaRelations"},{"id":"17240780","name":"PublicAffairsServices"},{"id":"17240781","name":"Stakeholder/PartnerOutreach"},{"id":"17240782","name":"PublicWorks"},{"id":"17240783","name":"StatewideAgency"},{"id":"17240784","name":"GovernmentAgency"},{"id":"17240785","name":"Nonprofit"},{"id":"17240786","name":"Association"},{"id":"17240788","name":"CrisisCOMMS"},{"id":"17250528","name":"EngineeringFirm"},{"id":"17250535","name":"PADOT"},{"id":"17250543","name":"Transportation"},{"id":"17250589","name":"FDOTCO"},{"id":"18052602","name":"Graphics"},{"id":"18052623","name":"WebDesign"},{"id":"18193313","name":"General-Engineering"},{"id":"18193314","name":"Public-Relations"},{"id":"18194865","name":"MKTG/Comms"},{"id":"18195483","name":"Creative"},{"id":"18383506","name":"GEC"},{"id":"18383507","name":"6.1—-Traffic-Engineering-Studies"},{"id":"18383508","name":"CSC"},{"id":"18383509","name":"PD\u0026E---CSC"},{"id":"18383510","name":"Construction"},{"id":"18383511","name":"Design-Build"},{"id":"18383512","name":"Design\u0026Misc/Services"},{"id":"18383513","name":"Engineering"},{"id":"18383514","name":"Design-/-Contruction"},{"id":"18383515","name":"Design-construction"},{"id":"18383516","name":"13.7—-Transportation-Statistics"},{"id":"18383517","name":"Project-Management"},{"id":"18383518","name":"Study"},{"id":"18383519","name":"-Compliance"},{"id":"18383520","name":"Consulting"},{"id":"18383521","name":"13.3—-Policy-Planning"},{"id":"18383522","name":"13.4—-Systems-Planning"},{"id":"18383523","name":"13.5—-Subarea/Corridor-Planning"},{"id":"18383524","name":"11.0—-Engineering-Contract-Admin.-and-Management"},{"id":"18383525","name":"Design-\u0026-CEI"},{"id":"18383526","name":"Design-\u0026-Construction"},{"id":"18383528","name":"Public-Involvement"},{"id":"18383529","name":"Public-Information"},{"id":"18383530","name":"Public-Outreach"},{"id":"18383531","name":"Admin"},{"id":"18383532","name":"Public-Engagement"},{"id":"18383533","name":"Compliance"},{"id":"18383534","name":"Process-Facilitator-/-Content-Writer"},{"id":"18383535","name":"Community-Engagement"},{"id":"18383536","name":"Public-Outreach-/-Information"},{"id":"18383537","name":"Public-Education-\u0026-Outreach"},{"id":"18383538","name":"Public-Involvement-\u0026-Compliance"},{"id":"18383539","name":"ADA-Compliance"},{"id":"18383540","name":"Public-Information-\u0026-Compliance"},{"id":"18383541","name":"Outreach-and-Education"},{"id":"18383542","name":"RCS"},{"id":"18383543","name":"CSS"},{"id":"18383577","name":"Architecture"},{"id":"18383578","name":"Compl"},{"id":"18383579","name":"Secretary/Clerical"},{"id":"18383580","name":"Graphic-Design"},{"id":"18899611","name":"OnBoard4Jobs"},{"id":"18899616","name":"SWWFD"},{"id":"18908969","name":"SWFD"},{"id":"19375778","name":"[[\\"},{"id":"19375780","name":"Veterans\\]"},{"id":"19375781","name":"]"},{"id":"19375782","name":"Employment-Opportunity\\,\\"},{"id":"19375783","name":"Event-Attendance\\]"},{"id":"19375784","name":"Employment-Opportunity\\]"},{"id":"19375785","name":"Indeed-Posting\\,\\"},{"id":"19375786","name":"Training-class-\\]"},{"id":"19375787","name":"Event-Attendance\\,\\"},{"id":"19375788","name":"Indeed-Posting\\]"},{"id":"19375789","name":"Florida-Road-Jobs\\,\\"},{"id":"19375790","name":"Roads-to-Jobs-Skills-Program\\]"},{"id":"19375791","name":"Summer-internship\\]"},{"id":"19375792","name":"Learning-new-skills-\\]"},{"id":"19375793","name":"Certificate-program"},{"id":"19375794","name":"Equipment-operatior\\]"},{"id":"19376248","name":"Employ"},{"id":"19409884","name":"FloridaRoadJobs"},{"id":"19409886","name":"RoadstoJobsSkillsProgram"},{"id":"19409888","name":"EmploymentOpportunity"},{"id":"19409890","name":"IndeedPosting"},{"id":"19409895","name":"EventAttendance"},{"id":"19409899","name":"Certificateprogram"},{"id":"19409911","name":"EquipmentOperator"},{"id":"19410681","name":"StudentInternship"},{"id":"19410687","name":"LearningNewSkills"},{"id":"19410688","name":"TrainingClass"},{"id":"19629893","name":"Internship"},{"id":"19757483","name":"Job-Readiness"},{"id":"19791976","name":"OJT"},{"id":"19851921","name":"CCA"},{"id":"19878387","name":"TIM"},{"id":"19878390","name":"CVO"},{"id":"19918481","name":"JobReadiness"},{"id":"19918548","name":"Re-Entry"},{"id":"19918688","name":"Women"},{"id":"20059874","name":"Mailinglist"},{"id":"20388686","name":"County/Municipal"},{"id":"20553619","name":"Design-PI"},{"id":"20553638","name":"Public-Involvement-/-Multimedia"},{"id":"20553639","name":"Public-Involvement-/-Compliance"},{"id":"20553640","name":"Public-Ivolvement"},{"id":"20655437","name":"Multimedia"},{"id":"20881262","name":"AlertToday"},{"id":"21008350","name":"CEI-(PIO-\u0026-RCS)"},{"id":"21008351","name":"Maintenance"},{"id":"21008352","name":"Design/-CEI"},{"id":"21008353","name":"Mkt"},{"id":"21008354","name":"Planning-\u0026-Engineering"},{"id":"21008355","name":"Design---Build"},{"id":"21359092","name":"WF"},{"id":"21359093","name":"Analysis"},{"id":"21359094","name":"GPC"},{"id":"21359095","name":"Videos"},{"id":"21359928","name":"Outreach-/-Mkt"},{"id":"21679400","name":"VTA"},{"id":"21689326","name":"Reentry"},{"id":"21764951","name":"WomeninConstruction"},{"id":"22240800","name":"Davids-Possesion"},{"id":"22240801","name":"Currently-Lost/Broke"},{"id":"22240802","name":"Media-Closet-HQ"},{"id":"22679525","name":"Test-info"},{"id":"22778626","name":"Hired"},{"id":"22778631","name":"JobOffer"},{"id":"22798772","name":"Interview"},{"id":"23227715","name":"SWFFD"},{"id":"23594173","name":"Placed"},{"id":"23595984","name":"Bi-Weekly"}]},"account_id":11070499}
+[08-Aug-2024 23:21:39 UTC] PHP Warning:  Undefined variable $boards in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 548
+[08-Aug-2024 23:21:40 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:21:40 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:21:41 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:21:45 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:21:45 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:21:47 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:22:47 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:22:48 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:24:48 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:24:49 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:26:49 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:26:50 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:28:50 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:28:51 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:30:51 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:30:52 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:32:52 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:32:53 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:34:53 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:34:54 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:36:54 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:36:55 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:38:55 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:38:56 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:40:56 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:40:57 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:42:57 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:42:58 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:45:08 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:45:11 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:46:59 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:47:00 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:49:00 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:49:01 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:51:01 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:51:02 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:52:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:52:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:53:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:53:19 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:54:35 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:54:36 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:54:41 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:54:45 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:55:24 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:55:26 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:56:26 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:56:26 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:56:29 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:56:30 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:56:31 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:56:31 UTC] API response body: {"data":{"tags":[{"id":"13588460","name":"Setup"},{"id":"13588461","name":"developers_platform"},{"id":"13588462","name":"Integration"},{"id":"13588463","name":"Notification"},{"id":"13588464","name":"Onboarding"},{"id":"13969910","name":"Retention"},{"id":"13969914","name":"Recruitment"},{"id":"13970482","name":"EmployeeRetention"},{"id":"14888287","name":"Contract"},{"id":"14888309","name":"Branding"},{"id":"14888313","name":"PublicInformation"},{"id":"14888325","name":"Media"},{"id":"14917394","name":"CEI"},{"id":"14917404","name":"Design"},{"id":"14917405","name":"PD\u0026E"},{"id":"14917414","name":"AllTypesConstructionServices"},{"id":"15489566","name":"CommunicationStrategies"},{"id":"16008468","name":"newlocation"},{"id":"16008469","name":"positive"},{"id":"16008470","name":"Food"},{"id":"16123560","name":"District-Six-Districtwide-Communications-Programs-And-Special-Projects"},{"id":"16123561","name":"Fire-Prevention-Campaign"},{"id":"16123562","name":"Marketing"},{"id":"16123563","name":"-Media-Planning-\u0026-Buying"},{"id":"16123564","name":"State-Forest-Recreation-Marketing"},{"id":"16123565","name":"Districtwide-Public-Communications"},{"id":"16123566","name":"CSC-for-Public-Outreach-and-Safety-Technical-Support"},{"id":"16123567","name":"Traffic-Operations"},{"id":"16123568","name":"-Safety-Unit-Communications"},{"id":"16123569","name":"Marketing-Services-Pre-Qualification-Pool"},{"id":"16123570","name":"List-of-GECs"},{"id":"16123571","name":"Workforce-Development"},{"id":"16906456","name":"Aviation"},{"id":"17240391","name":"BikesandPeds"},{"id":"17240393","name":"Citygovernment"},{"id":"17240399","name":"Countygovernment"},{"id":"17240405","name":"FDOT/FTE"},{"id":"17240410","name":"HousingAuthority"},{"id":"17240413","name":"Institutions"},{"id":"17240414","name":"MPO/TPO"},{"id":"17240416","name":"PortsandSpaceports"},{"id":"17240419","name":"PrivateSector"},{"id":"17240422","name":"SchoolSystem"},{"id":"17240424","name":"SolidWaste/Recycling"},{"id":"17240426","name":"Stategovernment"},{"id":"17240430","name":"TollwaysAuthority"},{"id":"17240433","name":"Transit/Rail"},{"id":"17240436","name":"WaterAuthority"},{"id":"17240439","name":"Veterans'Affairs"},{"id":"17240448","name":"AgricultureDeptofFlorida"},{"id":"17240455","name":"ADACompliance"},{"id":"17240460","name":"Advertising"},{"id":"17240463","name":"Animation"},{"id":"17240467","name":"AudioVisual"},{"id":"17240469","name":"Communications"},{"id":"17240474","name":"ConstructionEngineeringandInspection"},{"id":"17240475","name":"CreativeDesignServices"},{"id":"17240480","name":"CrisisCommuncation/Management"},{"id":"17240482","name":"CrisisCommunication/Management"},{"id":"17240497","name":"Design/Build"},{"id":"17240500","name":"Drone"},{"id":"17240502","name":"Education"},{"id":"17240505","name":"EmergencyAwareness"},{"id":"17240506","name":"Evaluations"},{"id":"17240508","name":"EventPlanning"},{"id":"17240510","name":"FocusGroups"},{"id":"17240513","name":"GeneralEngineeringConsultant"},{"id":"17240515","name":"GISservices"},{"id":"17240518","name":"GrantManagement"},{"id":"17240519","name":"HealthServices"},{"id":"17240527","name":"IT/Innovation"},{"id":"17240528","name":"NoiseConsulting"},{"id":"17240534","name":"MarketResearch"},{"id":"17240537","name":"Marketing/CommunicationService"},{"id":"17240567","name":"OperationsAnalysis"},{"id":"17240574","name":"PD\u0026E/Design"},{"id":"17240575","name":"Photography"},{"id":"17240576","name":"Planning/FeasibilityStudy"},{"id":"17240582","name":"PoliticalCampaign"},{"id":"17240583","name":"Printing"},{"id":"17240585","name":"PublicInvolvement"},{"id":"17240587","name":"Publicrelations"},{"id":"17240588","name":"RCSCompliance"},{"id":"17240590","name":"SafetyEducation"},{"id":"17240592","name":"SocialMedia"},{"id":"17240594","name":"StrategicIntermodalSystems(SIS)"},{"id":"17240595","name":"StrategicPlanning"},{"id":"17240597","name":"Survey"},{"id":"17240599","name":"Training"},{"id":"17240600","name":"Video"},{"id":"17240602","name":"Website"},{"id":"17240603","name":"WorkingGroups"},{"id":"17240604","name":"WorkForceDevelopment"},{"id":"17240630","name":"EmergencyManagement"},{"id":"17240632","name":"Finance/Admin"},{"id":"17240633","name":"Turnpike"},{"id":"17240634","name":"Freight"},{"id":"17240635","name":"Rail"},{"id":"17240659","name":"Operations/Maintenance"},{"id":"17240661","name":"Seaports"},{"id":"17240666","name":"Planning"},{"id":"17240667","name":"Transit"},{"id":"17240668","name":"Spaceports"},{"id":"17240683","name":"OperationsMaintenance"},{"id":"17240688","name":"PIO"},{"id":"17240692","name":"Utilities"},{"id":"17240694","name":"Safety"},{"id":"17240702","name":"Research"},{"id":"17240707","name":"TrafficEngineering/Ops"},{"id":"17240708","name":"TransportationTechnology"},{"id":"17240709","name":"GIS"},{"id":"17240715","name":"TransportationData\u0026Analytics"},{"id":"17240718","name":"TransportationInnovation"},{"id":"17240719","name":"FDOTD1"},{"id":"17240721","name":"FDOTD2"},{"id":"17240723","name":"FDOTD3"},{"id":"17240724","name":"FDOTD4"},{"id":"17240725","name":"FDOTD5"},{"id":"17240726","name":"FDOTD6"},{"id":"17240729","name":"FDOTD7"},{"id":"17240731","name":"FLTurnpikeEnterprise"},{"id":"17240734","name":"MediaPlanning/Buying"},{"id":"17240735","name":"CTST"},{"id":"17240736","name":"SafeMobilityForLife"},{"id":"17240741","name":"Multi-modalMobility"},{"id":"17240742","name":"Tourism"},{"id":"17240744","name":"EconomicDevelopment"},{"id":"17240746","name":"ElectricVehicle"},{"id":"17240747","name":"LawEnforcement"},{"id":"17240748","name":"Veterans"},{"id":"17240750","name":"Bicycle/Pedestrian"},{"id":"17240751","name":"Creative/BrandingService"},{"id":"17240753","name":"CommunityOutreach"},{"id":"17240754","name":"DroneServices"},{"id":"17240755","name":"PhotographyServices"},{"id":"17240756","name":"Newsletters"},{"id":"17240757","name":"Surveys/FocusGroups"},{"id":"17240759","name":"EducationalCampaigns"},{"id":"17240762","name":"SocialMediaManagement"},{"id":"17240763","name":"WebsiteServices"},{"id":"17240765","name":"StrategicMKTG\u0026COMMs"},{"id":"17240767","name":"SocialMediaMGMT"},{"id":"17240769","name":"DatabaseMGMT"},{"id":"17240772","name":"Animation/3D"},{"id":"17240774","name":"VoiceoverServices"},{"id":"17240776","name":"EventsSupport"},{"id":"17240778","name":"MediaRelations"},{"id":"17240780","name":"PublicAffairsServices"},{"id":"17240781","name":"Stakeholder/PartnerOutreach"},{"id":"17240782","name":"PublicWorks"},{"id":"17240783","name":"StatewideAgency"},{"id":"17240784","name":"GovernmentAgency"},{"id":"17240785","name":"Nonprofit"},{"id":"17240786","name":"Association"},{"id":"17240788","name":"CrisisCOMMS"},{"id":"17250528","name":"EngineeringFirm"},{"id":"17250535","name":"PADOT"},{"id":"17250543","name":"Transportation"},{"id":"17250589","name":"FDOTCO"},{"id":"18052602","name":"Graphics"},{"id":"18052623","name":"WebDesign"},{"id":"18193313","name":"General-Engineering"},{"id":"18193314","name":"Public-Relations"},{"id":"18194865","name":"MKTG/Comms"},{"id":"18195483","name":"Creative"},{"id":"18383506","name":"GEC"},{"id":"18383507","name":"6.1—-Traffic-Engineering-Studies"},{"id":"18383508","name":"CSC"},{"id":"18383509","name":"PD\u0026E---CSC"},{"id":"18383510","name":"Construction"},{"id":"18383511","name":"Design-Build"},{"id":"18383512","name":"Design\u0026Misc/Services"},{"id":"18383513","name":"Engineering"},{"id":"18383514","name":"Design-/-Contruction"},{"id":"18383515","name":"Design-construction"},{"id":"18383516","name":"13.7—-Transportation-Statistics"},{"id":"18383517","name":"Project-Management"},{"id":"18383518","name":"Study"},{"id":"18383519","name":"-Compliance"},{"id":"18383520","name":"Consulting"},{"id":"18383521","name":"13.3—-Policy-Planning"},{"id":"18383522","name":"13.4—-Systems-Planning"},{"id":"18383523","name":"13.5—-Subarea/Corridor-Planning"},{"id":"18383524","name":"11.0—-Engineering-Contract-Admin.-and-Management"},{"id":"18383525","name":"Design-\u0026-CEI"},{"id":"18383526","name":"Design-\u0026-Construction"},{"id":"18383528","name":"Public-Involvement"},{"id":"18383529","name":"Public-Information"},{"id":"18383530","name":"Public-Outreach"},{"id":"18383531","name":"Admin"},{"id":"18383532","name":"Public-Engagement"},{"id":"18383533","name":"Compliance"},{"id":"18383534","name":"Process-Facilitator-/-Content-Writer"},{"id":"18383535","name":"Community-Engagement"},{"id":"18383536","name":"Public-Outreach-/-Information"},{"id":"18383537","name":"Public-Education-\u0026-Outreach"},{"id":"18383538","name":"Public-Involvement-\u0026-Compliance"},{"id":"18383539","name":"ADA-Compliance"},{"id":"18383540","name":"Public-Information-\u0026-Compliance"},{"id":"18383541","name":"Outreach-and-Education"},{"id":"18383542","name":"RCS"},{"id":"18383543","name":"CSS"},{"id":"18383577","name":"Architecture"},{"id":"18383578","name":"Compl"},{"id":"18383579","name":"Secretary/Clerical"},{"id":"18383580","name":"Graphic-Design"},{"id":"18899611","name":"OnBoard4Jobs"},{"id":"18899616","name":"SWWFD"},{"id":"18908969","name":"SWFD"},{"id":"19375778","name":"[[\\"},{"id":"19375780","name":"Veterans\\]"},{"id":"19375781","name":"]"},{"id":"19375782","name":"Employment-Opportunity\\,\\"},{"id":"19375783","name":"Event-Attendance\\]"},{"id":"19375784","name":"Employment-Opportunity\\]"},{"id":"19375785","name":"Indeed-Posting\\,\\"},{"id":"19375786","name":"Training-class-\\]"},{"id":"19375787","name":"Event-Attendance\\,\\"},{"id":"19375788","name":"Indeed-Posting\\]"},{"id":"19375789","name":"Florida-Road-Jobs\\,\\"},{"id":"19375790","name":"Roads-to-Jobs-Skills-Program\\]"},{"id":"19375791","name":"Summer-internship\\]"},{"id":"19375792","name":"Learning-new-skills-\\]"},{"id":"19375793","name":"Certificate-program"},{"id":"19375794","name":"Equipment-operatior\\]"},{"id":"19376248","name":"Employ"},{"id":"19409884","name":"FloridaRoadJobs"},{"id":"19409886","name":"RoadstoJobsSkillsProgram"},{"id":"19409888","name":"EmploymentOpportunity"},{"id":"19409890","name":"IndeedPosting"},{"id":"19409895","name":"EventAttendance"},{"id":"19409899","name":"Certificateprogram"},{"id":"19409911","name":"EquipmentOperator"},{"id":"19410681","name":"StudentInternship"},{"id":"19410687","name":"LearningNewSkills"},{"id":"19410688","name":"TrainingClass"},{"id":"19629893","name":"Internship"},{"id":"19757483","name":"Job-Readiness"},{"id":"19791976","name":"OJT"},{"id":"19851921","name":"CCA"},{"id":"19878387","name":"TIM"},{"id":"19878390","name":"CVO"},{"id":"19918481","name":"JobReadiness"},{"id":"19918548","name":"Re-Entry"},{"id":"19918688","name":"Women"},{"id":"20059874","name":"Mailinglist"},{"id":"20388686","name":"County/Municipal"},{"id":"20553619","name":"Design-PI"},{"id":"20553638","name":"Public-Involvement-/-Multimedia"},{"id":"20553639","name":"Public-Involvement-/-Compliance"},{"id":"20553640","name":"Public-Ivolvement"},{"id":"20655437","name":"Multimedia"},{"id":"20881262","name":"AlertToday"},{"id":"21008350","name":"CEI-(PIO-\u0026-RCS)"},{"id":"21008351","name":"Maintenance"},{"id":"21008352","name":"Design/-CEI"},{"id":"21008353","name":"Mkt"},{"id":"21008354","name":"Planning-\u0026-Engineering"},{"id":"21008355","name":"Design---Build"},{"id":"21359092","name":"WF"},{"id":"21359093","name":"Analysis"},{"id":"21359094","name":"GPC"},{"id":"21359095","name":"Videos"},{"id":"21359928","name":"Outreach-/-Mkt"},{"id":"21679400","name":"VTA"},{"id":"21689326","name":"Reentry"},{"id":"21764951","name":"WomeninConstruction"},{"id":"22240800","name":"Davids-Possesion"},{"id":"22240801","name":"Currently-Lost/Broke"},{"id":"22240802","name":"Media-Closet-HQ"},{"id":"22679525","name":"Test-info"},{"id":"22778626","name":"Hired"},{"id":"22778631","name":"JobOffer"},{"id":"22798772","name":"Interview"},{"id":"23227715","name":"SWFFD"},{"id":"23594173","name":"Placed"},{"id":"23595984","name":"Bi-Weekly"}]},"account_id":11070499}
+[08-Aug-2024 23:56:32 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:57:26 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:57:27 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:57:50 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:57:51 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:58:28 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:58:29 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:58:54 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:58:55 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:58:56 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:58:56 UTC] API response body: {"data":{"tags":[{"id":"13588460","name":"Setup"},{"id":"13588461","name":"developers_platform"},{"id":"13588462","name":"Integration"},{"id":"13588463","name":"Notification"},{"id":"13588464","name":"Onboarding"},{"id":"13969910","name":"Retention"},{"id":"13969914","name":"Recruitment"},{"id":"13970482","name":"EmployeeRetention"},{"id":"14888287","name":"Contract"},{"id":"14888309","name":"Branding"},{"id":"14888313","name":"PublicInformation"},{"id":"14888325","name":"Media"},{"id":"14917394","name":"CEI"},{"id":"14917404","name":"Design"},{"id":"14917405","name":"PD\u0026E"},{"id":"14917414","name":"AllTypesConstructionServices"},{"id":"15489566","name":"CommunicationStrategies"},{"id":"16008468","name":"newlocation"},{"id":"16008469","name":"positive"},{"id":"16008470","name":"Food"},{"id":"16123560","name":"District-Six-Districtwide-Communications-Programs-And-Special-Projects"},{"id":"16123561","name":"Fire-Prevention-Campaign"},{"id":"16123562","name":"Marketing"},{"id":"16123563","name":"-Media-Planning-\u0026-Buying"},{"id":"16123564","name":"State-Forest-Recreation-Marketing"},{"id":"16123565","name":"Districtwide-Public-Communications"},{"id":"16123566","name":"CSC-for-Public-Outreach-and-Safety-Technical-Support"},{"id":"16123567","name":"Traffic-Operations"},{"id":"16123568","name":"-Safety-Unit-Communications"},{"id":"16123569","name":"Marketing-Services-Pre-Qualification-Pool"},{"id":"16123570","name":"List-of-GECs"},{"id":"16123571","name":"Workforce-Development"},{"id":"16906456","name":"Aviation"},{"id":"17240391","name":"BikesandPeds"},{"id":"17240393","name":"Citygovernment"},{"id":"17240399","name":"Countygovernment"},{"id":"17240405","name":"FDOT/FTE"},{"id":"17240410","name":"HousingAuthority"},{"id":"17240413","name":"Institutions"},{"id":"17240414","name":"MPO/TPO"},{"id":"17240416","name":"PortsandSpaceports"},{"id":"17240419","name":"PrivateSector"},{"id":"17240422","name":"SchoolSystem"},{"id":"17240424","name":"SolidWaste/Recycling"},{"id":"17240426","name":"Stategovernment"},{"id":"17240430","name":"TollwaysAuthority"},{"id":"17240433","name":"Transit/Rail"},{"id":"17240436","name":"WaterAuthority"},{"id":"17240439","name":"Veterans'Affairs"},{"id":"17240448","name":"AgricultureDeptofFlorida"},{"id":"17240455","name":"ADACompliance"},{"id":"17240460","name":"Advertising"},{"id":"17240463","name":"Animation"},{"id":"17240467","name":"AudioVisual"},{"id":"17240469","name":"Communications"},{"id":"17240474","name":"ConstructionEngineeringandInspection"},{"id":"17240475","name":"CreativeDesignServices"},{"id":"17240480","name":"CrisisCommuncation/Management"},{"id":"17240482","name":"CrisisCommunication/Management"},{"id":"17240497","name":"Design/Build"},{"id":"17240500","name":"Drone"},{"id":"17240502","name":"Education"},{"id":"17240505","name":"EmergencyAwareness"},{"id":"17240506","name":"Evaluations"},{"id":"17240508","name":"EventPlanning"},{"id":"17240510","name":"FocusGroups"},{"id":"17240513","name":"GeneralEngineeringConsultant"},{"id":"17240515","name":"GISservices"},{"id":"17240518","name":"GrantManagement"},{"id":"17240519","name":"HealthServices"},{"id":"17240527","name":"IT/Innovation"},{"id":"17240528","name":"NoiseConsulting"},{"id":"17240534","name":"MarketResearch"},{"id":"17240537","name":"Marketing/CommunicationService"},{"id":"17240567","name":"OperationsAnalysis"},{"id":"17240574","name":"PD\u0026E/Design"},{"id":"17240575","name":"Photography"},{"id":"17240576","name":"Planning/FeasibilityStudy"},{"id":"17240582","name":"PoliticalCampaign"},{"id":"17240583","name":"Printing"},{"id":"17240585","name":"PublicInvolvement"},{"id":"17240587","name":"Publicrelations"},{"id":"17240588","name":"RCSCompliance"},{"id":"17240590","name":"SafetyEducation"},{"id":"17240592","name":"SocialMedia"},{"id":"17240594","name":"StrategicIntermodalSystems(SIS)"},{"id":"17240595","name":"StrategicPlanning"},{"id":"17240597","name":"Survey"},{"id":"17240599","name":"Training"},{"id":"17240600","name":"Video"},{"id":"17240602","name":"Website"},{"id":"17240603","name":"WorkingGroups"},{"id":"17240604","name":"WorkForceDevelopment"},{"id":"17240630","name":"EmergencyManagement"},{"id":"17240632","name":"Finance/Admin"},{"id":"17240633","name":"Turnpike"},{"id":"17240634","name":"Freight"},{"id":"17240635","name":"Rail"},{"id":"17240659","name":"Operations/Maintenance"},{"id":"17240661","name":"Seaports"},{"id":"17240666","name":"Planning"},{"id":"17240667","name":"Transit"},{"id":"17240668","name":"Spaceports"},{"id":"17240683","name":"OperationsMaintenance"},{"id":"17240688","name":"PIO"},{"id":"17240692","name":"Utilities"},{"id":"17240694","name":"Safety"},{"id":"17240702","name":"Research"},{"id":"17240707","name":"TrafficEngineering/Ops"},{"id":"17240708","name":"TransportationTechnology"},{"id":"17240709","name":"GIS"},{"id":"17240715","name":"TransportationData\u0026Analytics"},{"id":"17240718","name":"TransportationInnovation"},{"id":"17240719","name":"FDOTD1"},{"id":"17240721","name":"FDOTD2"},{"id":"17240723","name":"FDOTD3"},{"id":"17240724","name":"FDOTD4"},{"id":"17240725","name":"FDOTD5"},{"id":"17240726","name":"FDOTD6"},{"id":"17240729","name":"FDOTD7"},{"id":"17240731","name":"FLTurnpikeEnterprise"},{"id":"17240734","name":"MediaPlanning/Buying"},{"id":"17240735","name":"CTST"},{"id":"17240736","name":"SafeMobilityForLife"},{"id":"17240741","name":"Multi-modalMobility"},{"id":"17240742","name":"Tourism"},{"id":"17240744","name":"EconomicDevelopment"},{"id":"17240746","name":"ElectricVehicle"},{"id":"17240747","name":"LawEnforcement"},{"id":"17240748","name":"Veterans"},{"id":"17240750","name":"Bicycle/Pedestrian"},{"id":"17240751","name":"Creative/BrandingService"},{"id":"17240753","name":"CommunityOutreach"},{"id":"17240754","name":"DroneServices"},{"id":"17240755","name":"PhotographyServices"},{"id":"17240756","name":"Newsletters"},{"id":"17240757","name":"Surveys/FocusGroups"},{"id":"17240759","name":"EducationalCampaigns"},{"id":"17240762","name":"SocialMediaManagement"},{"id":"17240763","name":"WebsiteServices"},{"id":"17240765","name":"StrategicMKTG\u0026COMMs"},{"id":"17240767","name":"SocialMediaMGMT"},{"id":"17240769","name":"DatabaseMGMT"},{"id":"17240772","name":"Animation/3D"},{"id":"17240774","name":"VoiceoverServices"},{"id":"17240776","name":"EventsSupport"},{"id":"17240778","name":"MediaRelations"},{"id":"17240780","name":"PublicAffairsServices"},{"id":"17240781","name":"Stakeholder/PartnerOutreach"},{"id":"17240782","name":"PublicWorks"},{"id":"17240783","name":"StatewideAgency"},{"id":"17240784","name":"GovernmentAgency"},{"id":"17240785","name":"Nonprofit"},{"id":"17240786","name":"Association"},{"id":"17240788","name":"CrisisCOMMS"},{"id":"17250528","name":"EngineeringFirm"},{"id":"17250535","name":"PADOT"},{"id":"17250543","name":"Transportation"},{"id":"17250589","name":"FDOTCO"},{"id":"18052602","name":"Graphics"},{"id":"18052623","name":"WebDesign"},{"id":"18193313","name":"General-Engineering"},{"id":"18193314","name":"Public-Relations"},{"id":"18194865","name":"MKTG/Comms"},{"id":"18195483","name":"Creative"},{"id":"18383506","name":"GEC"},{"id":"18383507","name":"6.1—-Traffic-Engineering-Studies"},{"id":"18383508","name":"CSC"},{"id":"18383509","name":"PD\u0026E---CSC"},{"id":"18383510","name":"Construction"},{"id":"18383511","name":"Design-Build"},{"id":"18383512","name":"Design\u0026Misc/Services"},{"id":"18383513","name":"Engineering"},{"id":"18383514","name":"Design-/-Contruction"},{"id":"18383515","name":"Design-construction"},{"id":"18383516","name":"13.7—-Transportation-Statistics"},{"id":"18383517","name":"Project-Management"},{"id":"18383518","name":"Study"},{"id":"18383519","name":"-Compliance"},{"id":"18383520","name":"Consulting"},{"id":"18383521","name":"13.3—-Policy-Planning"},{"id":"18383522","name":"13.4—-Systems-Planning"},{"id":"18383523","name":"13.5—-Subarea/Corridor-Planning"},{"id":"18383524","name":"11.0—-Engineering-Contract-Admin.-and-Management"},{"id":"18383525","name":"Design-\u0026-CEI"},{"id":"18383526","name":"Design-\u0026-Construction"},{"id":"18383528","name":"Public-Involvement"},{"id":"18383529","name":"Public-Information"},{"id":"18383530","name":"Public-Outreach"},{"id":"18383531","name":"Admin"},{"id":"18383532","name":"Public-Engagement"},{"id":"18383533","name":"Compliance"},{"id":"18383534","name":"Process-Facilitator-/-Content-Writer"},{"id":"18383535","name":"Community-Engagement"},{"id":"18383536","name":"Public-Outreach-/-Information"},{"id":"18383537","name":"Public-Education-\u0026-Outreach"},{"id":"18383538","name":"Public-Involvement-\u0026-Compliance"},{"id":"18383539","name":"ADA-Compliance"},{"id":"18383540","name":"Public-Information-\u0026-Compliance"},{"id":"18383541","name":"Outreach-and-Education"},{"id":"18383542","name":"RCS"},{"id":"18383543","name":"CSS"},{"id":"18383577","name":"Architecture"},{"id":"18383578","name":"Compl"},{"id":"18383579","name":"Secretary/Clerical"},{"id":"18383580","name":"Graphic-Design"},{"id":"18899611","name":"OnBoard4Jobs"},{"id":"18899616","name":"SWWFD"},{"id":"18908969","name":"SWFD"},{"id":"19375778","name":"[[\\"},{"id":"19375780","name":"Veterans\\]"},{"id":"19375781","name":"]"},{"id":"19375782","name":"Employment-Opportunity\\,\\"},{"id":"19375783","name":"Event-Attendance\\]"},{"id":"19375784","name":"Employment-Opportunity\\]"},{"id":"19375785","name":"Indeed-Posting\\,\\"},{"id":"19375786","name":"Training-class-\\]"},{"id":"19375787","name":"Event-Attendance\\,\\"},{"id":"19375788","name":"Indeed-Posting\\]"},{"id":"19375789","name":"Florida-Road-Jobs\\,\\"},{"id":"19375790","name":"Roads-to-Jobs-Skills-Program\\]"},{"id":"19375791","name":"Summer-internship\\]"},{"id":"19375792","name":"Learning-new-skills-\\]"},{"id":"19375793","name":"Certificate-program"},{"id":"19375794","name":"Equipment-operatior\\]"},{"id":"19376248","name":"Employ"},{"id":"19409884","name":"FloridaRoadJobs"},{"id":"19409886","name":"RoadstoJobsSkillsProgram"},{"id":"19409888","name":"EmploymentOpportunity"},{"id":"19409890","name":"IndeedPosting"},{"id":"19409895","name":"EventAttendance"},{"id":"19409899","name":"Certificateprogram"},{"id":"19409911","name":"EquipmentOperator"},{"id":"19410681","name":"StudentInternship"},{"id":"19410687","name":"LearningNewSkills"},{"id":"19410688","name":"TrainingClass"},{"id":"19629893","name":"Internship"},{"id":"19757483","name":"Job-Readiness"},{"id":"19791976","name":"OJT"},{"id":"19851921","name":"CCA"},{"id":"19878387","name":"TIM"},{"id":"19878390","name":"CVO"},{"id":"19918481","name":"JobReadiness"},{"id":"19918548","name":"Re-Entry"},{"id":"19918688","name":"Women"},{"id":"20059874","name":"Mailinglist"},{"id":"20388686","name":"County/Municipal"},{"id":"20553619","name":"Design-PI"},{"id":"20553638","name":"Public-Involvement-/-Multimedia"},{"id":"20553639","name":"Public-Involvement-/-Compliance"},{"id":"20553640","name":"Public-Ivolvement"},{"id":"20655437","name":"Multimedia"},{"id":"20881262","name":"AlertToday"},{"id":"21008350","name":"CEI-(PIO-\u0026-RCS)"},{"id":"21008351","name":"Maintenance"},{"id":"21008352","name":"Design/-CEI"},{"id":"21008353","name":"Mkt"},{"id":"21008354","name":"Planning-\u0026-Engineering"},{"id":"21008355","name":"Design---Build"},{"id":"21359092","name":"WF"},{"id":"21359093","name":"Analysis"},{"id":"21359094","name":"GPC"},{"id":"21359095","name":"Videos"},{"id":"21359928","name":"Outreach-/-Mkt"},{"id":"21679400","name":"VTA"},{"id":"21689326","name":"Reentry"},{"id":"21764951","name":"WomeninConstruction"},{"id":"22240800","name":"Davids-Possesion"},{"id":"22240801","name":"Currently-Lost/Broke"},{"id":"22240802","name":"Media-Closet-HQ"},{"id":"22679525","name":"Test-info"},{"id":"22778626","name":"Hired"},{"id":"22778631","name":"JobOffer"},{"id":"22798772","name":"Interview"},{"id":"23227715","name":"SWFFD"},{"id":"23594173","name":"Placed"},{"id":"23595984","name":"Bi-Weekly"}]},"account_id":11070499}
+[08-Aug-2024 23:58:57 UTC] PHP Warning:  Undefined variable $boards in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 551
+[08-Aug-2024 23:58:58 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:02 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:03 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:22 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:23 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:24 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:24 UTC] API response body: {"data":{"tags":[{"id":"13588460","name":"Setup"},{"id":"13588461","name":"developers_platform"},{"id":"13588462","name":"Integration"},{"id":"13588463","name":"Notification"},{"id":"13588464","name":"Onboarding"},{"id":"13969910","name":"Retention"},{"id":"13969914","name":"Recruitment"},{"id":"13970482","name":"EmployeeRetention"},{"id":"14888287","name":"Contract"},{"id":"14888309","name":"Branding"},{"id":"14888313","name":"PublicInformation"},{"id":"14888325","name":"Media"},{"id":"14917394","name":"CEI"},{"id":"14917404","name":"Design"},{"id":"14917405","name":"PD\u0026E"},{"id":"14917414","name":"AllTypesConstructionServices"},{"id":"15489566","name":"CommunicationStrategies"},{"id":"16008468","name":"newlocation"},{"id":"16008469","name":"positive"},{"id":"16008470","name":"Food"},{"id":"16123560","name":"District-Six-Districtwide-Communications-Programs-And-Special-Projects"},{"id":"16123561","name":"Fire-Prevention-Campaign"},{"id":"16123562","name":"Marketing"},{"id":"16123563","name":"-Media-Planning-\u0026-Buying"},{"id":"16123564","name":"State-Forest-Recreation-Marketing"},{"id":"16123565","name":"Districtwide-Public-Communications"},{"id":"16123566","name":"CSC-for-Public-Outreach-and-Safety-Technical-Support"},{"id":"16123567","name":"Traffic-Operations"},{"id":"16123568","name":"-Safety-Unit-Communications"},{"id":"16123569","name":"Marketing-Services-Pre-Qualification-Pool"},{"id":"16123570","name":"List-of-GECs"},{"id":"16123571","name":"Workforce-Development"},{"id":"16906456","name":"Aviation"},{"id":"17240391","name":"BikesandPeds"},{"id":"17240393","name":"Citygovernment"},{"id":"17240399","name":"Countygovernment"},{"id":"17240405","name":"FDOT/FTE"},{"id":"17240410","name":"HousingAuthority"},{"id":"17240413","name":"Institutions"},{"id":"17240414","name":"MPO/TPO"},{"id":"17240416","name":"PortsandSpaceports"},{"id":"17240419","name":"PrivateSector"},{"id":"17240422","name":"SchoolSystem"},{"id":"17240424","name":"SolidWaste/Recycling"},{"id":"17240426","name":"Stategovernment"},{"id":"17240430","name":"TollwaysAuthority"},{"id":"17240433","name":"Transit/Rail"},{"id":"17240436","name":"WaterAuthority"},{"id":"17240439","name":"Veterans'Affairs"},{"id":"17240448","name":"AgricultureDeptofFlorida"},{"id":"17240455","name":"ADACompliance"},{"id":"17240460","name":"Advertising"},{"id":"17240463","name":"Animation"},{"id":"17240467","name":"AudioVisual"},{"id":"17240469","name":"Communications"},{"id":"17240474","name":"ConstructionEngineeringandInspection"},{"id":"17240475","name":"CreativeDesignServices"},{"id":"17240480","name":"CrisisCommuncation/Management"},{"id":"17240482","name":"CrisisCommunication/Management"},{"id":"17240497","name":"Design/Build"},{"id":"17240500","name":"Drone"},{"id":"17240502","name":"Education"},{"id":"17240505","name":"EmergencyAwareness"},{"id":"17240506","name":"Evaluations"},{"id":"17240508","name":"EventPlanning"},{"id":"17240510","name":"FocusGroups"},{"id":"17240513","name":"GeneralEngineeringConsultant"},{"id":"17240515","name":"GISservices"},{"id":"17240518","name":"GrantManagement"},{"id":"17240519","name":"HealthServices"},{"id":"17240527","name":"IT/Innovation"},{"id":"17240528","name":"NoiseConsulting"},{"id":"17240534","name":"MarketResearch"},{"id":"17240537","name":"Marketing/CommunicationService"},{"id":"17240567","name":"OperationsAnalysis"},{"id":"17240574","name":"PD\u0026E/Design"},{"id":"17240575","name":"Photography"},{"id":"17240576","name":"Planning/FeasibilityStudy"},{"id":"17240582","name":"PoliticalCampaign"},{"id":"17240583","name":"Printing"},{"id":"17240585","name":"PublicInvolvement"},{"id":"17240587","name":"Publicrelations"},{"id":"17240588","name":"RCSCompliance"},{"id":"17240590","name":"SafetyEducation"},{"id":"17240592","name":"SocialMedia"},{"id":"17240594","name":"StrategicIntermodalSystems(SIS)"},{"id":"17240595","name":"StrategicPlanning"},{"id":"17240597","name":"Survey"},{"id":"17240599","name":"Training"},{"id":"17240600","name":"Video"},{"id":"17240602","name":"Website"},{"id":"17240603","name":"WorkingGroups"},{"id":"17240604","name":"WorkForceDevelopment"},{"id":"17240630","name":"EmergencyManagement"},{"id":"17240632","name":"Finance/Admin"},{"id":"17240633","name":"Turnpike"},{"id":"17240634","name":"Freight"},{"id":"17240635","name":"Rail"},{"id":"17240659","name":"Operations/Maintenance"},{"id":"17240661","name":"Seaports"},{"id":"17240666","name":"Planning"},{"id":"17240667","name":"Transit"},{"id":"17240668","name":"Spaceports"},{"id":"17240683","name":"OperationsMaintenance"},{"id":"17240688","name":"PIO"},{"id":"17240692","name":"Utilities"},{"id":"17240694","name":"Safety"},{"id":"17240702","name":"Research"},{"id":"17240707","name":"TrafficEngineering/Ops"},{"id":"17240708","name":"TransportationTechnology"},{"id":"17240709","name":"GIS"},{"id":"17240715","name":"TransportationData\u0026Analytics"},{"id":"17240718","name":"TransportationInnovation"},{"id":"17240719","name":"FDOTD1"},{"id":"17240721","name":"FDOTD2"},{"id":"17240723","name":"FDOTD3"},{"id":"17240724","name":"FDOTD4"},{"id":"17240725","name":"FDOTD5"},{"id":"17240726","name":"FDOTD6"},{"id":"17240729","name":"FDOTD7"},{"id":"17240731","name":"FLTurnpikeEnterprise"},{"id":"17240734","name":"MediaPlanning/Buying"},{"id":"17240735","name":"CTST"},{"id":"17240736","name":"SafeMobilityForLife"},{"id":"17240741","name":"Multi-modalMobility"},{"id":"17240742","name":"Tourism"},{"id":"17240744","name":"EconomicDevelopment"},{"id":"17240746","name":"ElectricVehicle"},{"id":"17240747","name":"LawEnforcement"},{"id":"17240748","name":"Veterans"},{"id":"17240750","name":"Bicycle/Pedestrian"},{"id":"17240751","name":"Creative/BrandingService"},{"id":"17240753","name":"CommunityOutreach"},{"id":"17240754","name":"DroneServices"},{"id":"17240755","name":"PhotographyServices"},{"id":"17240756","name":"Newsletters"},{"id":"17240757","name":"Surveys/FocusGroups"},{"id":"17240759","name":"EducationalCampaigns"},{"id":"17240762","name":"SocialMediaManagement"},{"id":"17240763","name":"WebsiteServices"},{"id":"17240765","name":"StrategicMKTG\u0026COMMs"},{"id":"17240767","name":"SocialMediaMGMT"},{"id":"17240769","name":"DatabaseMGMT"},{"id":"17240772","name":"Animation/3D"},{"id":"17240774","name":"VoiceoverServices"},{"id":"17240776","name":"EventsSupport"},{"id":"17240778","name":"MediaRelations"},{"id":"17240780","name":"PublicAffairsServices"},{"id":"17240781","name":"Stakeholder/PartnerOutreach"},{"id":"17240782","name":"PublicWorks"},{"id":"17240783","name":"StatewideAgency"},{"id":"17240784","name":"GovernmentAgency"},{"id":"17240785","name":"Nonprofit"},{"id":"17240786","name":"Association"},{"id":"17240788","name":"CrisisCOMMS"},{"id":"17250528","name":"EngineeringFirm"},{"id":"17250535","name":"PADOT"},{"id":"17250543","name":"Transportation"},{"id":"17250589","name":"FDOTCO"},{"id":"18052602","name":"Graphics"},{"id":"18052623","name":"WebDesign"},{"id":"18193313","name":"General-Engineering"},{"id":"18193314","name":"Public-Relations"},{"id":"18194865","name":"MKTG/Comms"},{"id":"18195483","name":"Creative"},{"id":"18383506","name":"GEC"},{"id":"18383507","name":"6.1—-Traffic-Engineering-Studies"},{"id":"18383508","name":"CSC"},{"id":"18383509","name":"PD\u0026E---CSC"},{"id":"18383510","name":"Construction"},{"id":"18383511","name":"Design-Build"},{"id":"18383512","name":"Design\u0026Misc/Services"},{"id":"18383513","name":"Engineering"},{"id":"18383514","name":"Design-/-Contruction"},{"id":"18383515","name":"Design-construction"},{"id":"18383516","name":"13.7—-Transportation-Statistics"},{"id":"18383517","name":"Project-Management"},{"id":"18383518","name":"Study"},{"id":"18383519","name":"-Compliance"},{"id":"18383520","name":"Consulting"},{"id":"18383521","name":"13.3—-Policy-Planning"},{"id":"18383522","name":"13.4—-Systems-Planning"},{"id":"18383523","name":"13.5—-Subarea/Corridor-Planning"},{"id":"18383524","name":"11.0—-Engineering-Contract-Admin.-and-Management"},{"id":"18383525","name":"Design-\u0026-CEI"},{"id":"18383526","name":"Design-\u0026-Construction"},{"id":"18383528","name":"Public-Involvement"},{"id":"18383529","name":"Public-Information"},{"id":"18383530","name":"Public-Outreach"},{"id":"18383531","name":"Admin"},{"id":"18383532","name":"Public-Engagement"},{"id":"18383533","name":"Compliance"},{"id":"18383534","name":"Process-Facilitator-/-Content-Writer"},{"id":"18383535","name":"Community-Engagement"},{"id":"18383536","name":"Public-Outreach-/-Information"},{"id":"18383537","name":"Public-Education-\u0026-Outreach"},{"id":"18383538","name":"Public-Involvement-\u0026-Compliance"},{"id":"18383539","name":"ADA-Compliance"},{"id":"18383540","name":"Public-Information-\u0026-Compliance"},{"id":"18383541","name":"Outreach-and-Education"},{"id":"18383542","name":"RCS"},{"id":"18383543","name":"CSS"},{"id":"18383577","name":"Architecture"},{"id":"18383578","name":"Compl"},{"id":"18383579","name":"Secretary/Clerical"},{"id":"18383580","name":"Graphic-Design"},{"id":"18899611","name":"OnBoard4Jobs"},{"id":"18899616","name":"SWWFD"},{"id":"18908969","name":"SWFD"},{"id":"19375778","name":"[[\\"},{"id":"19375780","name":"Veterans\\]"},{"id":"19375781","name":"]"},{"id":"19375782","name":"Employment-Opportunity\\,\\"},{"id":"19375783","name":"Event-Attendance\\]"},{"id":"19375784","name":"Employment-Opportunity\\]"},{"id":"19375785","name":"Indeed-Posting\\,\\"},{"id":"19375786","name":"Training-class-\\]"},{"id":"19375787","name":"Event-Attendance\\,\\"},{"id":"19375788","name":"Indeed-Posting\\]"},{"id":"19375789","name":"Florida-Road-Jobs\\,\\"},{"id":"19375790","name":"Roads-to-Jobs-Skills-Program\\]"},{"id":"19375791","name":"Summer-internship\\]"},{"id":"19375792","name":"Learning-new-skills-\\]"},{"id":"19375793","name":"Certificate-program"},{"id":"19375794","name":"Equipment-operatior\\]"},{"id":"19376248","name":"Employ"},{"id":"19409884","name":"FloridaRoadJobs"},{"id":"19409886","name":"RoadstoJobsSkillsProgram"},{"id":"19409888","name":"EmploymentOpportunity"},{"id":"19409890","name":"IndeedPosting"},{"id":"19409895","name":"EventAttendance"},{"id":"19409899","name":"Certificateprogram"},{"id":"19409911","name":"EquipmentOperator"},{"id":"19410681","name":"StudentInternship"},{"id":"19410687","name":"LearningNewSkills"},{"id":"19410688","name":"TrainingClass"},{"id":"19629893","name":"Internship"},{"id":"19757483","name":"Job-Readiness"},{"id":"19791976","name":"OJT"},{"id":"19851921","name":"CCA"},{"id":"19878387","name":"TIM"},{"id":"19878390","name":"CVO"},{"id":"19918481","name":"JobReadiness"},{"id":"19918548","name":"Re-Entry"},{"id":"19918688","name":"Women"},{"id":"20059874","name":"Mailinglist"},{"id":"20388686","name":"County/Municipal"},{"id":"20553619","name":"Design-PI"},{"id":"20553638","name":"Public-Involvement-/-Multimedia"},{"id":"20553639","name":"Public-Involvement-/-Compliance"},{"id":"20553640","name":"Public-Ivolvement"},{"id":"20655437","name":"Multimedia"},{"id":"20881262","name":"AlertToday"},{"id":"21008350","name":"CEI-(PIO-\u0026-RCS)"},{"id":"21008351","name":"Maintenance"},{"id":"21008352","name":"Design/-CEI"},{"id":"21008353","name":"Mkt"},{"id":"21008354","name":"Planning-\u0026-Engineering"},{"id":"21008355","name":"Design---Build"},{"id":"21359092","name":"WF"},{"id":"21359093","name":"Analysis"},{"id":"21359094","name":"GPC"},{"id":"21359095","name":"Videos"},{"id":"21359928","name":"Outreach-/-Mkt"},{"id":"21679400","name":"VTA"},{"id":"21689326","name":"Reentry"},{"id":"21764951","name":"WomeninConstruction"},{"id":"22240800","name":"Davids-Possesion"},{"id":"22240801","name":"Currently-Lost/Broke"},{"id":"22240802","name":"Media-Closet-HQ"},{"id":"22679525","name":"Test-info"},{"id":"22778626","name":"Hired"},{"id":"22778631","name":"JobOffer"},{"id":"22798772","name":"Interview"},{"id":"23227715","name":"SWFFD"},{"id":"23594173","name":"Placed"},{"id":"23595984","name":"Bi-Weekly"}]},"account_id":11070499}
+[08-Aug-2024 23:59:24 UTC] PHP Warning:  Undefined variable $boards in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 551
+[08-Aug-2024 23:59:25 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:35 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:37 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:50 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:51 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:52 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:52 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:53 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:53 UTC] API response body: {"data":{"tags":[{"id":"13588460","name":"Setup"},{"id":"13588461","name":"developers_platform"},{"id":"13588462","name":"Integration"},{"id":"13588463","name":"Notification"},{"id":"13588464","name":"Onboarding"},{"id":"13969910","name":"Retention"},{"id":"13969914","name":"Recruitment"},{"id":"13970482","name":"EmployeeRetention"},{"id":"14888287","name":"Contract"},{"id":"14888309","name":"Branding"},{"id":"14888313","name":"PublicInformation"},{"id":"14888325","name":"Media"},{"id":"14917394","name":"CEI"},{"id":"14917404","name":"Design"},{"id":"14917405","name":"PD\u0026E"},{"id":"14917414","name":"AllTypesConstructionServices"},{"id":"15489566","name":"CommunicationStrategies"},{"id":"16008468","name":"newlocation"},{"id":"16008469","name":"positive"},{"id":"16008470","name":"Food"},{"id":"16123560","name":"District-Six-Districtwide-Communications-Programs-And-Special-Projects"},{"id":"16123561","name":"Fire-Prevention-Campaign"},{"id":"16123562","name":"Marketing"},{"id":"16123563","name":"-Media-Planning-\u0026-Buying"},{"id":"16123564","name":"State-Forest-Recreation-Marketing"},{"id":"16123565","name":"Districtwide-Public-Communications"},{"id":"16123566","name":"CSC-for-Public-Outreach-and-Safety-Technical-Support"},{"id":"16123567","name":"Traffic-Operations"},{"id":"16123568","name":"-Safety-Unit-Communications"},{"id":"16123569","name":"Marketing-Services-Pre-Qualification-Pool"},{"id":"16123570","name":"List-of-GECs"},{"id":"16123571","name":"Workforce-Development"},{"id":"16906456","name":"Aviation"},{"id":"17240391","name":"BikesandPeds"},{"id":"17240393","name":"Citygovernment"},{"id":"17240399","name":"Countygovernment"},{"id":"17240405","name":"FDOT/FTE"},{"id":"17240410","name":"HousingAuthority"},{"id":"17240413","name":"Institutions"},{"id":"17240414","name":"MPO/TPO"},{"id":"17240416","name":"PortsandSpaceports"},{"id":"17240419","name":"PrivateSector"},{"id":"17240422","name":"SchoolSystem"},{"id":"17240424","name":"SolidWaste/Recycling"},{"id":"17240426","name":"Stategovernment"},{"id":"17240430","name":"TollwaysAuthority"},{"id":"17240433","name":"Transit/Rail"},{"id":"17240436","name":"WaterAuthority"},{"id":"17240439","name":"Veterans'Affairs"},{"id":"17240448","name":"AgricultureDeptofFlorida"},{"id":"17240455","name":"ADACompliance"},{"id":"17240460","name":"Advertising"},{"id":"17240463","name":"Animation"},{"id":"17240467","name":"AudioVisual"},{"id":"17240469","name":"Communications"},{"id":"17240474","name":"ConstructionEngineeringandInspection"},{"id":"17240475","name":"CreativeDesignServices"},{"id":"17240480","name":"CrisisCommuncation/Management"},{"id":"17240482","name":"CrisisCommunication/Management"},{"id":"17240497","name":"Design/Build"},{"id":"17240500","name":"Drone"},{"id":"17240502","name":"Education"},{"id":"17240505","name":"EmergencyAwareness"},{"id":"17240506","name":"Evaluations"},{"id":"17240508","name":"EventPlanning"},{"id":"17240510","name":"FocusGroups"},{"id":"17240513","name":"GeneralEngineeringConsultant"},{"id":"17240515","name":"GISservices"},{"id":"17240518","name":"GrantManagement"},{"id":"17240519","name":"HealthServices"},{"id":"17240527","name":"IT/Innovation"},{"id":"17240528","name":"NoiseConsulting"},{"id":"17240534","name":"MarketResearch"},{"id":"17240537","name":"Marketing/CommunicationService"},{"id":"17240567","name":"OperationsAnalysis"},{"id":"17240574","name":"PD\u0026E/Design"},{"id":"17240575","name":"Photography"},{"id":"17240576","name":"Planning/FeasibilityStudy"},{"id":"17240582","name":"PoliticalCampaign"},{"id":"17240583","name":"Printing"},{"id":"17240585","name":"PublicInvolvement"},{"id":"17240587","name":"Publicrelations"},{"id":"17240588","name":"RCSCompliance"},{"id":"17240590","name":"SafetyEducation"},{"id":"17240592","name":"SocialMedia"},{"id":"17240594","name":"StrategicIntermodalSystems(SIS)"},{"id":"17240595","name":"StrategicPlanning"},{"id":"17240597","name":"Survey"},{"id":"17240599","name":"Training"},{"id":"17240600","name":"Video"},{"id":"17240602","name":"Website"},{"id":"17240603","name":"WorkingGroups"},{"id":"17240604","name":"WorkForceDevelopment"},{"id":"17240630","name":"EmergencyManagement"},{"id":"17240632","name":"Finance/Admin"},{"id":"17240633","name":"Turnpike"},{"id":"17240634","name":"Freight"},{"id":"17240635","name":"Rail"},{"id":"17240659","name":"Operations/Maintenance"},{"id":"17240661","name":"Seaports"},{"id":"17240666","name":"Planning"},{"id":"17240667","name":"Transit"},{"id":"17240668","name":"Spaceports"},{"id":"17240683","name":"OperationsMaintenance"},{"id":"17240688","name":"PIO"},{"id":"17240692","name":"Utilities"},{"id":"17240694","name":"Safety"},{"id":"17240702","name":"Research"},{"id":"17240707","name":"TrafficEngineering/Ops"},{"id":"17240708","name":"TransportationTechnology"},{"id":"17240709","name":"GIS"},{"id":"17240715","name":"TransportationData\u0026Analytics"},{"id":"17240718","name":"TransportationInnovation"},{"id":"17240719","name":"FDOTD1"},{"id":"17240721","name":"FDOTD2"},{"id":"17240723","name":"FDOTD3"},{"id":"17240724","name":"FDOTD4"},{"id":"17240725","name":"FDOTD5"},{"id":"17240726","name":"FDOTD6"},{"id":"17240729","name":"FDOTD7"},{"id":"17240731","name":"FLTurnpikeEnterprise"},{"id":"17240734","name":"MediaPlanning/Buying"},{"id":"17240735","name":"CTST"},{"id":"17240736","name":"SafeMobilityForLife"},{"id":"17240741","name":"Multi-modalMobility"},{"id":"17240742","name":"Tourism"},{"id":"17240744","name":"EconomicDevelopment"},{"id":"17240746","name":"ElectricVehicle"},{"id":"17240747","name":"LawEnforcement"},{"id":"17240748","name":"Veterans"},{"id":"17240750","name":"Bicycle/Pedestrian"},{"id":"17240751","name":"Creative/BrandingService"},{"id":"17240753","name":"CommunityOutreach"},{"id":"17240754","name":"DroneServices"},{"id":"17240755","name":"PhotographyServices"},{"id":"17240756","name":"Newsletters"},{"id":"17240757","name":"Surveys/FocusGroups"},{"id":"17240759","name":"EducationalCampaigns"},{"id":"17240762","name":"SocialMediaManagement"},{"id":"17240763","name":"WebsiteServices"},{"id":"17240765","name":"StrategicMKTG\u0026COMMs"},{"id":"17240767","name":"SocialMediaMGMT"},{"id":"17240769","name":"DatabaseMGMT"},{"id":"17240772","name":"Animation/3D"},{"id":"17240774","name":"VoiceoverServices"},{"id":"17240776","name":"EventsSupport"},{"id":"17240778","name":"MediaRelations"},{"id":"17240780","name":"PublicAffairsServices"},{"id":"17240781","name":"Stakeholder/PartnerOutreach"},{"id":"17240782","name":"PublicWorks"},{"id":"17240783","name":"StatewideAgency"},{"id":"17240784","name":"GovernmentAgency"},{"id":"17240785","name":"Nonprofit"},{"id":"17240786","name":"Association"},{"id":"17240788","name":"CrisisCOMMS"},{"id":"17250528","name":"EngineeringFirm"},{"id":"17250535","name":"PADOT"},{"id":"17250543","name":"Transportation"},{"id":"17250589","name":"FDOTCO"},{"id":"18052602","name":"Graphics"},{"id":"18052623","name":"WebDesign"},{"id":"18193313","name":"General-Engineering"},{"id":"18193314","name":"Public-Relations"},{"id":"18194865","name":"MKTG/Comms"},{"id":"18195483","name":"Creative"},{"id":"18383506","name":"GEC"},{"id":"18383507","name":"6.1—-Traffic-Engineering-Studies"},{"id":"18383508","name":"CSC"},{"id":"18383509","name":"PD\u0026E---CSC"},{"id":"18383510","name":"Construction"},{"id":"18383511","name":"Design-Build"},{"id":"18383512","name":"Design\u0026Misc/Services"},{"id":"18383513","name":"Engineering"},{"id":"18383514","name":"Design-/-Contruction"},{"id":"18383515","name":"Design-construction"},{"id":"18383516","name":"13.7—-Transportation-Statistics"},{"id":"18383517","name":"Project-Management"},{"id":"18383518","name":"Study"},{"id":"18383519","name":"-Compliance"},{"id":"18383520","name":"Consulting"},{"id":"18383521","name":"13.3—-Policy-Planning"},{"id":"18383522","name":"13.4—-Systems-Planning"},{"id":"18383523","name":"13.5—-Subarea/Corridor-Planning"},{"id":"18383524","name":"11.0—-Engineering-Contract-Admin.-and-Management"},{"id":"18383525","name":"Design-\u0026-CEI"},{"id":"18383526","name":"Design-\u0026-Construction"},{"id":"18383528","name":"Public-Involvement"},{"id":"18383529","name":"Public-Information"},{"id":"18383530","name":"Public-Outreach"},{"id":"18383531","name":"Admin"},{"id":"18383532","name":"Public-Engagement"},{"id":"18383533","name":"Compliance"},{"id":"18383534","name":"Process-Facilitator-/-Content-Writer"},{"id":"18383535","name":"Community-Engagement"},{"id":"18383536","name":"Public-Outreach-/-Information"},{"id":"18383537","name":"Public-Education-\u0026-Outreach"},{"id":"18383538","name":"Public-Involvement-\u0026-Compliance"},{"id":"18383539","name":"ADA-Compliance"},{"id":"18383540","name":"Public-Information-\u0026-Compliance"},{"id":"18383541","name":"Outreach-and-Education"},{"id":"18383542","name":"RCS"},{"id":"18383543","name":"CSS"},{"id":"18383577","name":"Architecture"},{"id":"18383578","name":"Compl"},{"id":"18383579","name":"Secretary/Clerical"},{"id":"18383580","name":"Graphic-Design"},{"id":"18899611","name":"OnBoard4Jobs"},{"id":"18899616","name":"SWWFD"},{"id":"18908969","name":"SWFD"},{"id":"19375778","name":"[[\\"},{"id":"19375780","name":"Veterans\\]"},{"id":"19375781","name":"]"},{"id":"19375782","name":"Employment-Opportunity\\,\\"},{"id":"19375783","name":"Event-Attendance\\]"},{"id":"19375784","name":"Employment-Opportunity\\]"},{"id":"19375785","name":"Indeed-Posting\\,\\"},{"id":"19375786","name":"Training-class-\\]"},{"id":"19375787","name":"Event-Attendance\\,\\"},{"id":"19375788","name":"Indeed-Posting\\]"},{"id":"19375789","name":"Florida-Road-Jobs\\,\\"},{"id":"19375790","name":"Roads-to-Jobs-Skills-Program\\]"},{"id":"19375791","name":"Summer-internship\\]"},{"id":"19375792","name":"Learning-new-skills-\\]"},{"id":"19375793","name":"Certificate-program"},{"id":"19375794","name":"Equipment-operatior\\]"},{"id":"19376248","name":"Employ"},{"id":"19409884","name":"FloridaRoadJobs"},{"id":"19409886","name":"RoadstoJobsSkillsProgram"},{"id":"19409888","name":"EmploymentOpportunity"},{"id":"19409890","name":"IndeedPosting"},{"id":"19409895","name":"EventAttendance"},{"id":"19409899","name":"Certificateprogram"},{"id":"19409911","name":"EquipmentOperator"},{"id":"19410681","name":"StudentInternship"},{"id":"19410687","name":"LearningNewSkills"},{"id":"19410688","name":"TrainingClass"},{"id":"19629893","name":"Internship"},{"id":"19757483","name":"Job-Readiness"},{"id":"19791976","name":"OJT"},{"id":"19851921","name":"CCA"},{"id":"19878387","name":"TIM"},{"id":"19878390","name":"CVO"},{"id":"19918481","name":"JobReadiness"},{"id":"19918548","name":"Re-Entry"},{"id":"19918688","name":"Women"},{"id":"20059874","name":"Mailinglist"},{"id":"20388686","name":"County/Municipal"},{"id":"20553619","name":"Design-PI"},{"id":"20553638","name":"Public-Involvement-/-Multimedia"},{"id":"20553639","name":"Public-Involvement-/-Compliance"},{"id":"20553640","name":"Public-Ivolvement"},{"id":"20655437","name":"Multimedia"},{"id":"20881262","name":"AlertToday"},{"id":"21008350","name":"CEI-(PIO-\u0026-RCS)"},{"id":"21008351","name":"Maintenance"},{"id":"21008352","name":"Design/-CEI"},{"id":"21008353","name":"Mkt"},{"id":"21008354","name":"Planning-\u0026-Engineering"},{"id":"21008355","name":"Design---Build"},{"id":"21359092","name":"WF"},{"id":"21359093","name":"Analysis"},{"id":"21359094","name":"GPC"},{"id":"21359095","name":"Videos"},{"id":"21359928","name":"Outreach-/-Mkt"},{"id":"21679400","name":"VTA"},{"id":"21689326","name":"Reentry"},{"id":"21764951","name":"WomeninConstruction"},{"id":"22240800","name":"Davids-Possesion"},{"id":"22240801","name":"Currently-Lost/Broke"},{"id":"22240802","name":"Media-Closet-HQ"},{"id":"22679525","name":"Test-info"},{"id":"22778626","name":"Hired"},{"id":"22778631","name":"JobOffer"},{"id":"22798772","name":"Interview"},{"id":"23227715","name":"SWFFD"},{"id":"23594173","name":"Placed"},{"id":"23595984","name":"Bi-Weekly"}]},"account_id":11070499}
+[08-Aug-2024 23:59:56 UTC] WPF_Lite_Helper::handle_webhooks()
+[08-Aug-2024 23:59:58 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:00:15 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:00:16 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:00:17 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:00:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:00:21 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:00:23 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:01:23 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:01:23 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:01:52 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:01:52 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:01:53 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:01:55 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:02:20 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:02:20 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:02:21 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:02:28 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:02:31 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:03:02 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:03:02 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:03:03 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:03:04 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:03:05 UTC] PHP Warning:  Undefined variable $boards in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 554
+[09-Aug-2024 00:03:06 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:03:08 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:03:27 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:03:29 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:03:52 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:03:53 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:04:29 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:04:30 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:05:29 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:05:30 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:05:53 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:05:54 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:06:29 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:06:30 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:07:29 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:07:30 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:07:31 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:09:30 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:09:31 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:10:04 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:10:08 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:10:08 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:10:09 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:10:10 UTC] PHP Warning:  Undefined variable $boards in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 554
+[09-Aug-2024 00:10:10 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:10:12 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:10:14 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:11:14 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:11:14 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:12:14 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:12:15 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:14:15 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:14:16 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:16:16 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:16:17 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:18:17 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:18:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:20:00 UTC] PHP Warning:  require_once(/var/www/html/wp-content/plugins/wp-fusion-mondayincludes/admin/admin-functions.php): Failed to open stream: No such file or directory in /var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php on line 46
+[09-Aug-2024 00:20:00 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/var/www/html/wp-content/plugins/wp-fusion-mondayincludes/admin/admin-functions.php' (include_path='.:') in /var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php:46
 Stack trace:
-#0 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(77, Object(WP_Post), Object(WP_Post))
-#1 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#2 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#3 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 77, Object(WP_Post), Object(WP_Post))
-#4 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
-#5 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
-#6 /var/www/html/wp-admin/post.php(227): edit_post()
-#7 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 302
-[05-Aug-2024 23:51:53 UTC] PHP Fatal error:  Uncaught Error: Cannot use object of type WP_Post as array in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php:294
+#0 /var/www/html/wp-settings.php(522): include_once()
+#1 /var/www/html/wp-config.php(96): require_once('/var/www/html/w...')
+#2 /var/www/html/wp-load.php(50): require_once('/var/www/html/w...')
+#3 /var/www/html/wp-admin/admin-ajax.php(22): require_once('/var/www/html/w...')
+#4 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php on line 46
+[09-Aug-2024 00:20:01 UTC] PHP Warning:  require_once(/var/www/html/wp-content/plugins/wp-fusion-mondayincludes/admin/admin-functions.php): Failed to open stream: No such file or directory in /var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php on line 46
+[09-Aug-2024 00:20:01 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/var/www/html/wp-content/plugins/wp-fusion-mondayincludes/admin/admin-functions.php' (include_path='.:') in /var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php:46
 Stack trace:
-#0 /var/www/html/wp-includes/class-wp-hook.php(324): WPF_Post_Type_Sync_Integration->post_updated(77, Object(WP_Post), Object(WP_Post))
-#1 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
-#2 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#3 /var/www/html/wp-includes/post.php(4860): do_action('post_updated', 77, Object(WP_Post), Object(WP_Post))
-#4 /var/www/html/wp-includes/post.php(4993): wp_insert_post(Array, false, true)
-#5 /var/www/html/wp-admin/includes/post.php(453): wp_update_post(Array)
-#6 /var/www/html/wp-admin/post.php(227): edit_post()
-#7 {main}
-  thrown in /var/www/html/wp-content/plugins/wp-fusion-post-types/includes/class-post-types.php on line 294
+#0 /var/www/html/wp-settings.php(522): include_once()
+#1 /var/www/html/wp-config.php(96): require_once('/var/www/html/w...')
+#2 /var/www/html/wp-load.php(50): require_once('/var/www/html/w...')
+#3 /var/www/html/wp-admin/admin-ajax.php(22): require_once('/var/www/html/w...')
+#4 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php on line 46
+[09-Aug-2024 00:20:01 UTC] PHP Warning:  require_once(/var/www/html/wp-content/plugins/wp-fusion-mondayincludes/admin/admin-functions.php): Failed to open stream: No such file or directory in /var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php on line 46
+[09-Aug-2024 00:20:01 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/var/www/html/wp-content/plugins/wp-fusion-mondayincludes/admin/admin-functions.php' (include_path='.:') in /var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php:46
+Stack trace:
+#0 /var/www/html/wp-settings.php(522): include_once()
+#1 /var/www/html/wp-config.php(96): require_once('/var/www/html/w...')
+#2 /var/www/html/wp-load.php(50): require_once('/var/www/html/w...')
+#3 /var/www/html/wp-admin/admin.php(34): require_once('/var/www/html/w...')
+#4 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php on line 46
+[09-Aug-2024 00:20:17 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:20:18 UTC] PHP Fatal error:  Uncaught TypeError: call_user_func(): Argument #1 ($callback) must be a valid callback, class WP_Fusion_Options does not have a method "show_field_workspace_multiselect" in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php:1000
+Stack trace:
+#0 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(905): WP_Fusion_Options->show_section('setup')
+#1 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Options->show_page('')
+#2 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#3 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /var/www/html/wp-admin/admin.php(259): do_action('settings_page_w...')
+#5 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php on line 1000
+[09-Aug-2024 00:20:19 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:20:21 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:20:21 UTC] PHP Fatal error:  Uncaught TypeError: call_user_func(): Argument #1 ($callback) must be a valid callback, class WP_Fusion_Options does not have a method "show_field_workspace_multiselect" in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php:1000
+Stack trace:
+#0 /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php(905): WP_Fusion_Options->show_section('setup')
+#1 /var/www/html/wp-includes/class-wp-hook.php(324): WP_Fusion_Options->show_page('')
+#2 /var/www/html/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#3 /var/www/html/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /var/www/html/wp-admin/admin.php(259): do_action('settings_page_w...')
+#5 {main}
+  thrown in /var/www/html/wp-content/plugins/wp-fusion-lite/includes/admin/options/class-options.php on line 1000
+[09-Aug-2024 00:21:55 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:21:57 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:22:16 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:22:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:23:07 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:23:08 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:23:13 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:23:13 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:23:15 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:23:16 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:23:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:24:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:24:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:24:26 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:24:28 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:24:30 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:24:32 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:25:09 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:25:09 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:25:10 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:25:11 UTC] PHP Warning:  Undefined variable $boards in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 554
+[09-Aug-2024 00:25:11 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:25:12 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:25:13 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:25:16 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:25:17 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:25:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:26:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:26:19 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:27:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:27:19 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:28:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:28:19 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:29:18 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:29:19 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:30:56 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:30:57 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:30:59 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:31:00 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:31:28 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:31:30 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:31:56 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:31:57 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:32:30 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:32:31 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:32:34 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:32:35 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:33:35 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:33:36 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:33:57 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:33:58 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:34:35 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:34:36 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:35:35 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:35:36 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:35:58 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:35:59 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:36:35 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:36:36 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:36:39 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:36:41 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:37:41 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:37:41 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:38:00 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:38:00 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:38:41 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:38:41 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:40:01 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:40:01 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:40:41 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:40:41 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:42:41 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:42:41 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:44:42 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:44:42 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:46:46 UTC] WPF_Lite_Helper::handle_webhooks()
+[09-Aug-2024 00:46:47 UTC] WPF_Lite_Helper::handle_webhooks()

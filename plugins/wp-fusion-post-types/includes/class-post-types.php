@@ -55,6 +55,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 		// Validation.
 		add_filter( 'validate_field_postType_post_fields', array( $this, 'validate_field_post_fields' ), 10, 3 );
+		add_filter( 'validate_field_post_type_sync_post', array( $this, 'validate_field_post_type_sync_post' ), 10, 3 );
 
 		add_filter( 'wpf_set_setting_post_fields', array( $this, 'handle_post_type_fields_update' ), 10, 2 );
 		add_filter( 'wpf_get_setting_post_fields', array( $this, 'handle_get_post_fields' ) );
@@ -182,6 +183,21 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 	}
 
+	/**
+	 * Validation for contact field data
+	 *
+	 * @access public
+	 * @return mixed
+	 */
+	public function validate_field_post_type_sync_post( $input, $setting, $options_class ) {
+		BugFu::log("validate_field_post_type_sync_post init");
+		BugFu::log($input);
+		BugFu::log($setting);
+		BugFu::log($options_class);
+		return wpf_clean( $input );
+
+	}
+
 
 	// /**
 	//  * Triggered when post updates.
@@ -262,6 +278,11 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		 // Avoid infinite loops
 		//remove_action('post_updated', 'post_updated', 10, 3);
 
+		// Check if this is a new post (creation)
+		if (wp_is_post_revision($post_id) || $post_data->post_status == 'auto-draft') {
+			add_action('post_updated', 'post_updated', 10, 3);
+			return;
+		}
 
 		do_action( 'wpf_post_updated_start', $post_id, $post_data );
 
@@ -278,7 +299,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		// $post_data = array_merge( $user_meta, $post_data );
 
 		/**
-		 * Allow modification of the registration data.
+		 * Allow modification of the post data.
 		 *
 		 * @since 1.0.0
 		 *
@@ -291,6 +312,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		 */
 
 		$post_data = apply_filters( 'wpf_post_updated', $post_data, $post_id );
+		$post_meta = get_post_meta($post_id);
 		BugFu::log($post_data->post_title);
 
 
@@ -308,7 +330,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 				sprintf( __( 'Post not synced to %s because Post Title wasn\'t detected in the submitted data.', 'wp-fusion-lite' ), wp_fusion()->crm->name ),
 				array(
 					'source'              => 'user-register',
-					// 'meta_array_nofilter' => $post_data,
+					//'meta_array_nofilter' => $post_meta,
 				)
 			);
 
@@ -339,111 +361,111 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		// 	$post_data['lists'] = $assign_lists;
 		// }
 
-		// if ( empty( $contact_id ) ) {
+		if ( empty( $item_id ) ) {
 
-		// 	// Contact does not exist in the CRM.
+			// Contact does not exist in the CRM.
 
-		// 	// See if user role is elligible for being created as a contact.
+			// See if user role is elligible for being created as a contact.
 
-		// 	$valid_roles = wpf_get_option( 'user_roles', array() );
+			// $valid_roles = wpf_get_option( 'user_roles', array() );
 
-		// 	$valid_roles = apply_filters( 'wpf_register_valid_roles', $valid_roles, $user_id, $post_data );
+			// $valid_roles = apply_filters( 'wpf_register_valid_roles', $valid_roles, $user_id, $post_data );
 
-		// 	if ( ! empty( $valid_roles ) && ! in_array( $post_data['role'], $valid_roles ) && false === $force ) {
+			// if ( ! empty( $valid_roles ) && ! in_array( $post_data['role'], $valid_roles ) && false === $force ) {
 
-		// 		wpf_log(
-		// 			'notice',
-		// 			$user_id,
-		// 			/* translators: %1$s: CRM Name, %2$s New user's role slug */
-		// 			sprintf( __( 'User not added to %1$s because role %2$s isn\'t enabled for contact creation.', 'wp-fusion-lite' ), wp_fusion()->crm->name, '<strong>' . $post_data['role'] . '</strong>' )
-		// 		);
-		// 		return false;
+			// 	wpf_log(
+			// 		'notice',
+			// 		$user_id,
+			// 		/* translators: %1$s: CRM Name, %2$s New user's role slug */
+			// 		sprintf( __( 'User not added to %1$s because role %2$s isn\'t enabled for contact creation.', 'wp-fusion-lite' ), wp_fusion()->crm->name, '<strong>' . $post_data['role'] . '</strong>' )
+			// 	);
+			// 	return false;
 
-		// 	}
+			// }
 
-		// 	// Log what's about to happen.
+			// Log what's about to happen.
 
-		// 	wpf_log(
-		// 		'info',
-		// 		$user_id,
-		// 		/* translators: %s: CRM Name */
-		// 		sprintf( __( 'New user registration. Adding contact to %s:', 'wp-fusion-lite' ), wp_fusion()->crm->name ),
-		// 		array(
-		// 			'source'     => 'user-register',
-		// 			'meta_array' => $post_data,
-		// 		)
-		// 	);
+			wpf_log(
+				'info',
+				$post_id,
+				/* translators: %s: CRM Name */
+				sprintf( __( 'New post registration. Adding item to %s:', 'wp-fusion-lite' ), wp_fusion()->crm->name ),
+				array(
+					'source'     => 'post-update',
+					// 'meta_array' => $post_meta,
+				)
+			);
 
-		// 	// Add the contact to the CRM.
+			// Add the item to the CRM.
 
-		// 	$contact_id = wp_fusion()->crm->add_contact( $post_data );
+			$item_id = wp_fusion()->crm->add_object( $post_data, 'post', $map_meta_fields = true );
 
-		// 	if ( is_wp_error( $contact_id ) ) {
+			// if ( is_wp_error( $contact_id ) ) {
 
-		// 		// Error logging.
+			// 	// Error logging.
 
-		// 		wpf_log(
-		// 			$contact_id->get_error_code(),
-		// 			$user_id,
-		// 			/* translators: %s: Error message */
-		// 			sprintf( __( 'Error adding contact: %s', 'wp-fusion-lite' ), $contact_id->get_error_message() ),
-		// 			array(
-		// 				'source' => 'user-register',
-		// 			)
-		// 		);
+			// 	wpf_log(
+			// 		$contact_id->get_error_code(),
+			// 		$post_id,
+			// 		/* translators: %s: Error message */
+			// 		sprintf( __( 'Error adding contact: %s', 'wp-fusion-lite' ), $contact_id->get_error_message() ),
+			// 		array(
+			// 			'source' => 'post-update',
+			// 		)
+			// 	);
 
-		// 		return false;
+			// 	return false;
 
-		// 	}
+			// }
 
-		// 	$contact_id = sanitize_text_field( $contact_id );
+			// $contact_id = sanitize_text_field( $contact_id );
 
-		// 	update_user_meta( $user_id, WPF_CONTACT_ID_META_KEY, $contact_id );
+			// update_user_meta( $user_id, WPF_CONTACT_ID_META_KEY, $contact_id );
 
-		// } else {
+		} else {
 
-		// 	// Contact already exists in the CRM, update them.
+			// Contact already exists in the CRM, update them.
 
-		// 	wpf_log(
-		// 		'info',
-		// 		$user_id,
-		// 		/* translators: %1$s: Existing contact ID, %2$s CRM name */
-		// 		sprintf( __( 'New user registration. Updating contact #%1$s in %2$s:', 'wp-fusion-lite' ), $contact_id, wp_fusion()->crm->name ),
-		// 		array(
-		// 			'source'     => 'user-register',
-		// 			'meta_array' => $post_data,
-		// 		)
-		// 	);
+			wpf_log(
+				'info',
+				$post_id,
+				/* translators: %1$s: Existing contact ID, %2$s CRM name */
+				sprintf( __( 'New post registration. Updating item #%1$s in %2$s:', 'wp-fusion-lite' ), $item_id, wp_fusion()->crm->name ),
+				array(
+					'source'     => 'post-update',
+					// 'meta_array' => $post_data,
+				)
+			);
 
-		// 	// Send the update data.
+			// Send the update data.
 
-		// 	$result = wp_fusion()->crm->update_contact( $contact_id, $post_data );
+			$result = wp_fusion()->crm->update_object( $item_id, $post_data );
 
-		// 	if ( is_wp_error( $result ) ) {
+			if ( is_wp_error( $result ) ) {
 
-		// 		// If update failed.
+				// If update failed.
 
-		// 		wpf_log(
-		// 			$result->get_error_code(),
-		// 			$user_id,
-		// 			/* translators: %s: Error message */
-		// 			sprintf( __( 'Error updating contact: %s', 'wp-fusion-lite' ), $result->get_error_message() ),
-		// 			array(
-		// 				'source' => 'user-register',
-		// 			)
-		// 		);
+				wpf_log(
+					$result->get_error_code(),
+					$post_id,
+					/* translators: %s: Error message */
+					sprintf( __( 'Error updating item: %s', 'wp-fusion-lite' ), $result->get_error_message() ),
+					array(
+						'source' => 'post-update',
+					)
+				);
 
-		// 		return false;
+				return false;
 
-		// 	}
+			}
 
-		// 	// Load the tags from the existing contact record.
+			// Load the tags from the existing contact record.
 
-		// 	$this->get_tags( $user_id, true, false );
+			// $this->get_tags( $user_id, true, false );
 
-		// }
+		}
 
-		// // Assign any tags specified in the WPF settings page.
+		// Assign any tags specified in the WPF settings page.
 		// $assign_tags = wpf_get_option( 'assign_tags' );
 
 		// if ( ! empty( $assign_tags ) ) {
@@ -451,9 +473,9 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 		// 	$this->apply_tags( $assign_tags, $user_id );
 		// }
 
-		// do_action( 'wpf_user_created', $user_id, $contact_id, $post_data );
+		// do_action( 'wpf_user_created', $user_id, $item_id, $post_data );
 
-		// return $contact_id;
+		return $item_id;
 
 	}
 	
@@ -1299,7 +1321,7 @@ class WPF_Post_Type_Sync_Integration extends WPF_Integrations_Base {
 
 	 public function prepare_post_meta_fields( $meta_fields ) {
 		// Load the reference of standard WP field names and types.
-		include __DIR__ . '/wordpress-post-fields.php';
+		include __DIR__ . '/includes/wordpress-post-fields.php';
 	
 		// Sets field types and labels for all built in fields.
 		foreach ( $wp_fields as $key => $data ) {

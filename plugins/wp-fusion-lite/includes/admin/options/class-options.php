@@ -216,7 +216,7 @@ class WP_Fusion_Options {
 
 	private function save_options() {
 
-		//BugFu::log("save_options init");
+		BugFu::log("save_options init");
 		$nonce = $_POST[ $this->setup['project_slug'] . '_nonce' ];
 
 		if ( ! isset( $_POST[ $this->setup['project_slug'] . '_nonce' ] ) ) {
@@ -234,10 +234,12 @@ class WP_Fusion_Options {
 			$this->post_data = array();
 		}
 
+		BugFu::log($this->option_group);
+
 		// For each settings field, run the input through it's defined validation function
 
 		$settings = $this->settings;
-		//BugFu::log($settings);
+		// BugFu::log($settings);
 		//BugFu::log($this->post_data);
 
 		// Beydefault $_POST ignores checkboxes with no value set, so we need to
@@ -282,7 +284,7 @@ class WP_Fusion_Options {
 			
 
 			if ( isset( $this->post_data[ $id ] ) && $this->post_data[ $id ] !== $this->options[ $id ] ) {
-				//::log( "ID: " . $id );
+				// BugFu::log( "ID: " . $id );
 				// BugFu::log( $this->post_data[ $id ] );
 				// BugFu::log( $setting );
 
@@ -400,12 +402,12 @@ class WP_Fusion_Options {
 
 		if ( has_filter( 'validate_field_' . $id ) ) {
 			// validate_fields_contact_fields fired here
-			//BugFu::log("validate_field_" . $id);
+			// BugFu::log("validate_field_" . $id);
 
 
 			// If there's a validation function for this particular field ID
 			$input = apply_filters( 'validate_field_' . $id, $input, $setting, $this );
-			// BugFu::log("Has Filter[id]: validate_field_" . $id);
+			BugFu::log("Has Filter[id]: validate_field_" . $id);
 			// BugFu::log($input);
 
 		} elseif ( has_filter( 'validate_field_' . $setting['type'] ) || has_filter( 'validate_field_' . $setting['type'] . '_override' ) ) {

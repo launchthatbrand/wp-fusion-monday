@@ -304,6 +304,7 @@ class WPF_User {
 	 * @return string|bool The contact ID of the new contact or false on failure.
 	 */
 	public function user_register( $user_id, $post_data = array(), $force = false ) {
+		BugFu::log("user_register init");
 
 		remove_action( 'profile_update', array( $this, 'profile_update' ), 10, 2 );
 
@@ -418,7 +419,9 @@ class WPF_User {
 				)
 			);
 
-			// Add the contact to the CRM.
+			// Add the contact to the CRM.\
+			BugFu::log("Add the contact to the CRM");
+			BugFu::log($post_data);
 
 			$contact_id = wp_fusion()->crm->add_contact( $post_data );
 

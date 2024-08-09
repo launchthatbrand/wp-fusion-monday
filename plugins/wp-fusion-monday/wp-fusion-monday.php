@@ -41,6 +41,12 @@ if ( ! class_exists( 'WPF_Monday' ) ) {
 
 include_once __DIR__ . '/includes/wpf-custom-utilities.php';
 
+if ( is_admin() ) {
+	// require_once WPF_EC_DIR_PATH . 'includes/admin/class-notices.php';
+	require_once  __DIR__ . '/includes/admin/admin-functions.php';
+	//require_once WPF_EC_DIR_PATH . 'includes/admin/class-upgrades.php';
+}
+
 // if ( ! class_exists( 'WPF_Post_Type' ) ) {
 // 	include_once __DIR__ . '/includes/class-post-type.php';
 // }

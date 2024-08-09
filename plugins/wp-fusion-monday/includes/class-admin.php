@@ -70,8 +70,18 @@ class WPF_Monday_Admin {
 
 		if ( ! empty( $options['connection_configured'] ) && 'monday' === wpf_get_option( 'crm' ) ) {
 
+			$new_settings['monday_workspace'] = array(
+				'title'       => __( 'Monday Workspace', 'wp-fusion-lite' ),
+				'type'        => 'select',
+				'choices'     => wp_fusion()->settings->get( 'available_workspaces', array() ),
+				'placeholder' => __( 'Select a workspace', 'wp-fusion-lite' ),
+				'section'     => 'setup',
+				'desc'    => __( 'Which workspace to sync Users to. For more information, see <a href="https://wpfusion.com/documentation/crm-specific-docs/zoho-tags/" target="_blank">Tags with Zoho</a>.', 'wp-fusion-lite' ),
+			);
+
 			$new_settings['monday_board'] = array(
 				'title'       => __( 'Select Monday.com Board', 'wp-fusion' ),
+				'disabled'    => isset( $options['monday_workspace'] ) ? false : true,
 				'desc'        => __( 'Select the Monday.com board to sync with.', 'wp-fusion' ),
 				'type'        => 'select',
 				'placeholder' => 'Select Board',
@@ -86,6 +96,7 @@ class WPF_Monday_Admin {
 			'type'    => 'text',
 			'placeholder' => 'https://api.monday.com/v2',
 			'section' => 'setup',
+			'std'         => $this->crm->api_url, // Set the default value
 		);
 
 		$new_settings['monday_key'] = array(

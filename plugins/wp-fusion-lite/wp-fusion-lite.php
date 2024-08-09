@@ -185,6 +185,7 @@ final class WP_Fusion_Lite {
 	public static function instance() {
 
 		if ( ! isset( self::$instance ) && ! ( self::$instance instanceof WP_Fusion_Lite ) ) {
+			// BugFu::log("creating instanceof WP_Fusion_Lite");
 
 			self::$instance = new WP_Fusion_Lite();
 
@@ -578,6 +579,7 @@ final class WP_Fusion_Lite {
 		 *
 		 * @param WPF_* object  The CRM class.
 		 */
+		// BugFu::log("do_action_ref_array - wp_fusion_init_crm");
 
 		do_action_ref_array( 'wp_fusion_init_crm', array( &self::$instance->crm ) );
 
