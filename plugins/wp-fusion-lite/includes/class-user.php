@@ -304,7 +304,6 @@ class WPF_User {
 	 * @return string|bool The contact ID of the new contact or false on failure.
 	 */
 	public function user_register( $user_id, $post_data = array(), $force = false ) {
-		BugFu::log("user_register init");
 
 		remove_action( 'profile_update', array( $this, 'profile_update' ), 10, 2 );
 
@@ -378,7 +377,7 @@ class WPF_User {
 		}
 
 		// Get any lists to add.
-		$assign_lists = wpf_get_option( 'assign_lists' );
+		$assign_lists = apply_filters( 'wpf_add_contact_lists', wpf_get_option( 'assign_lists', array() ) );
 
 		if ( ! empty( $assign_lists ) ) {
 			$post_data['lists'] = $assign_lists;
@@ -419,9 +418,7 @@ class WPF_User {
 				)
 			);
 
-			// Add the contact to the CRM.\
-			BugFu::log("Add the contact to the CRM");
-			BugFu::log($post_data);
+			// Add the contact to the CRM.
 
 			$contact_id = wp_fusion()->crm->add_contact( $post_data );
 
@@ -2068,7 +2065,6 @@ class WPF_User {
 	 */
 
 	public function push_user_meta( $user_id, $user_meta = false ) {
-		BugFu::log("push_user_meta init");
 
 		if ( ! wpf_get_option( 'push' ) || ! wp_fusion()->crm ) {
 			return false;
@@ -2081,8 +2077,6 @@ class WPF_User {
 		if ( false === $user_meta ) {
 			$user_meta = $this->get_user_meta( $user_id );
 		}
-
-		BugFu::log($user_meta);
 
 		$user_meta = apply_filters( 'wpf_user_update', $user_meta, $user_id );
 
@@ -2100,7 +2094,6 @@ class WPF_User {
 		}
 
 		wpf_log( 'info', $user_id, 'Pushing meta data to ' . wp_fusion()->crm->name . ': ', array( 'meta_array' => $user_meta ) );
-		BugFu::log($user_meta);
 
 		$result = wp_fusion()->crm->update_contact( $contact_id, $user_meta );
 

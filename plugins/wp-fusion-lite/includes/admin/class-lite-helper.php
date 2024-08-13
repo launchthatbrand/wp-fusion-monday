@@ -78,7 +78,6 @@ class WPF_Lite_Helper {
 	 * @since 3.38.33
 	 */
 	public function handle_webhooks() {
-		error_log('WPF_Lite_Helper::handle_webhooks()');
 
 		if ( isset( $_REQUEST['wpf_action'] ) ) {
 

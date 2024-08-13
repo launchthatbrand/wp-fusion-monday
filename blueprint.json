@@ -17,9 +17,7 @@
     {
       "step": "defineWpConfigConsts",
       "consts": {
-        "WP_DEBUG_LOG": "/var/www/html/wp-content/themes/twentytwentyfour/debug.log",
-        "WP_HOME": "https://4508-217-180-192-183.ngrok-free.app",
-        "WP_SITEURL": "https://4508-217-180-192-183.ngrok-free.app"
+        "WP_DEBUG_LOG": "/var/www/html/wp-content/themes/twentytwentyfour/debug.log"
       },
       "method": "define-before-run"
     }

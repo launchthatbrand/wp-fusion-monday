@@ -64,6 +64,14 @@ class WPF_Monday {
 	public $edit_url = 'https://desmondtatilians-team.monday.com/%s';
 
 	/**
+	 * The CRM object
+	 *
+	 * @var object
+	 * @since 3.37.31
+	 */
+	private $crm;
+
+	/**
 	 * Get things started
 	 *
 	 * @access  public
@@ -73,6 +81,8 @@ class WPF_Monday {
 	public function __construct() {
 
 		// $this->api_url = trailingslashit( wpf_get_option( 'monday_url' ) );
+
+
 
 		$this->init();
 
@@ -108,8 +118,23 @@ class WPF_Monday {
 		// if ( ! empty( $this->api_url ) ) {
 		// 	$this->edit_url = trailingslashit( preg_replace( '/\.api\-.+?(?=\.)/', '.activehosted', $this->api_url ) ) . 'app/contacts/%d/';
 		// }
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+		
 	}
 
+	public function test_set(){
+		// BugFu::log("test_set_init");
+		wp_fusion()->settings->set('test_set', 'test');
+	}
+
+	public function enqueue_scripts() {
+		// BugFu::log("enqueue_scripts_init");
+        // wp_enqueue_style( 'select4', WPF_DIR_URL . 'includes/admin/options/lib/select2/select4.min.css' );
+		// wp_enqueue_script( 'select4', WPF_DIR_URL . 'includes/admin/options/lib/select2/select4.min.js', array( 'jquery' ), '4.0.1', true );
+        wp_enqueue_script( 'wpf-monday-admin', plugin_dir_url( __FILE__ ) . 'js/wpf-monday-admin.js', array('jquery', 'select4'), '1.1', true );
+    }
 
 	/**
 	 * Formats POST data received from HTTP Posts into standard format
@@ -146,7 +171,6 @@ class WPF_Monday {
 
 		return $post_data;
 	}
-
 
 	/**
 	 * Formats user entered data to match AC field formats
@@ -190,7 +214,7 @@ class WPF_Monday {
 	 * @return array Params
 	 */
 
-	 public function get_params( $api_key = null ) {
+	public function get_params( $api_key = null ) {
 
 		// Get saved data from DB.
 		if ( ! $api_key ) {
@@ -221,8 +245,10 @@ class WPF_Monday {
 	 */
 
 	public function handle_http_response( $response, $args, $url ) {
+		BugFu::log("handle_http_response_init");
 
 		if ( strpos( $url, $this->api_url ) !== false && 'WP Fusion; ' . home_url() === $args['user-agent'] ) { // check if the request came from us.
+			BugFu::log("handle_http_response_init2");
 
 			$body_json     = json_decode( wp_remote_retrieve_body( $response ) );
 			$response_code = wp_remote_retrieve_response_code( $response );
@@ -249,6 +275,7 @@ class WPF_Monday {
 
 				}
 			} elseif ( isset( $body_json->success ) && false === (bool) $body_json->success && isset( $body_json->message ) ) {
+				BugFu::log($body_json->message);
 
 				$response = new WP_Error( 'error', $body_json->message );
 
@@ -357,6 +384,7 @@ class WPF_Monday {
 		BugFu::log("connect_init");
 
 		if ( isset( $this->app ) && ! $test ) {
+			BugFu::log("app already initialized");
 			return true;
 		}
 
@@ -379,20 +407,41 @@ class WPF_Monday {
 		BugFu::log($api_url, false);
 		BugFu::log($api_key, false);
 
-		// if ( $test ) {
+		if ( $test ) {
+			BugFu::log("testing connection");
 
-		// 	$response = wp_remote_get( trailingslashit( $api_url ) . 'api/3/tags', $this->get_params( $api_key ) );
+			$query = '{"query": "{ workspaces (limit:150) { id name } }"}';
+			$response = wp_safe_remote_post(
+				trailingslashit( $api_url ),
+				array(
+					'method' => 'POST',
+					'headers' => array(
+						'Authorization' => $api_key,
+						'Content-Type' => 'application/json',
+					),
+					'body' => $query,
+				)
+			);
 
-		// 	if ( is_wp_error( $response ) ) {
-		// 		return $response;
-		// 	}
-		// }
+			if ( is_wp_error( $response ) ) {
+				return $response;
+			}
+
+			// Decode the JSON with the JSON_BIGINT_AS_STRING option to handle large integers
+			$body = json_decode(wp_remote_retrieve_body($response), true, 512, JSON_BIGINT_AS_STRING);
+
+			// Check if there are errors in the response body
+			if (isset($body['errors']) && !empty($body['errors'])) {
+				// Handle the API error (e.g., return a WP_Error)
+				$error_message = implode(', ', $body['errors']);
+				return new WP_Error('api_error', __('API Error: ', 'wp-fusion') . $error_message);
+			}
+		}
 
 		BugFu::log(wp_fusion()->crm->app);
 
 		return true;
 	}
-
 
 	/**
 	 * Performs initial sync once connection is configured
@@ -409,16 +458,15 @@ class WPF_Monday {
 
 		$this->connect();
 
-		//$this->sync_tags();
-		$this->sync_workspaces();
-		// $this->sync_lists();
-		//$this->sync_crm_fields();
+		$this->sync_tags();
+		//$this->sync_workspaces();
+		//$this->sync_lists();
+		$this->sync_crm_fields();
 
 		do_action( 'wpf_sync' );
 
 		return true;
 	}
-
 
 	/**
 	 * Gets all available tags and saves them to options
@@ -427,19 +475,71 @@ class WPF_Monday {
 	 * @return array Tags
 	 */
 
-	 public function sync_tags() {
+	public function sync_tags() {
+		BugFu::log("sync_tags_init");
+	
 		// Ensure the API key is available
 		$api_key = wpf_get_option('monday_key');
-	
-		if ( empty($api_key) ) {
+
+		$options= get_option('wpf_options');
+		$monday_board = $options['monday_board'];
+		BugFu::log($monday_board);
+
+		if (empty($api_key)) {
 			return new WP_Error('missing_api_key', __('API key is missing.', 'wp-fusion'));
 		}
 	
-		// Prepare the GraphQL query
-		$query = '{"query": "{ tags { id name } }"}';
+		// Get the selected tag field ID
+		$monday_tag_field = wpf_get_option('monday_tag_field');
+		BugFu::log($monday_tag_field);
+
+		if (empty($monday_tag_field)) {
+			return new WP_Error('missing_tag_field', __('Tag field or type is missing.', 'wp-fusion'));
+		}
+
+		// Get the available CRM tag fields
+		$available_crm_tag_fields = get_option('wpf_available_crm_tag_fields');
+		BugFu::log($available_crm_tag_fields);
+
+		// Check if the monday_tag_field exists in available_crm_tag_fields
+		if (isset($available_crm_tag_fields[$monday_tag_field])) {
+			$tag_field_type = $available_crm_tag_fields[$monday_tag_field]['type'];
+		} else {
+			BugFu::log("Tag field not found in available CRM tag fields");
+			return new WP_Error('tag_field_not_found', __('Tag field not found.', 'wp-fusion'));
+		}
+		
 	
-		// Make the request to the Monday.com API
-		$response = wp_safe_remote_post(
+		BugFu::log("Tag field type: " . $tag_field_type);
+	
+		$available_tags = array();
+	
+		// Prepare the GraphQL query based on the type of the tag field
+		if ($tag_field_type === 'tags') {
+			// If the tag field type is 'tags', query all account tags
+			$query = '{
+				tags {
+					id
+					name
+				}
+			}';
+		} elseif ($tag_field_type === 'dropdown') {
+			// If the tag field type is 'dropdown', query the dropdown's available id/name
+			$query = '{
+				boards(ids: ' . $monday_board . ') {
+					columns(ids: "' . $monday_tag_field . '") {
+						settings_str
+					}
+				}
+			}';
+		} else {
+			return new WP_Error('invalid_tag_field_type', __('Invalid tag field type.', 'wp-fusion'));
+		}
+
+		BugFu::log($query);
+	
+		 // Make the request to the Monday.com API
+		 $response = wp_safe_remote_post(
 			'https://api.monday.com/v2',
 			array(
 				'method'  => 'POST',
@@ -447,49 +547,60 @@ class WPF_Monday {
 					'Authorization' => $api_key,
 					'Content-Type'  => 'application/json',
 				),
-				'body'    => $query,
+				'body'    => wp_json_encode(array('query' => $query)),
 			)
 		);
 	
 		// Handle the response
-		if ( is_wp_error( $response ) ) {
+		if (is_wp_error($response)) {
+			BugFu::log('API request error: ' . $response->get_error_message());
 			error_log('API request error: ' . $response->get_error_message());
 			return $response;
 		}
 	
-		$body = wp_remote_retrieve_body( $response );
-		error_log('API response body: ' . $body);
+		$body = wp_remote_retrieve_body($response);
+		BugFu::log('API response body: ' . $body);
 	
-		$body_json = json_decode( $body, true );
+		$body_json = json_decode($body, true);
 	
 		// Check if the body or data is null or empty
-		if ( is_null( $body_json ) || !isset( $body_json['data'] ) ) {
+		if (is_null($body_json) || !isset($body_json['data'])) {
 			return new WP_Error('api_error', __('API error: Invalid response', 'wp-fusion'));
 		}
 	
 		// Check for errors in the response
-		if ( isset($body_json['errors']) && !empty($body_json['errors']) ) {
+		if (isset($body_json['errors']) && !empty($body_json['errors'])) {
 			$error_message = isset($body_json['errors'][0]['message']) ? $body_json['errors'][0]['message'] : 'Unknown error';
 			return new WP_Error('api_error', __('API error: ', 'wp-fusion') . $error_message);
 		}
 	
-		// Process the tags
-		$available_tags = array();
-	
-		if ( !empty($body_json['data']['tags']) ) {
-			foreach ( $body_json['data']['tags'] as $tag ) {
-				$available_tags[$tag['id']] = sanitize_text_field($tag['name']);
+		if ($tag_field_type === 'tags') {
+			// Process the tags
+			if (!empty($body_json['data']['tags'])) {
+				foreach ($body_json['data']['tags'] as $tag) {
+					$available_tags[$tag['id']] = sanitize_text_field($tag['name']);
+				}
+			}
+		} elseif ($tag_field_type === 'dropdown') {
+			// Process the dropdown options
+			$settings_str = $body_json['data']['boards'][0]['columns'][0]['settings_str'];
+			$settings = json_decode($settings_str, true);
+			BugFu::log($settings);
+			
+			if (!empty($settings['labels'])) {
+				foreach ($settings['labels'] as $label) {
+					$available_tags[$label['id']] = sanitize_text_field($label['name']);
+				}
 			}
 		}
 	
 		asort($available_tags);
+		BugFu::log($available_tags);
 	
 		wp_fusion()->settings->set('available_tags', $available_tags);
 	
 		return $available_tags;
 	}
-
-
 
 	/**
 	 * Gets all available workspaces and saves them to options
@@ -498,7 +609,7 @@ class WPF_Monday {
 	 * @return array Lists
 	 */
 
-	 public function sync_workspaces() {
+	public function sync_workspaces() {
 		BugFu::log("sync_workspaces init");
 	
 		$api_key = $this->api_key;
@@ -551,78 +662,161 @@ class WPF_Monday {
 
 		BugFu::log($workspaces, false);
 	
-		return $boards;
+		return $workspaces;
 	}
 
-
-	
-
 	/**
-	 * Gets all available lists/workspaces and saves them to options
+	 * Gets all available lists (boards) and saves them to options
 	 *
 	 * @access public
 	 * @return array Lists
 	 */
 
-	 public function sync_lists() {
+	public function sync_lists() {
+
 		BugFu::log("sync_lists_init");
-	
+
 		$api_key = $this->api_key;
-		BugFu::log($api_key, false);
-	
-		if (empty($api_key)) {
+
+		$monday_workspace = wpf_get_option('monday_workspace');
+		BugFu::log($monday_workspace);
+
+		
+
+		if ( empty( $api_key ) || empty( $monday_workspace ) ) {
+			BugFu::log('API key or workspace is missing', false);
 			return array();
 		}
-	
-		$query = '{"query": "{ boards { id name workspace { id name } } }"}';
+
+		$query = '{"query": "{ boards (workspace_ids: ' .$monday_workspace .', limit:50) { id name } }"}';
 		$response = wp_safe_remote_post(
 			'https://api.monday.com/v2',
 			array(
-				'method' => 'POST',
+				'method'  => 'POST',
 				'headers' => array(
 					'Authorization' => $api_key,
-					'Content-Type' => 'application/json',
+					'Content-Type'  => 'application/json',
 				),
-				'body' => $query,
+				'body'    => $query,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			return array();
+		}
+
+		// Decode the JSON with the JSON_BIGINT_AS_STRING option to handle large integers
+		$body = json_decode(wp_remote_retrieve_body($response), true, 512, JSON_BIGINT_AS_STRING);
+
+		BugFu::log($body);
+
+		$boards = array();
+
+		if ( empty( $body['data']['boards'] ) ) {
+			return array();
+		}
+
+		foreach ( $body['data']['boards'] as $board ) {
+			$boards[ $board['id'] ] = $board['name'];
+		}
+
+		natcasesort( $boards );
+
+		// $result = wp_fusion()->settings->set( 'available_lists', $boards );
+		$result = update_option( 'wpf_available_lists', $boards, false );
+		error_log('Result of saving: ' . ($result ? 'success' : 'failure'));
+
+		BugFu::log($boards);
+
+		return $boards;
+	}
+
+	/**
+	 * Gets all available monday fields that could be used for tags
+	 *
+	 * @access public
+	 * @return array Lists
+	 */
+
+	public function sync_crm_tag_fields() {
+
+		BugFu::log("sync_crm_tag_fields init");
+		$options = get_option('wpf_options');
+	
+		$api_key = $this->api_key;
+		$monday_board = wp_fusion()->settings->options['monday_board'];
+	
+		BugFu::log($monday_board);
+	
+		if (empty($api_key) || empty($monday_board)) {
+			BugFu::log('API key or board ID is missing', false);
+			return array();
+		}
+	
+		// Construct the GraphQL query to get columns from the specified board
+		$query = '{"query": "{ boards (ids: ' . $monday_board . ') { columns { id title type } } }"}';
+	
+		$response = wp_safe_remote_post(
+			'https://api.monday.com/v2',
+			array(
+				'method'  => 'POST',
+				'headers' => array(
+					'Authorization' => $api_key,
+					'Content-Type'  => 'application/json',
+				),
+				'body'    => $query,
 			)
 		);
 	
 		if (is_wp_error($response)) {
+			BugFu::log('Error in API response', false);
 			return array();
 		}
 	
 		// Decode the JSON with the JSON_BIGINT_AS_STRING option to handle large integers
 		$body = json_decode(wp_remote_retrieve_body($response), true, 512, JSON_BIGINT_AS_STRING);
 	
-		BugFu::log($body, false);
+		BugFu::log($body);
 	
-		if (empty($body['data']['boards'])) {
-			return array();
+		$fields = array();
+	
+		if (empty($body['data']['boards'][0]['columns'])) {
+			BugFu::log('No columns found for this board');
 		}
 	
-		$boards = array();
-		$workspaces = array();
-	
-		foreach ($body['data']['boards'] as $board) {
-			$boards[$board['id']] = $board['name'];
-			$workspace_id = $board['workspace']['id'];
-			$workspace_name = $board['workspace']['name'];
-			$workspaces[$workspace_id] = $workspace_name;
-		}
-	
-		natcasesort($boards);
-		natcasesort($workspaces);
-	
-		wp_fusion()->settings->set('available_lists', $boards);
-		wp_fusion()->settings->set('available_workspaces', $workspaces);
-	
-		BugFu::log($boards, false);
-		BugFu::log($workspaces, false);
-	
-		return $boards;
-	}
-	
+		// Filter the columns to only include those with type 'tags' or 'dropdown'
+		foreach ($body['data']['boards'][0]['columns'] as $column) {
+			if (in_array($column['type'], array('tags', 'dropdown'))) {
 
+				BugFu::log($column['id']);
+
+				$fields[$column['id']] = array(
+					'title' => $column['title'],
+					'type' => $column['type'],
+				);
+			}
+		}
+	
+		if (empty($fields)) {
+			BugFu::log('No tag or dropdown fields found', false);
+		}
+
+		BugFu::log($fields);
+	
+		// Sort the fields by title using uasort to preserve the keys
+		uasort($fields, function ($a, $b) {
+			return strnatcasecmp($a['title'], $b['title']);
+		});
+
+		BugFu::log($fields);
+	
+		// Save the available tag CRM fields to the options
+		$result = update_option( 'wpf_available_crm_tag_fields', $fields, false );
+		error_log('Result of saving: ' . ($result ? 'success' : 'failure'));
+
+	
+		return $fields;
+	}
 
 	/**
 	 * Loads all custom fields from CRM and merges with local list
@@ -631,7 +825,7 @@ class WPF_Monday {
 	 * @return array CRM Fields
 	 */
 
-	 public function get_selected_board() {
+	public function get_selected_board() {
 		// Retrieve the entire options array
 		$options = get_option('wpf_options');
 		// BugFu::log($options, false);
@@ -646,14 +840,14 @@ class WPF_Monday {
 		}
 	}
 
-	 public function sync_crm_fields() {
+	public function sync_crm_fields() {
 
 		// Fetch the API key
 		$api_key = wpf_get_option('monday_key');
 		if (empty($api_key)) {
 			return new WP_Error('no_api_key', __('No API key provided.', 'wp-fusion'));
 		}
-
+	
 		// Ensure a board is selected
 		$selected_board = $this->get_selected_board();
 		
@@ -694,13 +888,21 @@ class WPF_Monday {
 			return new WP_Error('no_columns_found', __('No columns found for the selected board.', 'wp-fusion'));
 		}
 	
+		// Get the monday_tag_field to filter out
+		$monday_tag_field = wpf_get_option('monday_tag_field');
+		
 		// Process the columns
 		$built_in_fields = array();
 		$custom_fields   = array();
-
+	
 		BugFu::log($body['data']['boards'][0]['columns']);
 	
 		foreach ($body['data']['boards'][0]['columns'] as $column) {
+			// Filter out the selected monday_tag_field
+			if ($column['id'] === $monday_tag_field) {
+				continue;
+			}
+	
 			// Assuming all columns are custom fields in Monday.com
 			$custom_fields[$column['id']] = $column['title'];
 		}
@@ -712,14 +914,13 @@ class WPF_Monday {
 			'Standard Fields' => $built_in_fields,
 			'Custom Fields'   => $custom_fields,
 		);
-
+	
 		BugFu::log($crm_fields);
 	
 		wp_fusion()->settings->set('crm_fields', $crm_fields);
 	
 		return $crm_fields;
 	}
-
 
 	/**
 	 * Gets contact ID for a user based on email address
@@ -744,7 +945,6 @@ class WPF_Monday {
 			return $response->contacts[0]->id;
 		}
 	}
-
 
 	/**
 	 * Gets all tags currently applied to the contact, also update the list of available tags. This uses the old API since the v3 API only uses tag IDs
@@ -792,49 +992,98 @@ class WPF_Monday {
 	 */
 
 	public function apply_tags( $tags, $contact_id ) {
+		BugFu::log("apply_tags_init");
 
-		$request = add_query_arg(
-			array(
-				'api_key'    => wpf_get_option( 'ac_key' ),
-				'api_action' => 'contact_tag_add',
-				'api_output' => 'json',
-			),
-			$this->api_url . 'admin/api.php'
-		);
+		// Get API key and other necessary parameters
+		$api_key = $this->api_key;
+		$params = $this->get_params();
 
-		$data = array(
-			'id'   => $contact_id,
-			'tags' => $tags,
-		);
+		// Fetch existing tags for the user
+		$user_id = wpf_get_user_id( $contact_id );
+    	$tags = wpf_get_tags($user_id);
 
-		$params                            = $this->get_params();
-		$params['timeout']                 = 20;
-		$params['body']                    = $data;
-		$params['headers']['Content-Type'] = 'application/x-www-form-urlencoded';
+		// Determine the type of tag field (dropdown or tags)
+		$tag_type = 'dropdown'; // This would be dynamically determined in practice
+	
+		// Retrieve necessary options from your settings
+		$board_id = wp_fusion()->settings->options['monday_board'];
+		$tag_field = wp_fusion()->settings->options['monday_tag_field']; // Assuming this contains the column ID for the dropdown
+		BugFu::log($board_id);
+		BugFu::log($tag_field);
+	
+		if ( 'dropdown' === $tag_type ) {
+			// Convert the tags array to a comma-separated string of tag IDs
+			$tags_value = implode( ',', $tags );
+	
+			// Prepare the GraphQL mutation for adding tags to the dropdown
+			$mutation = 'mutation { change_multiple_column_values(item_id:' . $contact_id . ', board_id:' . $board_id . ', column_values: "{\"' . esc_js($tag_field) . '\":{\"ids\":[' . $tags_value . ']}}") { id } }';
 
-		$response = wp_remote_post( $request, $params );
+			// Log the mutation for debugging
+			BugFu::log('GraphQL Mutation: ' . $mutation);
+		
+			// Make the request to the Monday.com API
+			$response = wp_safe_remote_post(
+				'https://api.monday.com/v2',
+				array(
+					'method'  => 'POST',
+					'headers' => array(
+						'Authorization' => $api_key,
+						'Content-Type'  => 'application/json',
+					),
+					'body'    => wp_json_encode(array('query' => $mutation)),
+				)
+			);
 
-		if ( is_wp_error( $response ) ) {
-			return $response;
-		}
+			$body = wp_remote_retrieve_body( $response );
 
-		// Possibly update available tags if it's a newly created one.
-		$available_tags = wpf_get_option( 'available_tags' );
-
-		foreach ( $tags as $tag ) {
-			if ( ! isset( $available_tags[ $tag ] ) ) {
-				$available_tags[ $tag ] = $tag;
-				$needs_update           = true;
+			BugFu::log($body);
+	
+			// Handle any errors
+			if ( is_wp_error( $response ) ) {
+				BugFu::log('API request error: ' . $response->get_error_message());
+				return $response;
 			}
+		} else {
+			// Handle the case for the 'tags' field type (to be implemented)
+			// ...
 		}
-
-		if ( isset( $needs_update ) ) {
-			wp_fusion()->settings->set( 'available_tags', $available_tags );
-		}
-
+	
 		return true;
 	}
+	
 
+	// public function apply_tags( $tags, $contact_id ) {
+
+	// 	$params = $this->get_params();
+
+	// 	$tag_type = 'dropdown';
+
+	// 	if ( 'tags' === wpf_get_option( 'zoho_tag_type' ) ) {
+
+	// 		$field = wpf_get_option( 'zoho_multiselect_field' );
+	// 		$data  = array(
+	// 			'$append_values' => array(
+	// 				$field => true,
+	// 			),
+	// 			$field => $tags,
+	// 		);
+
+	// 		$params['body']   = wp_json_encode( array( 'data' => array( $data ) ) );
+	// 		$params['method'] = 'PUT';
+	// 		$request          = $this->api_domain . '/crm/v2/' . $this->object_type . '/' . $contact_id;
+	// 	} else {
+	// 		$request = $this->api_domain . '/crm/v2/' . $this->object_type . '/' . $contact_id . '/actions/add_tags?tag_names=' . implode( ',', $tags ) . '&over_write=false';
+	// 	}
+
+	// 	$response = wp_safe_remote_post( $request, $params );
+
+	// 	if ( is_wp_error( $response ) ) {
+	// 		return $response;
+	// 	}
+
+	// 	return true;
+
+	// }
 
 	/**
 	 * Removes tags from a contact. This uses the old API since the v3 API only uses tag IDs
@@ -843,33 +1092,94 @@ class WPF_Monday {
 	 * @return bool
 	 */
 
+	// public function remove_tags( $tags, $contact_id ) {
+
+	// 	$request = add_query_arg(
+	// 		array(
+	// 			'api_key'    => wpf_get_option( 'ac_key' ),
+	// 			'api_action' => 'contact_tag_remove',
+	// 			'api_output' => 'json',
+	// 		),
+	// 		$this->api_url . 'admin/api.php'
+	// 	);
+
+	// 	$data = array(
+	// 		'id'   => $contact_id,
+	// 		'tags' => $tags,
+	// 	);
+
+	// 	$params                            = $this->get_params();
+	// 	$params['timeout']                 = 20;
+	// 	$params['body']                    = $data;
+	// 	$params['headers']['Content-Type'] = 'application/x-www-form-urlencoded';
+
+	// 	$response = wp_remote_post( $request, $params );
+
+	// 	if ( is_wp_error( $response ) ) {
+	// 		return $response;
+	// 	}
+
+	// 	return true;
+	// }
+
 	public function remove_tags( $tags, $contact_id ) {
+		BugFu::log("remove_tags init");
 
-		$request = add_query_arg(
-			array(
-				'api_key'    => wpf_get_option( 'ac_key' ),
-				'api_action' => 'contact_tag_remove',
-				'api_output' => 'json',
-			),
-			$this->api_url . 'admin/api.php'
-		);
+		// Get API key and other necessary parameters
+		$api_key = $this->api_key;
+		$params = $this->get_params();
 
-		$data = array(
-			'id'   => $contact_id,
-			'tags' => $tags,
-		);
+		// Fetch existing tags for the user
+		$user_id = wpf_get_user_id( $contact_id );
+    	$tags = wpf_get_tags($user_id);
 
-		$params                            = $this->get_params();
-		$params['timeout']                 = 20;
-		$params['body']                    = $data;
-		$params['headers']['Content-Type'] = 'application/x-www-form-urlencoded';
+	
+		// Determine the type of tag field (dropdown or tags)
+		$tag_type = 'dropdown'; // This would be dynamically determined in practice
+	
+		// Retrieve necessary options from your settings
+		$board_id = wp_fusion()->settings->options['monday_board'];
+		$tag_field = wp_fusion()->settings->options['monday_tag_field']; // Assuming this contains the column ID for the dropdown
+		BugFu::log($board_id);
+		BugFu::log($tag_field);
+	
+		if ( 'dropdown' === $tag_type ) {
+			// Convert the tags array to a comma-separated string of tag IDs
+			$tags_value = implode( ',', $tags );
+	
+			// Prepare the GraphQL mutation for adding tags to the dropdown
+			$mutation = 'mutation { change_multiple_column_values(item_id:' . $contact_id . ', board_id:' . $board_id . ', column_values: "{\"' . esc_js($tag_field) . '\":{\"ids\":[' . $tags_value . ']}}") { id } }';
 
-		$response = wp_remote_post( $request, $params );
+			// Log the mutation for debugging
+			BugFu::log('GraphQL Mutation: ' . $mutation);
+		
+			// Make the request to the Monday.com API
+			$response = wp_safe_remote_post(
+				'https://api.monday.com/v2',
+				array(
+					'method'  => 'POST',
+					'headers' => array(
+						'Authorization' => $api_key,
+						'Content-Type'  => 'application/json',
+					),
+					'body'    => wp_json_encode(array('query' => $mutation)),
+				)
+			);
 
-		if ( is_wp_error( $response ) ) {
-			return $response;
+			$body = wp_remote_retrieve_body( $response );
+
+			BugFu::log($body);
+	
+			// Handle any errors
+			if ( is_wp_error( $response ) ) {
+				BugFu::log('API request error: ' . $response->get_error_message());
+				return $response;
+			}
+		} else {
+			// Handle the case for the 'tags' field type (to be implemented)
+			// ...
 		}
-
+	
 		return true;
 	}
 
@@ -921,7 +1231,6 @@ class WPF_Monday {
 
 		return $update_data;
 	}
-
 
 	/**
 	 * Adds a contact to a list.
@@ -1001,62 +1310,63 @@ class WPF_Monday {
 	
 		$column_values_json = json_encode( $column_values, JSON_UNESCAPED_SLASHES );
 	
-		// // Prepare the GraphQL mutation
-		// $mutation = 'mutation {
-		// 	create_item (board_id: ' . $board_id . ', item_name: "' . esc_js( $contact_data['name'] ) . '", column_values: "' . addslashes( $column_values_json ) . '") {
-		// 		id
-		// 	}
-		// }';
+		// Prepare the GraphQL mutation
+		$mutation = 'mutation {
+			create_item (board_id: ' . $board_id . ', item_name: "' . esc_js( $contact_data['name'] ) . '", column_values: "' . addslashes( $column_values_json ) . '") {
+				id
+			}
+		}';
+
+		BugFu::log($mutation);
 
 
 	
-		// // Log the mutation for debugging
-		// error_log('GraphQL Mutation: ' . $mutation);
+		// Log the mutation for debugging
+		error_log('GraphQL Mutation: ' . $mutation);
 	
-		// // Make the request to the Monday.com API
-		// $response = wp_safe_remote_post(
-		// 	'https://api.monday.com/v2',
-		// 	array(
-		// 		'method'  => 'POST',
-		// 		'headers' => array(
-		// 			'Authorization' => $api_key,
-		// 			'Content-Type'  => 'application/json',
-		// 		),
-		// 		'body'    => wp_json_encode(array('query' => $mutation)),
-		// 	)
-		// );
+		// Make the request to the Monday.com API
+		$response = wp_safe_remote_post(
+			'https://api.monday.com/v2',
+			array(
+				'method'  => 'POST',
+				'headers' => array(
+					'Authorization' => $api_key,
+					'Content-Type'  => 'application/json',
+				),
+				'body'    => wp_json_encode(array('query' => $mutation)),
+			)
+		);
 	
-		// // Handle the response
-		// if ( is_wp_error( $response ) ) {
-		// 	error_log('API request error: ' . $response->get_error_message());
-		// 	return $response;
-		// }
+		// Handle the response
+		if ( is_wp_error( $response ) ) {
+			error_log('API request error: ' . $response->get_error_message());
+			return $response;
+		}
 	
-		// $body = wp_remote_retrieve_body( $response );
-		// error_log('API response body: ' . $body);
+		$body = wp_remote_retrieve_body( $response );
+		error_log('API response body: ' . $body);
 	
-		// $body_json = json_decode( $body, true );
+		$body_json = json_decode( $body, true );
 	
-		// // Check if the body or data is null or empty
-		// if ( is_null( $body_json ) || !isset( $body_json['data'] ) ) {
-		// 	return new WP_Error('api_error', __('API error: Invalid response', 'wp-fusion'));
-		// }
+		// Check if the body or data is null or empty
+		if ( is_null( $body_json ) || !isset( $body_json['data'] ) ) {
+			return new WP_Error('api_error', __('API error: Invalid response', 'wp-fusion'));
+		}
 	
-		// // Check for errors in the response
-		// if ( isset($body_json['errors']) && !empty($body_json['errors']) ) {
-		// 	$error_message = isset($body_json['errors'][0]['message']) ? $body_json['errors'][0]['message'] : 'Unknown error';
-		// 	return new WP_Error('api_error', __('API error: ', 'wp-fusion') . $error_message);
-		// }
+		// Check for errors in the response
+		if ( isset($body_json['errors']) && !empty($body_json['errors']) ) {
+			$error_message = isset($body_json['errors'][0]['message']) ? $body_json['errors'][0]['message'] : 'Unknown error';
+			return new WP_Error('api_error', __('API error: ', 'wp-fusion') . $error_message);
+		}
 	
-		// // Ensure the expected data structure is present
-		// if ( !isset( $body_json['data']['create_item']['id'] ) ) {
-		// 	return new WP_Error('api_error', __('API error: Missing contact ID in response', 'wp-fusion'));
-		// }
+		// Ensure the expected data structure is present
+		if ( !isset( $body_json['data']['create_item']['id'] ) ) {
+			return new WP_Error('api_error', __('API error: Missing contact ID in response', 'wp-fusion'));
+		}
 	
-		// // Get new contact ID out of response
-		// return $body_json['data']['create_item']['id'];
+		// Get new contact ID out of response
+		return $body_json['data']['create_item']['id'];
 	}
-
 
 	/**
 	 * Update contact
@@ -1065,7 +1375,7 @@ class WPF_Monday {
 	 * @return bool
 	 */
 
-	 public function update_contact( $contact_id, $contact_data, $map_meta_fields = true ) {
+	public function update_contact( $contact_id, $contact_data, $map_meta_fields = true ) {
 		BugFu::log('update_contact_init');
 		// Ensure the API key and board ID are available
 		$api_key = wpf_get_option('monday_key');
@@ -1084,8 +1394,9 @@ class WPF_Monday {
 	
 		// Prepare the column values in JSON format dynamically
 		$column_values = array();
+		
 		foreach ( $contact_data as $key => $value ) {
-			if ( $key === 'email' ) {
+			if ( strpos( $key, 'email' ) !== false ) {
 				$column_values[$key] = array(
 					'email' => $value,
 					'text' => $value
@@ -1094,6 +1405,7 @@ class WPF_Monday {
 				$column_values[$key] = $value;
 			}
 		}
+		
 	
 		$column_values_json = json_encode( $column_values, JSON_UNESCAPED_SLASHES );
 	
@@ -1631,7 +1943,6 @@ class WPF_Monday {
 
 		return true;
 	}
-
 
 	/**
 	 * Creates a new custom object.

@@ -47,6 +47,7 @@ if ( is_admin() ) {
 	//require_once WPF_EC_DIR_PATH . 'includes/admin/class-upgrades.php';
 }
 
+
 // if ( ! class_exists( 'WPF_Post_Type' ) ) {
 // 	include_once __DIR__ . '/includes/class-post-type.php';
 // }

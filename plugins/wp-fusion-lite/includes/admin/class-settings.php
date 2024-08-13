@@ -203,7 +203,6 @@ class WPF_Settings {
 	 * @return mixed
 	 */
 	public function get( $key, $default = false ) {
-		
 
 		// Special fields first.
 
@@ -222,38 +221,28 @@ class WPF_Settings {
 
 			}
 		} elseif ( 'crm_fields' == $key && empty( $this->options['crm_fields'] ) ) {
-			//BugFu::log("get crm_fields");
-			
-			
 
 			$setting = get_option( 'wpf_crm_fields', array() );
-			//BugFu::log($setting);
 
 			if ( ! empty( $setting ) ) {
-				//BugFu::log("setting not empty");
-				// BugFu::log($setting);
 
 				$this->options['crm_fields'] = $setting;
 
 			} elseif ( empty( $setting ) && empty( $this->options ) ) {
-				//BugFu::log("get wpf_options");
 
 				// Fallback in case the data hasn't been moved yet (pre 3.37).
 				$this->options = get_option( 'wpf_options', array() );
 
 			}
 		} elseif ( empty( $this->options ) ) {
-			
 
 			$this->options = get_option( 'wpf_options', array() );
 
 		}
 
 		if ( ! empty( $this->options[ $key ] ) ) {
-			// BugFu::log("not empty options " . $key);
 
 			$value = $this->options[ $key ];
-			//BugFu::log("value " . $value);
 
 		} elseif ( isset( $this->options[ $key ] ) && ( 0 === $this->options[ $key ] || '0' === $this->options[ $key ] ) ) {
 
@@ -271,19 +260,14 @@ class WPF_Settings {
 
 		}
 
-		// BugFu::log($value);
-
 		if ( is_array( $value ) ) {
-			//BugFu::log("value is array");
 
 			// $value = array_filter( $value ); // Can't array filter here since it removes un-checked checkboxes.
 
 			// Fix for pre-3.40.33 Select CRM Field dropdowns.
 
 			if ( isset( $value['crm_field'] ) ) {
-				//BugFu::log("value['crm_field'] set");
 				$value = $value['crm_field'];
-				//BugFu::log($value);
 			}
 		} elseif ( is_string( $value ) && preg_match( '/^[0-9]+$/', $value ) ) {
 
@@ -308,7 +292,6 @@ class WPF_Settings {
 	 * @param mixed  $value  The settings value.
 	 */
 	public function set( $key, $value ) {
-		//BugFu::log("set init");
 
 		$value = apply_filters( 'wpf_set_setting_' . $key, $value );
 
@@ -325,15 +308,16 @@ class WPF_Settings {
 		// Special fields get saved to their own keys to reduce memory usage.
 
 		if ( 'available_tags' === $key ) {
-			update_option( 'wpf_available_tags', $value, false );
+			return update_option( 'wpf_available_tags', $value, false );
 		} elseif ( 'crm_fields' === $key ) {
-			update_option( 'wpf_crm_fields', $value, false );
+			return update_option( 'wpf_crm_fields', $value, false );
 		}
 
 		if ( ! empty( $GLOBALS['_wp_switched_stack'] ) && ! is_multisite() ) {
 			// Don't save the main settings if we've switched to another blog.
 			// This fixes the settings getting overwritten.
-			return;
+			wpf_log( 'notice', wpf_get_current_user_id(), "WP Fusion tried to save the settings key <strong>{$key}</strong> while switched to another blog. This is not allowed and the setting was not saved." );
+			return false;
 		}
 
 		if ( 'contact_fields' === $key ) {
@@ -350,7 +334,8 @@ class WPF_Settings {
 			unset( $options_to_save['crm_fields'] );
 		}
 
-		update_option( 'wpf_options', $options_to_save );
+		return update_option( 'wpf_options', $options_to_save );
+
 	}
 
 	/**
@@ -405,9 +390,6 @@ class WPF_Settings {
 	 * @return array  Contact fields
 	 */
 	public function get_contact_fields( $fields ) {
-		//BugFu::log("get_contact_fields init");
-
-		//BugFu::log($fields);
 
 		$defaults = array(
 			'active'    => false,
@@ -882,7 +864,7 @@ class WPF_Settings {
 
 			// With categories. Just HubSpot for now.
 
-			$available_tags[ $tag_id ] = array(
+			$available_tags[ $tag_id ] = array( 
 				'label'    => $tag_name,
 				'category' => 'Static Lists',
 			);
@@ -2537,7 +2519,6 @@ class WPF_Settings {
 	 */
 
 	public function show_field_crm_field( $id, $field ) {
-		// BugFu::log("show_field_crm_field init");
 
 		$setting = $this->get( $id );
 
@@ -2582,8 +2563,6 @@ class WPF_Settings {
 	 */
 
 	public function show_field_contact_fields( $id, $field ) {
-		// BugFu::log("show_field_contact_fields init");
-		// BugFu::log($field, false);
 
 		// Lets group contact fields by integration if we can
 		$field_groups = array(
@@ -2617,7 +2596,6 @@ class WPF_Settings {
 		 * @param array $fields    Tags to be removed from the user
 		 */
 		$field['choices'] = apply_filters( 'wpf_meta_fields', $field['choices'] );
-		// BugFu::log($field, false);
 
 		foreach ( $this->get( 'contact_fields', array() ) as $key => $data ) {
 
@@ -2830,7 +2808,6 @@ class WPF_Settings {
 				}
 
 				echo '<td>';
-				//BugFu::log($this->options[ $id ]);
 
 				wpf_render_crm_field_select( $this->options[ $id ][ $user_meta ]['crm_field'], 'wpf_options', 'contact_fields', $user_meta );
 
@@ -3222,9 +3199,6 @@ class WPF_Settings {
 	 * @return mixed
 	 */
 	public function validate_field_contact_fields( $input, $setting, $options_class ) {
-		//BugFu::log("validate_field_contact_fields init");
-
-		// BugFu::log($input);
 
 		// Unset the empty ones.
 		foreach ( $input as $field => $data ) {
@@ -3237,8 +3211,6 @@ class WPF_Settings {
 				unset( $input[ $field ] );
 			}
 		}
-
-		//BugFu::log($input);
 
 		// New fields.
 		if ( ! empty( $input['new_field']['key'] ) ) {

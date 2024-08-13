@@ -179,7 +179,6 @@ class WP_Fusion_Options {
 			// work on the settings page.
 
 			foreach ( $this->options as $id => $value ) {
-				//BugFu::log("wpf_get_setting_" . $id);
 				$this->options[ $id ] = apply_filters( 'wpf_get_setting_' . $id, $value );
 			}
 
@@ -215,8 +214,6 @@ class WP_Fusion_Options {
 	 */
 
 	private function save_options() {
-
-		BugFu::log("save_options init");
 		$nonce = $_POST[ $this->setup['project_slug'] . '_nonce' ];
 
 		if ( ! isset( $_POST[ $this->setup['project_slug'] . '_nonce' ] ) ) {
@@ -234,13 +231,9 @@ class WP_Fusion_Options {
 			$this->post_data = array();
 		}
 
-		BugFu::log($this->option_group);
-
 		// For each settings field, run the input through it's defined validation function
 
 		$settings = $this->settings;
-		// BugFu::log($settings);
-		//BugFu::log($this->post_data);
 
 		// Beydefault $_POST ignores checkboxes with no value set, so we need to
 		// iterate through all defined checkboxes and set their value to 0 if
@@ -267,7 +260,6 @@ class WP_Fusion_Options {
 		}
 
 		foreach ( $settings as $id => $setting ) {
-			
 
 			if ( empty( $this->post_data[ $id ] ) && 'hidden' === $setting['type'] ) {
 				// Don't erase saved values with empty hidden fields.
@@ -281,12 +273,7 @@ class WP_Fusion_Options {
 
 			}
 
-			
-
 			if ( isset( $this->post_data[ $id ] ) && $this->post_data[ $id ] !== $this->options[ $id ] ) {
-				// BugFu::log( "ID: " . $id );
-				// BugFu::log( $this->post_data[ $id ] );
-				// BugFu::log( $setting );
 
 				$this->post_data[ $id ] = $this->validate_options( $id, $this->post_data[ $id ], $setting );
 
@@ -313,6 +300,7 @@ class WP_Fusion_Options {
 			wp_fusion()->settings->options = $this->options;
 
 		} else {
+			// BugFu::log( $this->options );
 
 			// Merge the form data with the existing options, updating as necessary
 			$this->options = wp_parse_args( $this->post_data, $this->options );
@@ -381,37 +369,26 @@ class WP_Fusion_Options {
 	 */
 
 	private function validate_options( $id, $input, $setting ) {
-		// BugFu::log("validate_options init");
-		// BugFu::log($setting);
-		
 
 		if ( method_exists( $this, 'validate_field_' . $setting['type'] ) && ! has_filter( 'validate_field_' . $setting['type'] . '_override' ) ) {
 
 			// If a validation filter has been specified for the setting type, register it with add_filters
 			add_filter( 'validate_field_' . $setting['type'], array( $this, 'validate_field_' . $setting['type'] ), 10, 3 );
-			// BugFu::log("Method exists[type]: validate_field_" . $setting['type']);
 
 		}
 
 		// Handles the Reset option.
 		if ( method_exists( $this, 'validate_field_' . $id ) ) {
 			add_filter( 'validate_field_' . $id, array( $this, 'validate_field_' . $id ), 10, 3 );
-			// BugFu::log("Method exists[id]: validate_field_" . $id);
 		}
 
-
 		if ( has_filter( 'validate_field_' . $id ) ) {
-			// validate_fields_contact_fields fired here
-			// BugFu::log("validate_field_" . $id);
-
 
 			// If there's a validation function for this particular field ID
 			$input = apply_filters( 'validate_field_' . $id, $input, $setting, $this );
-			BugFu::log("Has Filter[id]: validate_field_" . $id);
-			// BugFu::log($input);
 
 		} elseif ( has_filter( 'validate_field_' . $setting['type'] ) || has_filter( 'validate_field_' . $setting['type'] . '_override' ) ) {
-			// BugFu::log("Has Filter[type]: validate_field_" . $setting['type']);
+
 			// If there's a validation for this field type or an override
 			if ( has_filter( 'validate_field_' . $setting['type'] . '_override' ) ) {
 
@@ -467,43 +444,40 @@ class WP_Fusion_Options {
 
 			// We need to keep track of some types here
 
-			if ( isset( $setting['type'] ) ) {
+			if ( 'checkbox' == $setting['type'] ) {
+				$this->checkboxes[] = $id;
+			} elseif ( 'multi_select' == $setting['type'] || 'checkboxes' == $setting['type'] || 'assign_tags' == $setting['type'] ) {
+				$this->multi_selects[] = $id;
+			}
 
-				if ( 'checkbox' == $setting['type'] ) {
-					$this->checkboxes[] = $id;
-				} elseif ( 'multi_select' == $setting['type'] || 'checkboxes' == $setting['type'] || 'assign_tags' == $setting['type'] ) {
-					$this->multi_selects[] = $id;
-				}
+			// If a custom setting template has been specified, load those values as well
 
-				// If a custom setting template has been specified, load those values as well
+			if ( has_filter( 'default_field_' . $setting['type'] ) ) {
 
-				if ( has_filter( 'default_field_' . $setting['type'] ) ) {
+				$default         = apply_filters( 'default_field_' . $setting['type'], $setting );
+				$settings[ $id ] = wp_parse_args( $settings[ $id ], $default );
 
-					$default         = apply_filters( 'default_field_' . $setting['type'], $setting );
-					$settings[ $id ] = wp_parse_args( $settings[ $id ], $default );
+			} elseif ( method_exists( $this, 'default_field_' . $setting['type'] ) ) {
 
-				} elseif ( method_exists( $this, 'default_field_' . $setting['type'] ) ) {
+				$default         = call_user_func( array( $this, 'default_field_' . $setting['type'] ) );
+				$settings[ $id ] = wp_parse_args( $settings[ $id ], $default );
 
-					$default         = call_user_func( array( $this, 'default_field_' . $setting['type'] ) );
-					$settings[ $id ] = wp_parse_args( $settings[ $id ], $default );
+			}
 
-				}
+			// Load the array of settings currently in use
+			if ( ! isset( $this->fields[ $setting['type'] ] ) ) {
+				$this->fields[ $setting['type'] ] = true;
+			}
 
-				// Load the array of settings currently in use
-				if ( ! isset( $this->fields[ $setting['type'] ] ) ) {
-					$this->fields[ $setting['type'] ] = true;
-				}
+			if ( ! isset( $this->options[ $id ] ) && ! empty( $settings[ $id ]['std'] ) ) {
 
-				if ( ! isset( $this->options[ $id ] ) && ! empty( $settings[ $id ]['std'] ) ) {
+				// Set the default value if no option exists
+				$this->options[ $id ] = $settings[ $id ]['std'];
 
-					// Set the default value if no option exists
-					$this->options[ $id ] = $settings[ $id ]['std'];
+			} elseif ( ! isset( $this->options[ $id ] ) ) {
 
-				} elseif ( ! isset( $this->options[ $id ] ) ) {
-
-					// If there's no std, set it to false
-					$this->options[ $id ] = false;
-				}
+				// If there's no std, set it to false
+				$this->options[ $id ] = false;
 			}
 		}
 

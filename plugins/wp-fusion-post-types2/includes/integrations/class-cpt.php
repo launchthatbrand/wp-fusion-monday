@@ -75,7 +75,7 @@ class WPF_CPT extends WPF_CPT_Integrations_Base {
 	 * @since 3.41.35 Moved from wpf_crm_init hook to constructor.
 	 */
 	public function set_constants() {
-		BugFu::log("PASS");
+		// BugFu::log("PASS");
 
 		$slug = wpf_get_option( 'crm' );
 
@@ -296,11 +296,11 @@ class WPF_CPT extends WPF_CPT_Integrations_Base {
 	 * @return mixed
 	 */
 	public function validate_field_post_type_sync_post( $input, $setting, $options_class ) {
-		BugFu::log("validate_field_post_type_sync_post init");
-		BugFu::log($input);
-		BugFu::log($setting);
-		BugFu::log($options_class);
-		return wpf_clean( $input );
+		// BugFu::log("validate_field_post_type_sync_post init");
+		// BugFu::log($input);
+		// BugFu::log($setting);
+		// BugFu::log($options_class);
+		// return wpf_clean( $input );
 
 	}
 

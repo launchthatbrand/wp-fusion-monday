@@ -1494,6 +1494,8 @@ class WP_Fusion_Options {
 	 */
 	private function show_field_select( $id, $field, $subfield_id = null ) {
 
+		BugFu::log( $this->option_group );
+
 		if ( ! isset( $field['allow_null'] ) ) {
 			if ( empty( $field['std'] ) ) {
 				$field['allow_null'] = true;

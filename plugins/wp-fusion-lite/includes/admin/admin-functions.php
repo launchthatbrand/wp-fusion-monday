@@ -243,8 +243,6 @@ function wpf_render_tag_multiselect( $args = array() ) {
  */
 
 function wpf_render_crm_field_select( $setting, $meta_name, $field_id = false, $field_sub_id = false ) {
-	// BugFu::log("wpf_render_crm_field_select init");
-	// BugFu::log($setting);
 
 	if ( doing_action( 'show_field_crm_field' ) ) {
 		// Settings page.
@@ -338,7 +336,6 @@ function wpf_render_crm_field_select( $setting, $meta_name, $field_id = false, $
 
 		// Check to see if new custom fields have been added.
 		if ( ! empty( $setting ) && ! isset( $field_check[ $setting ] ) ) {
-			BugFu::log($setting);
 
 			echo '<option value="' . esc_attr( $setting ) . '" selected="selected">' . esc_html( $setting ) . '</option>';
 
