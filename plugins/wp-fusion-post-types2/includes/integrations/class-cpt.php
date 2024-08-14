@@ -525,6 +525,9 @@ class WPF_CPT extends WPF_CPT_Integrations_Base {
 		 * @param int        $user_id   The user ID.
 		 */
 
+		$post_type= get_post_type($post_id);
+		BugFu::log($post_type);
+
 		$post_data = apply_filters( 'wpf_post_updated', $post_data, $post_id );
 		$post_meta = get_post_meta($post_id);
 		BugFu::log($post_data->post_title);
@@ -612,7 +615,7 @@ class WPF_CPT extends WPF_CPT_Integrations_Base {
 
 			// Add the item to the CRM.
 
-			$item_id = wp_fusion()->crm->add_object( $post_data, 'post', $map_meta_fields = true );
+			$item_id = wp_fusion()->crm->add_object( $post_data, $post_type, $map_meta_fields = true );
 
 			if ( is_wp_error( $item_id ) ) {
 
