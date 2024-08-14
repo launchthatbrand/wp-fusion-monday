@@ -614,3 +614,48 @@ Stack trace:
 			}
 		}
 [13-Aug-2024 22:58:26 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7218546947"}},"account_id":11070499}
+[13-Aug-2024 23:43:41 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
+[13-Aug-2024 23:49:09 UTC] GraphQL Mutation: mutation {
+			change_multiple_column_values (board_id: 7193033323, item_id: 7218546947, column_values: "{\"email__1\":{\"email\":\"bbbbb@bbbbb.com\",\"text\":\"bbbbb@bbbbb.com\"},\"name\":\"asdasd\",\"numbers__1\":\"9\"}") {
+				id
+			}
+		}
+[13-Aug-2024 23:49:10 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7218546947"}},"account_id":11070499}
+[13-Aug-2024 23:49:55 UTC] GraphQL Mutation: mutation {
+			change_multiple_column_values (board_id: 7193033323, item_id: 7218546947, column_values: "{\"email__1\":{\"email\":\"bbbbb@bbbbb.com\",\"text\":\"bbbbb@bbbbb.com\"},\"name\":\"asdasd\",\"numbers__1\":\"9\"}") {
+				id
+			}
+		}
+[13-Aug-2024 23:49:56 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7218546947"}},"account_id":11070499}
+[13-Aug-2024 23:57:32 UTC] GraphQL Mutation: mutation {
+			change_multiple_column_values (board_id: 7193033323, item_id: 7218546947, column_values: "{\"email__1\":{\"email\":\"bbbbb@bbbbb.com\",\"text\":\"bbbbb@bbbbb.com\"},\"name\":\"asdasd\",\"numbers__1\":\"9\"}") {
+				id
+			}
+		}
+[13-Aug-2024 23:57:33 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7218546947"}},"account_id":11070499}
+[13-Aug-2024 23:57:33 UTC] PHP Notice:  Function wpdb::prepare was called <strong>incorrectly</strong>. Unsupported value type (array). Please see <a href="https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/">Debugging in WordPress</a> for more information. (This message was added in version 4.8.2.) in /var/www/html/wp-includes/functions.php on line 6085
+[13-Aug-2024 23:57:33 UTC] PHP Warning:  Array to string conversion in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 1018
+[13-Aug-2024 23:59:09 UTC] GraphQL Mutation: mutation {
+			change_multiple_column_values (board_id: 7193033323, item_id: 7218546947, column_values: "{\"email__1\":{\"email\":\"bbbbb@bbbbb.com\",\"text\":\"bbbbb@bbbbb.com\"},\"name\":\"asdasd\",\"numbers__1\":\"9\"}") {
+				id
+			}
+		}
+[13-Aug-2024 23:59:09 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7218546947"}},"account_id":11070499}
+[13-Aug-2024 23:59:26 UTC] GraphQL Mutation: mutation {
+			change_multiple_column_values (board_id: 7193033323, item_id: 7218546947, column_values: "{\"email__1\":{\"email\":\"bbbbb@bbbbb.com\",\"text\":\"bbbbb@bbbbb.com\"},\"name\":\"asdasd\",\"numbers__1\":\"9\"}") {
+				id
+			}
+		}
+[13-Aug-2024 23:59:26 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7218546947"}},"account_id":11070499}
+[13-Aug-2024 23:59:34 UTC] GraphQL Mutation: mutation {
+			change_multiple_column_values (board_id: 7193033323, item_id: 7218546947, column_values: "{\"email__1\":{\"email\":\"bbbbb@bbbbb.com\",\"text\":\"bbbbb@bbbbb.com\"},\"name\":\"asdasd\",\"numbers__1\":\"9\"}") {
+				id
+			}
+		}
+[13-Aug-2024 23:59:35 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7218546947"}},"account_id":11070499}
+[14-Aug-2024 00:00:00 UTC] GraphQL Mutation: mutation {
+			change_multiple_column_values (board_id: 7193033323, item_id: 7218546947, column_values: "{\"email__1\":{\"email\":\"bbbbb@bbbbb.com\",\"text\":\"bbbbb@bbbbb.com\"},\"name\":\"asdasd asdasd\",\"numbers__1\":\"9\"}") {
+				id
+			}
+		}
+[14-Aug-2024 00:00:01 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7218546947"}},"account_id":11070499}

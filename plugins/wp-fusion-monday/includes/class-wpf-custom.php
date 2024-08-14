@@ -985,14 +985,13 @@ class WPF_Monday {
 	}
 
 	/**
-	 * Applies tags to a contact. This uses the old API since the v3 API only uses tag IDs
+	 * Syncs Monday.com tags. This is called from the generic apply_tags and remove_tags since it does the same thing for both.
 	 *
 	 * @access public
-	 * @return bool
+	 * @return void
 	 */
-
-	public function apply_tags( $tags, $contact_id ) {
-		BugFu::log("apply_tags_init");
+	public function sync_monday_tags($tags, $contact_id) {
+		BugFu::log("sync_monday_tags init");
 
 		// Get API key and other necessary parameters
 		$api_key = $this->api_key;
@@ -1049,138 +1048,29 @@ class WPF_Monday {
 		}
 	
 		return true;
+
 	}
-	
-
-	// public function apply_tags( $tags, $contact_id ) {
-
-	// 	$params = $this->get_params();
-
-	// 	$tag_type = 'dropdown';
-
-	// 	if ( 'tags' === wpf_get_option( 'zoho_tag_type' ) ) {
-
-	// 		$field = wpf_get_option( 'zoho_multiselect_field' );
-	// 		$data  = array(
-	// 			'$append_values' => array(
-	// 				$field => true,
-	// 			),
-	// 			$field => $tags,
-	// 		);
-
-	// 		$params['body']   = wp_json_encode( array( 'data' => array( $data ) ) );
-	// 		$params['method'] = 'PUT';
-	// 		$request          = $this->api_domain . '/crm/v2/' . $this->object_type . '/' . $contact_id;
-	// 	} else {
-	// 		$request = $this->api_domain . '/crm/v2/' . $this->object_type . '/' . $contact_id . '/actions/add_tags?tag_names=' . implode( ',', $tags ) . '&over_write=false';
-	// 	}
-
-	// 	$response = wp_safe_remote_post( $request, $params );
-
-	// 	if ( is_wp_error( $response ) ) {
-	// 		return $response;
-	// 	}
-
-	// 	return true;
-
-	// }
 
 	/**
-	 * Removes tags from a contact. This uses the old API since the v3 API only uses tag IDs
+	 * Applies tags to a contact. Calls $this->sync_monday_tags
 	 *
 	 * @access public
 	 * @return bool
 	 */
-
-	// public function remove_tags( $tags, $contact_id ) {
-
-	// 	$request = add_query_arg(
-	// 		array(
-	// 			'api_key'    => wpf_get_option( 'ac_key' ),
-	// 			'api_action' => 'contact_tag_remove',
-	// 			'api_output' => 'json',
-	// 		),
-	// 		$this->api_url . 'admin/api.php'
-	// 	);
-
-	// 	$data = array(
-	// 		'id'   => $contact_id,
-	// 		'tags' => $tags,
-	// 	);
-
-	// 	$params                            = $this->get_params();
-	// 	$params['timeout']                 = 20;
-	// 	$params['body']                    = $data;
-	// 	$params['headers']['Content-Type'] = 'application/x-www-form-urlencoded';
-
-	// 	$response = wp_remote_post( $request, $params );
-
-	// 	if ( is_wp_error( $response ) ) {
-	// 		return $response;
-	// 	}
-
-	// 	return true;
-	// }
-
+	public function apply_tags( $tags, $contact_id ) {
+		BugFu::log("apply_tags_init");
+		return $this->sync_monday_tags($tags, $contact_id);
+	}
+	
+	/**
+	 * Removes tags from a contact. Calls $this->sync_monday_tags
+	 *
+	 * @access public
+	 * @return bool
+	 */
 	public function remove_tags( $tags, $contact_id ) {
 		BugFu::log("remove_tags init");
-
-		// Get API key and other necessary parameters
-		$api_key = $this->api_key;
-		$params = $this->get_params();
-
-		// Fetch existing tags for the user
-		$user_id = wpf_get_user_id( $contact_id );
-    	$tags = wpf_get_tags($user_id);
-
-	
-		// Determine the type of tag field (dropdown or tags)
-		$tag_type = 'dropdown'; // This would be dynamically determined in practice
-	
-		// Retrieve necessary options from your settings
-		$board_id = wp_fusion()->settings->options['monday_board'];
-		$tag_field = wp_fusion()->settings->options['monday_tag_field']; // Assuming this contains the column ID for the dropdown
-		BugFu::log($board_id);
-		BugFu::log($tag_field);
-	
-		if ( 'dropdown' === $tag_type ) {
-			// Convert the tags array to a comma-separated string of tag IDs
-			$tags_value = implode( ',', $tags );
-	
-			// Prepare the GraphQL mutation for adding tags to the dropdown
-			$mutation = 'mutation { change_multiple_column_values(item_id:' . $contact_id . ', board_id:' . $board_id . ', column_values: "{\"' . esc_js($tag_field) . '\":{\"ids\":[' . $tags_value . ']}}") { id } }';
-
-			// Log the mutation for debugging
-			BugFu::log('GraphQL Mutation: ' . $mutation);
-		
-			// Make the request to the Monday.com API
-			$response = wp_safe_remote_post(
-				'https://api.monday.com/v2',
-				array(
-					'method'  => 'POST',
-					'headers' => array(
-						'Authorization' => $api_key,
-						'Content-Type'  => 'application/json',
-					),
-					'body'    => wp_json_encode(array('query' => $mutation)),
-				)
-			);
-
-			$body = wp_remote_retrieve_body( $response );
-
-			BugFu::log($body);
-	
-			// Handle any errors
-			if ( is_wp_error( $response ) ) {
-				BugFu::log('API request error: ' . $response->get_error_message());
-				return $response;
-			}
-		} else {
-			// Handle the case for the 'tags' field type (to be implemented)
-			// ...
-		}
-	
-		return true;
+		return $this->sync_monday_tags($tags, $contact_id);
 	}
 
 	private function format_contact_data( $data ) {
