@@ -61,9 +61,10 @@ class WPF_CPT extends WPF_CPT_Integrations_Base {
 		add_filter( 'wpf_set_setting_post_fields', array( $this, 'handle_post_type_fields_update' ), 10, 2 );
 		add_filter( 'wpf_get_setting_post_fields', array( $this, 'handle_get_post_fields' ) );
 
-		
 
 		
+
+	
 		// Register dynamic actions for all post types
 		$this->register_dynamic_actions();
 	}
@@ -112,8 +113,8 @@ class WPF_CPT extends WPF_CPT_Integrations_Base {
 			if (isset($options['post_type_sync_' . $post_type->name]) && !empty($options['post_type_sync_' . $post_type->name])) {
 
 				// WPF Post Type Fields Table Rendering
-				add_action("show_field_postType_{$post_type->name}_fields", array($this, 'show_field_postType_fields'), 15, 2);
-				add_action("show_field_postType_{$post_type->name}_fields_begin", array($this, 'show_field_postType_fields_begin'), 15, 2);
+				add_action("show_field_{$post_type->name}-fields", array($this, 'show_field_postType_fields'), 15, 2);
+				add_action("show_field_{$post_type->name}-fields_begin", array($this, 'show_field_postType_fields_begin'), 15, 2);
 				add_filter( "wpf_{$post_type->name}_meta_fields", array( $this, "prepare_{$post_type->name}_meta_fields" ), 60 );
 
 				// add_filter( "wpf_set_setting_post_type_fields_{$post_type->name}", array( $this, "handle_post_type_fields_update" ), 10, 2 );
@@ -125,10 +126,117 @@ class WPF_CPT extends WPF_CPT_Integrations_Base {
 				// add_action('add_meta_boxes', 'example_add_meta_box');
 				add_action( "wpf_meta_box_content", array( $this, 'add_custom_meta_box_field' ), 10, 2);
 
+				// Export functions with post_type->name passed to export_options
+				add_filter( 'wpf_export_options', function($options) use ($post_type) {
+					return $this->export_options($options, $post_type->name);
+				}, 10 );
+
+				add_action( "wpf_batch_save_post_{$post_type->name}_init", function() use ($post_type) {
+					return $this->batch_init($post_type->name);
+				}, 10 );
+
+				add_action( "wpf_batch_save_post_{$post_type->name}", function($post_id) use ($post_type) {
+					return $this->batch_step_postTypes($post_id, $post_type);
+				}, 10 );
+				
+
 				// Load the field mapping into memory.
 				$this->{$post_type->name . '_fields'} = wpf_get_option( 'postType_' . $post_type->name . '_fields', array() );
 			}
 		}
+	}
+
+
+
+	/**
+	 * Adds CPT checkboxs to available export options
+	 *
+	 * @access public
+	 * @return array Options
+	 */
+
+	 public function export_options($options, $post_type_name) {
+
+		$options[sprintf('save_post_%s', $post_type_name)] = array(
+			'label'   => sprintf(__('Export %ss', 'wp-fusion'), $post_type_name),
+			'title'   => sprintf(__('Export %ss', 'wp-fusion'), $post_type_name),
+			'tooltip' => sprintf(__('All WordPress %ss without a matching %s item record will be exported as new items.', 'wp-fusion' ), $post_type_name, wp_fusion()->crm->name ),
+		);
+	
+		return $options;
+	}
+
+	/**
+	 * Counts total number of postType objects to be processed
+	 *
+	 * @access public
+	 * @return int Count
+	 */
+
+	 public function batch_init($post_type_name) {
+		BugFu::log("batch_init init");
+
+		$args = array(
+			'numberposts' => -1,
+			'post_type'   => strtolower($post_type_name),  // Use the dynamic post type name
+			'post_status' => array('publish'),
+			'fields'      => 'ids',
+			'order'       => 'ASC',
+			'meta_query'  => array(
+				'relation' => 'OR',
+				array(
+					'key'     => WPF_CONTACT_ID_META_KEY,
+					'compare' => 'NOT EXISTS',
+				),
+				array(
+					'key'   => WPF_CONTACT_ID_META_KEY,
+					'value' => false,
+				),
+			),
+		);
+	
+		$objects = get_posts($args);
+	
+		wp_fusion()->logger->handle('info', 0, 'Beginning <strong>' . ucfirst($post_type_name) . '</strong> batch operation on ' . count($objects) . ' objects', array('source' => 'batch-process'));
+	
+		BugFu::log($objects);
+		return $objects;
+	}
+	
+
+	/**
+	 * Checks groups for each user and applies tags
+	 *
+	 * @access public
+	 * @return void
+	 */
+
+	 public function batch_step_postTypes( $post_id, $post_type ) {
+		BugFu::log("batch_step_postTypes init" . $post_id);
+		BugFu::log($post_type->name);
+
+		// Get the post data using the post ID
+		$post_data = get_post($post_id);
+
+		// Check if the post exists
+		if (!$post_data) {
+			BugFu::log("No post found for ID " . $post_id);
+			return;
+		}
+
+		wp_fusion()->crm->add_object( $post_data, $post_type->name, $map_meta_fields = true );
+
+		// $groups = bp_get_user_groups( $user_id );
+
+		// if ( ! empty( $groups ) ) {
+
+		// 	foreach ( $groups as $group ) {
+
+		// 		$this->join_group( $group->group_id, $user_id );
+
+		// 	}
+		// }
+
 	}
 
 	function add_custom_meta_box_field( $post, $settings) {
@@ -296,11 +404,11 @@ class WPF_CPT extends WPF_CPT_Integrations_Base {
 	 * @return mixed
 	 */
 	public function validate_field_post_type_sync_post( $input, $setting, $options_class ) {
-		// BugFu::log("validate_field_post_type_sync_post init");
+		BugFu::log("validate_field_post_type_sync_post init");
 		// BugFu::log($input);
 		// BugFu::log($setting);
 		// BugFu::log($options_class);
-		// return wpf_clean( $input );
+		return wpf_clean( $input );
 
 	}
 

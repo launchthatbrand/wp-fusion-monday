@@ -1207,12 +1207,8 @@ class WPF_Monday {
 			}
 		}';
 
-		BugFu::log($mutation);
-
-
-	
 		// Log the mutation for debugging
-		error_log('GraphQL Mutation: ' . $mutation);
+		BugFu::log($mutation);
 	
 		// Make the request to the Monday.com API
 		$response = wp_safe_remote_post(
@@ -1229,12 +1225,12 @@ class WPF_Monday {
 	
 		// Handle the response
 		if ( is_wp_error( $response ) ) {
-			error_log('API request error: ' . $response->get_error_message());
+			BugFu::log('API request error: ' . $response->get_error_message());
 			return $response;
 		}
 	
 		$body = wp_remote_retrieve_body( $response );
-		error_log('API response body: ' . $body);
+		BugFu::log('API response body: ' . $body);
 	
 		$body_json = json_decode( $body, true );
 	

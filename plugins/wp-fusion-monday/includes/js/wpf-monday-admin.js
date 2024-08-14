@@ -1,6 +1,63 @@
 jQuery(document).ready(function ($) {
-  // Sync tags and custom fields
+  var syncLists = function (button, total, crmContainer) {
+    console.log("syncLists init");
+    button.addClass("button-primary");
+    button.find("span.dashicons").addClass("wpf-spin");
+    button.find("span.text").html("Syncing Workspaces");
 
+    var data = {
+      action: "wpf_sync_lists",
+      _ajax_nonce: wpf_ajax.nonce,
+    };
+
+    $.post(ajaxurl, data, function (response) {
+      if (response.success == true) {
+        if (true == wpf_ajax.connected) {
+          // If connection already configured, skip users sync
+          button.find("span.dashicons").removeClass("wpf-spin");
+          button.find("span.text").html("Complete");
+        } else {
+          button.find("span.text").html("Loading Contact IDs");
+
+          var data = {
+            action: "wpf_batch_init",
+            _ajax_nonce: wpf_ajax.nonce,
+            hook: "users_sync",
+          };
+
+          $.post(ajaxurl, data, function (total) {
+            //getBatchStatus(total, 'Users (syncing contact IDs and tags, no data is being sent)');
+            wpf_ajax.connected = true;
+            button.find("span.dashicons").removeClass("wpf-spin");
+            button.find("span.text").html("Complete");
+
+            $(crmContainer)
+              .find("#connection-output")
+              .html(
+                '<div class="updated"><p>' +
+                  wpf_ajax.strings.connectionSuccess.replace(
+                    "CRMNAME",
+                    $(crmContainer).attr("data-name")
+                  ) +
+                  "</p></div>"
+              );
+          });
+        }
+      } else {
+        $(crmContainer)
+          .find("#connection-output")
+          .html(
+            '<div class="error"><p><strong>' +
+              wpf_ajax.strings.error +
+              ": </strong>" +
+              response.data +
+              "</p></div>"
+          );
+      }
+    });
+  };
+
+  // Sync workspaces
   var syncWorkspaces = function (button, total, crmContainer) {
     console.log("syncWorkspaces init");
     button.addClass("button-primary");
@@ -78,10 +135,9 @@ jQuery(document).ready(function ($) {
     };
 
     // Add the submitted data
-    postFields = $(crmContainer)
-      .find("#test-monday-connection")
-      .attr("data-post-fields")
-      .split(",");
+    postFields = $(button).attr("data-post-fields").split(",");
+
+    console.log("postFields:", postFields);
 
     $(postFields).each(function (index, el) {
       if ($("#" + el).length) {
@@ -111,17 +167,31 @@ jQuery(document).ready(function ($) {
         button.find("span.dashicons").removeClass("wpf-spin");
         button.find("span.text").html("Retry");
       } else {
-        console.log("connection success, sync workspaces");
+        console.log("connection success, determining sub-function");
         $(crmContainer).find("div.error").remove();
-
         $("#wpf-needs-setup").slideUp(400);
-        var total = parseFloat(button.attr("data-total-users"));
-        syncWorkspaces(button, total, crmContainer);
-
-        // remove disabled on submit button:
-
-        $('p.submit input[type="submit"]').removeAttr("disabled");
       }
+
+      // Determine which sub-function to trigger based on postFields
+      if (postFields.includes("monday_workspace")) {
+        // Call syncTagFields if monday_board is provided
+        syncLists(button, crmContainer);
+      } else if (postFields.includes("monday_board")) {
+        // Call syncTagFields if monday_board is provided
+        syncTagFields(button, crmContainer);
+      } else if (postFields.includes("monday_tag_field")) {
+        // Call syncTagFields if monday_tag is provided
+        syncTags(button, crmContainer);
+      } else if (
+        postFields.includes("monday_url") &&
+        postFields.includes("monday_key")
+      ) {
+        // Call syncWorkspaces if monday_url and monday_key are provided
+        syncWorkspaces(button, crmContainer);
+      }
+
+      // remove disabled on submit button:
+      $('p.submit input[type="submit"]').removeAttr("disabled");
     });
   });
 

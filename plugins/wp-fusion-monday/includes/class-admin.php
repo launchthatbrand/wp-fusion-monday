@@ -31,6 +31,7 @@ class WPF_Monday_Admin {
 
 		// AJAX
 		add_action( 'wp_ajax_wpf_sync_workspaces', array( $this, 'wp_ajax_wpf_sync_workspaces' ) );
+		add_action( 'wp_ajax_wpf_sync_lists', array( $this, 'wp_ajax_wpf_sync_lists' ) );
 		add_action( 'wp_ajax_wpf_test_connection_' . $this->slug, array( $this, 'test_connection' ) );
 
 		add_action( 'show_field_test_connection', array( $this, 'show_field_test_connection' ), 10, 2 );
@@ -108,6 +109,13 @@ class WPF_Monday_Admin {
 		wp_send_json_success();
 	}
 
+	public function wp_ajax_wpf_sync_lists(){
+		BugFu::log("wp_ajax_wpf_sync_lists init");
+		wp_fusion()->crm->sync_lists();
+		
+		wp_send_json_success();
+	}
+
 	
 
 
@@ -130,7 +138,7 @@ class WPF_Monday_Admin {
 		// Retrieve the value from the options array
 		$value = isset( $this->options[ $id ] ) ? $this->options[ $id ] : '';
 
-		BugFu::log($value);
+		// BugFu::log($value);
 
 		if ( ! isset( $field['allow_null'] ) ) {
 			if ( empty( $field['std'] ) ) {
@@ -213,7 +221,7 @@ class WPF_Monday_Admin {
 
 			$tip = sprintf( __( 'Refresh available workspaces from %s. Does not modify any user data or permissions.', 'wp-fusion-lite' ), wp_fusion()->crm->name );
 
-			echo '<a id="test-connection" data-post-fields="' . esc_attr( implode( ',', $field['post_fields'] ) ) . '" class="button button-primary wpf-tip wpf-tip-right test-connection-button" data-tip="' . esc_attr( $tip ) . '">';
+			echo '<a id="test-monday-connection" data-post-fields="' . esc_attr( implode( ',', $field['post_fields'] ) ) . '" class="button button-primary wpf-tip wpf-tip-right test-connection-button" data-tip="' . esc_attr( $tip ) . '">';
 			echo '<span class="dashicons dashicons-update-alt"></span>';
 			echo '<span class="text">' . sprintf( esc_html__( 'Refresh %s', 'wp-fusion-lite' ), esc_html( $field['child'] ) ) . '</span>';
 			echo '</a>';
@@ -371,7 +379,7 @@ class WPF_Monday_Admin {
 				'placeholder' => __( 'Select a workspace', 'wp-fusion' ),
 				'section'     => 'setup',
 				'desc'    => __( 'Which workspace to sync Users to. For more information, see <a href="https://wpfusion.com/documentation/crm-specific-docs/zoho-tags/" target="_blank">Tags with Zoho</a>.', 'wp-fusion-lite' ),
-				'post_fields' => array( 'monday_workspace' ),
+				'post_fields' => array( 'monday_url', 'monday_key', 'monday_workspace' ),
 			);			
 
 			$new_settings['monday_board'] = array(
@@ -383,7 +391,7 @@ class WPF_Monday_Admin {
 				'placeholder' => 'Select Board',
 				'section'     => 'setup',
 				'choices'     => wp_fusion()->settings->get( 'available_lists', array() ),
-				'post_fields' => array( 'monday_board' ),
+				'post_fields' => array( 'monday_url', 'monday_key', 'monday_board' ),
 			);
 
 			$new_settings['monday_tag_field'] = array(
@@ -395,7 +403,7 @@ class WPF_Monday_Admin {
 				'placeholder' => 'Select Tag Field',
 				'section'     => 'setup',
 				'choices'     => wp_fusion()->settings->get( 'available_crm_tag_fields', array() ),
-				'post_fields' => array( 'monday_tag_field' ),
+				'post_fields' => array( 'monday_url', 'monday_key', 'monday_tag_field' ),
 			);
 			$new_settings['monday_footer'] = array(
 				'type'    => 'heading',

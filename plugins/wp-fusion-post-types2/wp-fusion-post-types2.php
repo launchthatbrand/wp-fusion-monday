@@ -416,5 +416,5 @@ function wp_fusion_postTypes() {
 
 }
 
-add_action( 'plugins_loaded', 'wp_fusion_postTypes', 10 );
+add_action( 'plugins_loaded', 'wp_fusion_postTypes', 100 );
 
