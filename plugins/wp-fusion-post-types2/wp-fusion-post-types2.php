@@ -168,7 +168,7 @@ final class WP_Fusion_PostTypes {
 		$slug = wp_fusion()->crm->slug;
 
 		if ( empty( $slug ) ) {
-			return new WP_Error( 'error', 'WP Fusion must be connected to a CRM for "WP Fusion - Ecommerce Addon" to work.' );
+			return new WP_Error( 'error', 'WP Fusion must be connected to a CRM for "WP Fusion - Post Types Addon" to work.' );
 		}
 
 		if ( ! array_key_exists( $slug, $crms ) ) {

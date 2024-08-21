@@ -1,15 +1,77 @@
-[14-Aug-2024 20:17:51 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[14-Aug-2024 20:18:07 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[14-Aug-2024 20:19:49 UTC] GraphQL Mutation: mutation {
-			change_multiple_column_values (board_id: 7193033323, item_id: 7224825144, column_values: "{\"email__1\":{\"email\":\"bbb@gmail.com\",\"text\":\"bbb@gmail.com\"},\"name\":\"bbb bbb\",\"numbers__1\":\"4\"}") {
-				id
-			}
-		}
-[14-Aug-2024 20:19:49 UTC] API response body: {"data":{"change_multiple_column_values":{"id":"7224825144"}},"account_id":11070499}
-[14-Aug-2024 20:24:34 UTC] Result of saving: success
-[14-Aug-2024 20:27:32 UTC] PHP Warning:  strtotime(): Epoch doesn't fit in a PHP integer in /var/www/html/wp-admin/includes/meta-boxes.php on line 381
-[14-Aug-2024 20:27:36 UTC] PHP Warning:  Undefined property: WPF_PT_CRM_Base::$downloads_fields in /var/www/html/wp-content/plugins/wp-fusion-post-types2/includes/crms/class-base.php on line 136
-[14-Aug-2024 20:27:36 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /var/www/html/wp-content/plugins/wp-fusion-post-types2/includes/crms/class-base.php on line 136
-[14-Aug-2024 20:27:36 UTC] PHP Warning:  Undefined array key "name" in /var/www/html/wp-content/plugins/wp-fusion-monday/includes/class-wpf-custom.php on line 1894
-[14-Aug-2024 20:27:37 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types2/includes/crms/class-base.php:136) in /var/www/html/wp-includes/pluggable.php on line 1435
-[14-Aug-2024 20:27:37 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-content/plugins/wp-fusion-post-types2/includes/crms/class-base.php:136) in /var/www/html/wp-includes/pluggable.php on line 1438
+[18-Aug-2024 02:55:38 UTC] Automatic updates starting...
+[18-Aug-2024 02:55:38 UTC] Automatic updates complete.
+[18-Aug-2024 16:30:39 UTC] Automatic updates starting...
+[18-Aug-2024 16:30:39 UTC] Automatic updates complete.
+[18-Aug-2024 17:51:16 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:51:16 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:51:17 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/includes/misc.php on line 1438
+[18-Aug-2024 17:51:17 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-includes/functions.php on line 7108
+[18-Aug-2024 17:51:17 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/admin-header.php on line 9
+[18-Aug-2024 17:51:17 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:51:17 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:51:20 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:51:20 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:51:20 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/includes/misc.php on line 1438
+[18-Aug-2024 17:51:20 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-includes/functions.php on line 7108
+[18-Aug-2024 17:51:21 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/admin-header.php on line 9
+[18-Aug-2024 17:51:22 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:51:22 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:51:23 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/includes/misc.php on line 1438
+[18-Aug-2024 17:51:23 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-includes/functions.php on line 7108
+[18-Aug-2024 17:51:23 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/admin-header.php on line 9
+[18-Aug-2024 17:51:28 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:51:28 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:51:28 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/includes/misc.php on line 1438
+[18-Aug-2024 17:51:28 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-includes/functions.php on line 7108
+[18-Aug-2024 17:51:29 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/admin-header.php on line 9
+[18-Aug-2024 17:52:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:52:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:53:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:53:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:54:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:54:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:55:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:55:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:56:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:56:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:57:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:57:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:58:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:58:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:59:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 17:59:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:00:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:00:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:01:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:01:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:02:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:02:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:03:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:03:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:04:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:04:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:05:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:05:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:06:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:06:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:07:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:07:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:08:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:08:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:09:29 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:09:29 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:09:52 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:09:52 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:09:52 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/includes/misc.php on line 1438
+[18-Aug-2024 18:09:52 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-includes/functions.php on line 7108
+[18-Aug-2024 18:09:53 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/admin-header.php on line 9
+[18-Aug-2024 18:10:00 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:10:00 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:10:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/includes/misc.php on line 1438
+[18-Aug-2024 18:10:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-includes/functions.php on line 7108
+[18-Aug-2024 18:10:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/admin-header.php on line 9
+[18-Aug-2024 18:10:05 UTC] PHP Warning:  include_once(/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php): Failed to open stream: No such file or directory in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:10:05 UTC] PHP Warning:  include_once(): Failed opening '/var/www/html/wp-content/plugins/wp-fusion-monday/wp-fusion-monday.php' for inclusion (include_path='.:') in /var/www/html/wp-settings.php on line 522
+[18-Aug-2024 18:10:05 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/includes/misc.php on line 1438
+[18-Aug-2024 18:10:05 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-includes/functions.php on line 7108
+[18-Aug-2024 18:10:05 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-settings.php:522) in /var/www/html/wp-admin/admin-header.php on line 9

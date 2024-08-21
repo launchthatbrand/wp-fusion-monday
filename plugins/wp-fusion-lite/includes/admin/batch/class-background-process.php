@@ -86,6 +86,7 @@ if ( ! class_exists( 'WPF_Background_Process' ) ) {
 		 * @return array Response from wp_remote_post
 		 */
 		public function dispatch() {
+			BugFu::log( 'dispatch init' );
 
 			if ( $this->is_process_running() ) {
 				return true;
@@ -119,6 +120,7 @@ if ( ! class_exists( 'WPF_Background_Process' ) ) {
 		 * @return $this
 		 */
 		public function save() {
+			BugFu::log( 'save init' );
 
 			// Key is wpf_background_process_{random}
 

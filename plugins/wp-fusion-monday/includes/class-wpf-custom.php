@@ -119,9 +119,44 @@ class WPF_Monday {
 		// 	$this->edit_url = trailingslashit( preg_replace( '/\.api\-.+?(?=\.)/', '.activehosted', $this->api_url ) ) . 'app/contacts/%d/';
 		// }
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_filter( 'wpf_batch_import_users_args', array( $this, 'import_users_args' ), 10, 2 );
+		// add_filter( 'wpf_batch_objects', array( $this, 'batch_objects' ), 10, 2 );
+		add_filter( 'wpf_import_user', array( $this, 'import_user' ), 10, 2 );
+
+
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 20 );
 
 		
+	}
+
+	public function import_user( $user_meta, $contact_id ) {
+		BugFu::log("import_user monday init");
+		BugFu::log($user_meta);
+		BugFu::log($contact_id);
+	
+		// Check if 'monday_contact_id' exists in $user_meta
+		if (isset($user_meta['monday_contact_id'])) {
+			// Strip out the underscore
+			$user_meta['monday_contact_id'] = str_replace('_', '', $user_meta['monday_contact_id']);
+		}
+	
+		return $user_meta;
+	}
+	
+
+	public function batch_objects( $objects, $args ) {
+		BugFu::log("batch_objects init");
+		BugFu::log($objects);
+		BugFu::log($args);
+
+		return $objects;
+	}
+
+	public function import_users_args( $args, $objects ) {
+		BugFu::log("import_users_args init");
+		BugFu::log($args);
+		BugFu::log($objects);
 	}
 
 	public function test_set(){
@@ -134,6 +169,11 @@ class WPF_Monday {
         // wp_enqueue_style( 'select4', WPF_DIR_URL . 'includes/admin/options/lib/select2/select4.min.css' );
 		// wp_enqueue_script( 'select4', WPF_DIR_URL . 'includes/admin/options/lib/select2/select4.min.js', array( 'jquery' ), '4.0.1', true );
         wp_enqueue_script( 'wpf-monday-admin', plugin_dir_url( __FILE__ ) . 'js/wpf-monday-admin.js', array('jquery', 'select4'), '1.1', true );
+
+		// Localize the script with required data
+		wp_localize_script('wpf-monday-admin', 'wpf_ajax', array(
+			'nonce' => wp_create_nonce('wpf_settings_nonce'),
+		));
     }
 
 	/**
@@ -930,21 +970,67 @@ class WPF_Monday {
 	 */
 
 	public function get_contact_id( $email_address ) {
+		BugFu::log("get_contact_id custom init");
+		error_log("get_contact_id custom init");
+		// Get the board ID and email column ID from options
+		$monday_board = wpf_get_option( 'monday_board' );
 
-		$response = wp_safe_remote_get( $this->api_url . 'api/3/contacts?email=' . rawurlencode( $email_address ), $this->params );
-
+		$lookup_field = wp_fusion()->crm->get_crm_field( 'user_email', 'Email' );
+		BugFu::log($lookup_field);
+		$lookup_field = apply_filters( 'wpf_monday_lookup_field', $lookup_field );
+	
+		// If either the board ID or email column ID is not set, return false
+		if ( empty( $monday_board ) || empty( $lookup_field ) ) {
+			return false;
+		}
+	
+		// Construct the GraphQL query to search for the email in the specified column
+		$query = '{
+			boards(ids: ' . $monday_board . ') {
+				items_page(query_params: {rules: [{column_id: "' . esc_js( $lookup_field ) . '", compare_value: ["' . esc_js( $email_address ) . '"], operator: any_of}]}) {
+					items {
+						id
+						name
+					}
+				}
+			}
+		}';
+	
+		// Send the request to the Monday.com API
+		$response = wp_safe_remote_post(
+			'https://api.monday.com/v2',
+			array(
+				'method'  => 'POST',
+				'headers' => array(
+					'Authorization' => wpf_get_option( 'monday_key' ), // Assuming API key is stored in options
+					'Content-Type'  => 'application/json',
+				),
+				'body'    => wp_json_encode( array( 'query' => $query ) ),
+			)
+		);
+	
+		// Handle any errors
 		if ( is_wp_error( $response ) ) {
 			return $response;
 		}
-
-		$response = json_decode( wp_remote_retrieve_body( $response ) );
-
-		if ( empty( $response->contacts ) ) {
-			return false;
-		} else {
-			return $response->contacts[0]->id;
+	
+		// Decode the JSON response
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+	
+		// Check for errors in the response body
+		if ( isset( $body['errors'] ) && ! empty( $body['errors'] ) ) {
+			return new WP_Error( 'monday_error', $body['errors'][0]['message'] );
 		}
+	
+		// If no items are found, return false
+		if ( empty( $body['data']['boards'][0]['items_page']['items'] ) ) {
+			return false;
+		}
+	
+		// Return the ID of the first matching item (contact)
+		return $body['data']['boards'][0]['items_page']['items'][0]['id'];
 	}
+	
 
 	/**
 	 * Gets all tags currently applied to the contact, also update the list of available tags. This uses the old API since the v3 API only uses tag IDs
@@ -1188,7 +1274,7 @@ class WPF_Monday {
 		// Prepare the column values in JSON format dynamically
 		$column_values = array();
 		foreach ( $contact_data as $key => $value ) {
-			if ( $key === 'email' ) {
+			if ( strpos( $key, 'email' ) !== false ) {
 				$column_values[$key] = array(
 					'email' => $value,
 					'text' => $value
@@ -1355,151 +1441,188 @@ class WPF_Monday {
 	 * @return array User meta data that was returned
 	 */
 
-	public function load_contact( $contact_id ) {
+	 public function load_contact( $contact_id ) {
+		BugFu::log("load_contact init");
 
-		$response = wp_safe_remote_get( $this->api_url . 'api/3/contacts/' . $contact_id, $this->get_params() );
+		// Remove the U+FEFF character if present
+		// $contact_id = str_replace("\u{FEFF}", '', $contact_id);
 
+		// Remove the prefix before using the contact ID
+		$contact_id = ltrim($contact_id, '_');
+
+		BugFu::log($contact_id);
+
+		$options = get_option('wpf_options');
+		$monday_board = $options['monday_board'];
+	
+		// Prepare the GraphQL query to get the item details.
+		$query = '{
+				items(ids: ' . $contact_id . ') {
+					name
+					column_values {
+						id
+						text
+						value
+					}
+				}
+		}';
+
+		BugFu::log($query);
+	
+		$response = wp_safe_remote_post(
+			$this->api_url,
+			array(
+				'method'  => 'POST',
+				'headers' => array(
+					'Authorization' => $this->api_key,
+					'Content-Type'  => 'application/json',
+				),
+				'body'    => wp_json_encode( array( 'query' => $query ) ),
+			)
+		);
+	
 		if ( is_wp_error( $response ) ) {
+			BugFu::log('API request error: ' . $response->get_error_message());
 			return $response;
 		}
-
-		$response = json_decode( wp_remote_retrieve_body( $response ) );
-
-		if ( empty( $response ) ) {
+	
+		$response = json_decode( wp_remote_retrieve_body( $response ), true );
+		BugFu::log($response);
+	
+		if ( empty( $response['data']['items'][0] ) ) {
 			return false;
 		}
-
+	
+		$item_data = $response['data']['items'][0];
+		BugFu::log($item_data);
+	
 		$user_meta = array();
-
-		// Map contact fields.
+	
+		// Map contact fields from Monday.com.
 		$contact_fields = wpf_get_option( 'contact_fields', array() );
-
+		BugFu::log($contact_fields);
+		
+	
 		$loaded_data = array(
-			'first_name' => $response->contact->{'firstName'},
-			'last_name'  => $response->contact->{'lastName'},
-			'email'      => $response->contact->{'email'},
-			'phone'      => $response->contact->{'phone'},
+			'name'  => $item_data['name'],  // Assuming 'name' contains first and last name
 		);
-
-		// Maybe merge custom fields.
-		$custom_fields = wp_list_pluck( $response->{'fieldValues'}, 'value', 'field' );
-
-		if ( ! empty( $custom_fields ) ) {
-			$loaded_data = $loaded_data + $custom_fields;
+	
+		// Maybe merge custom fields from Monday.com column values.
+		foreach ( $item_data['column_values'] as $column ) {
+			$loaded_data[ $column['id'] ] = $column['text'];
 		}
-
+	
 		// Standard fields.
 		foreach ( $loaded_data as $field_name => $value ) {
-
 			foreach ( $contact_fields as $meta_key => $field_data ) {
-
 				if ( $field_data['active'] ) {
-
-					// Convert stored v1 custom field names.
 					$field_id = str_replace( 'field[', '', $field_data['crm_field'] );
 					$field_id = str_replace( ',0]', '', $field_id );
-
-					if ( 'multiselect' === $field_data['type'] && ! empty( $value ) ) {
-						$meta_value = array_values( array_filter( explode( '||', $value ) ) );
-					} elseif ( ! empty( $value ) ) {
-						$meta_value = trim( $value, '||' ); // in case it's a multiselect being loaded as text.
-					} else {
-						$meta_value = $value;
-					}
-
+	
 					if ( strval( $field_id ) === strval( $field_name ) ) {
-						$user_meta[ $meta_key ] = $meta_value;
+						$user_meta[ $meta_key ] = $value;
 					}
 				}
 			}
 		}
 
+		BugFu::log($user_meta);
+	
 		return $user_meta;
 	}
+	
 
 	/**
-	 * Gets a list of contact IDs based on tag
+	 * Gets a list of contact IDs based on tag from a Monday board
 	 *
 	 * @access public
 	 * @return array Contact IDs returned
 	 */
-
 	public function load_contacts( $tag_name = false ) {
+		BugFu::log("load_contacts init");
+		BugFu::log($tag_name);
 
-		$url = $this->api_url . 'api/3/contacts?limit=100';
+		$api_key = wpf_get_option('monday_key');
 
-		if ( $tag_name ) {
+		$options = get_option('wpf_options');
+		$monday_board = $options['monday_board'];
+		$monday_tag_field = wpf_get_option('monday_tag_field');
 
-			// For this to work we need the tag ID
-			$response = wp_safe_remote_get( $this->api_url . 'api/3/tags?search=' . rawurlencode( $tag_name ), $this->get_params() );
-
-			if ( is_wp_error( $response ) ) {
-				return $response;
-			}
-
-			$response = json_decode( wp_remote_retrieve_body( $response ) );
-
-			if ( empty( $response->tags ) ) {
-
-				wpf_log( 'error', 0, 'Unable to get tag ID for ' . $tag_name . ', cancelling import.' );
-				return false;
-
-			}
-
-			$tag_id = false;
-
-			foreach ( $response->tags as $tag ) {
-
-				if ( $tag_name === $tag->tag ) {
-					$tag_id = $tag->id;
-					break;
-				}
-			}
-			if ( $tag_id ) {
-				$url = add_query_arg( 'tagid', $tag_id, $url );
-			}
+		if (empty($api_key) || empty($monday_board) || empty($monday_tag_field)) {
+			return new WP_Error('missing_data', __('API key, board ID, or tag field is missing.', 'wp-fusion'));
 		}
 
-		// Query will only return contacts on at least one list.
+		// Determine if the tag_name is numeric or not
+		$compare_value = is_numeric($tag_name) ? $tag_name : '"' . esc_js($tag_name) . '"';
 
+		// Build the GraphQL query
+		$query = '{
+			boards (ids: ' . $monday_board . ') {
+				items_page (query_params: {rules: [{column_id: "' . esc_js($monday_tag_field) . '", compare_value: [' . $compare_value . '], operator: any_of}]}) {
+					items {
+						id
+						name
+					}
+				}
+			}
+		}';
+
+		BugFu::log($query);
+
+		// Make the request to the Monday API
+		$response = wp_safe_remote_post(
+			'https://api.monday.com/v2',
+			array(
+				'method'  => 'POST',
+				'headers' => array(
+					'Authorization' => $api_key,
+					'Content-Type'  => 'application/json',
+				),
+				'body'    => wp_json_encode(array('query' => $query)),
+			)
+		);
+
+		if (is_wp_error($response)) {
+			return $response;
+		}
+
+		$body = json_decode(wp_remote_retrieve_body($response), true);
+
+		// Handle the response
+		if (isset($body['errors']) && !empty($body['errors'])) {
+			return new WP_Error('api_error', __('API error: ', 'wp-fusion') . $body['errors'][0]['message']);
+		}
+
+		if (empty($body['data']['boards'][0]['items_page']['items'])) {
+			return array();
+		}
+
+		// Collect the contact IDs (items IDs in Monday)
 		$contact_ids = array();
-		$offset      = 0;
-		$proceed     = true;
 
-		while ( $proceed ) {
-
-			// Limit is actually 100, this has been tested.
-			$url = add_query_arg( 'offset', $offset, $url );
-
-			$response = wp_safe_remote_get( $url, $this->get_params() );
-
-			if ( is_wp_error( $response ) ) {
-				return $response;
-			}
-
-			$response = json_decode( wp_remote_retrieve_body( $response ) );
-
-			if ( ! empty( $response->contacts ) ) {
-
-				foreach ( $response->contacts as $contact ) {
-
-					$contact_ids[] = $contact->id;
-
-				}
-
-				$offset += 100;
-
-			}
-
-			if ( count( $response->contacts ) < 100 ) {
-
-				$proceed = false;
-
-			}
+		foreach ($body['data']['boards'][0]['items_page']['items'] as $item) {
+			$contact_ids[] = $item['id'];
 		}
+
+		// Convert all contact IDs to strings and add a zero-width space prefix to avoid integer processing issues
+		// $contact_ids = array_map(function($id) {
+		// 	return "\u{200B}" . strval($id);
+		// }, $contact_ids);
+
+		// $contact_ids = array_map(function($id) {
+		// 	return "\u{FEFF}" . strval($id);  // Add zero-width no-break space (U+FEFF) prefix
+		// }, $contact_ids);
+
+		// Convert all contact IDs to strings and add a prefix to avoid integer processing issues
+		$contact_ids = array_map(function($id) {
+			return '_' . strval($id);
+		}, $contact_ids);
+
+		BugFu::log($contact_ids);
 
 		return $contact_ids;
 	}
+
 
 	//
 	// Deep data stuff

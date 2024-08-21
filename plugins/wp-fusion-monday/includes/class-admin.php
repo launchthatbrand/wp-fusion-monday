@@ -22,7 +22,9 @@ class WPF_Monday_Admin {
 		// Load option group
 		$this->option_group = 'wpf_options';
 		$this->options      = get_option( 'wpf_options', array() );
-		// BugFu::log($this->options);
+		
+		// Set the constants for the usermeta keys.
+		add_action( 'wpf_crm_loaded', array( $this, 'set_constants' ) );
 
 		// Settings
 		add_filter( 'wpf_configure_settings', array( $this, 'register_connection_settings' ), 10, 2 );
@@ -39,6 +41,8 @@ class WPF_Monday_Admin {
 		add_action( 'show_field_select2', array( $this, 'show_field_select2' ), 10, 2 );
 		add_action( 'show_field_select3', array( $this, 'show_field_select3' ), 10, 2 );
 		add_action( 'show_field_select3_end', array( $this, 'show_field_select3_end' ), 10, 2 );
+
+		
 
 		if ( wpf_get_option( 'crm' ) == $this->slug ) {
 			$this->init();
@@ -71,7 +75,151 @@ class WPF_Monday_Admin {
 
 		add_filter( 'wpf_get_setting_available_crm_tag_fields', array( $this, 'get_setting_available_crm_tag_fields' ) );
 		add_filter( 'wpf_get_setting_available_lists', array( $this, 'get_setting_available_lists' ) );
+
+		// Export users from Users admin screen
+		add_filter( 'bulk_actions-users', array( $this, 'register_export_selected_users_bulk_action' ), 10, 1 );
+		add_action( 'wp_ajax_export_selected_users', array( $this, 'handle_export_selected_users_ajax' ), 10 );
+		add_filter( 'wpf_batch_export_selected_users_init', array( $this, 'export_selected_users_init' ), 10, 1 );
+		add_action( 'wpf_batch_export_selected_users', array( $this, 'export_selected_users_step' ), 10, 1 );		
+
+		// add_filter( 'handle_bulk_actions-users', array( $this, 'handle_custom_bulk_action_export_users' ), 10, 3 );
+		add_filter( 'admin_notices', array( $this, 'wpf_add_bulk_update_bar' ) );
+
+		add_filter( 'manage_users_columns', array( $this, 'add_crm_contact_id_column' ), 10, 1 );
+		add_filter( 'manage_users_custom_column', array( $this, 'populate_monday_contact_id_column' ), 15, 3 );
 		
+	}
+
+	/**
+	 * Sets the constants for the usermeta keys.
+	 *
+	 * @since 3.38.25
+	 *
+	 * @param WPF_CRM $crm    The CRM integration.
+	 */
+	public function set_constants( $crm ) {
+
+		$slug = $this->slug;
+
+		if ( ! defined( 'WPF_CONTACT_ID_META_KEY' ) ) {
+			define( 'WPF_CONTACT_ID_META_KEY', $slug . '_contact_id' );
+		}
+
+	}
+
+	public function export_selected_users_init($args) {
+		BugFu::log("export_selected_users_init");
+		BugFu::log($args);
+	
+		if (isset($args['user_ids'])) {
+			$user_ids = $args['user_ids'];
+	
+			// Query the users with the provided IDs
+			$query_args = array(
+				'include' => $user_ids,
+				'meta_query' => array(
+					'relation' => 'OR',
+					array(
+						'key'     => 'monday_contact_id',
+						'compare' => 'NOT EXISTS',
+					),
+					array(
+						'key'   => 'monday_contact_id',
+						'value' => false,
+					),
+				),
+				'fields' => 'ID',
+			);
+	
+			$filtered_users = get_users($query_args);
+			BugFu::log($filtered_users);
+	
+			return $filtered_users;
+		}
+	
+		// Fallback to an empty array if no user_ids are provided
+		return [];
+	}
+	
+
+	public function export_selected_users_step( $user_id ) {
+		// Use the existing user_register method
+		wp_fusion()->user->user_register( $user_id );
+	}
+
+	public function handle_export_selected_users_ajax() {
+		BugFu::log("handle_export_selected_users_ajax_init");
+		check_ajax_referer('wpf_settings_nonce', '_ajax_nonce');
+	
+		if (!current_user_can('manage_options')) {
+			wp_send_json_error(['message' => 'Unauthorized']);
+		}
+	
+		$user_ids = isset($_POST['user_ids']) ? array_map('intval', $_POST['user_ids']) : [];
+		BugFu::log($user_ids);
+	
+		if (empty($user_ids)) {
+			wp_send_json_error(['message' => 'No users selected']);
+		}
+	
+		$batch = new WPF_Batch();
+		$batch->batch_init('export_selected_users', ['user_ids' => $user_ids]);
+		BugFu::log($batch);
+	
+		wp_send_json_success(['message' => 'Batch process started']);
+	}
+
+	public function populate_monday_contact_id_column( $value, $column_name, $user_id ) {
+		if ( 'monday_contact_id' === $column_name ) {
+			// Get the monday_contact_id user meta
+			$monday_contact_id = get_user_meta( $user_id, 'monday_contact_id', true );
+
+			// Display the Monday Contact ID if it exists, otherwise display 'Not Synced'
+			return ! empty( $monday_contact_id ) ? esc_html( $monday_contact_id ) : __( 'Not Synced', 'your-text-domain' );
+		}
+
+		return $value;
+	}
+
+
+	public function add_crm_contact_id_column( $columns ) {
+		// Add a new column after the 'Username' column
+		$slug = wp_fusion()->crm->slug;
+		$name = wp_fusion()->crm->name;
+		$columns["{$slug}_contact_id"] = __( "{$name} Contact ID", 'your-text-domain' );
+		return $columns;
+	}
+
+	public function register_export_selected_users_bulk_action( $bulk_actions ) {
+		$bulk_actions['export_selected_users'] = __('Export Selected Users', 'your-plugin-textdomain');
+    	return $bulk_actions;
+	}
+
+	// public function handle_custom_bulk_action_export_users( $redirect_to, $doaction, $user_ids ) {
+	// 	if ( $doaction !== 'export_to_monday' ) {
+	// 		return $redirect_to;
+	// 	}
+	
+	// 	// Add the selected users to the WP Fusion background process
+	// 	foreach ( $user_ids as $user_id ) {
+	// 		BugFu::log( "Exporting user ID: ". $user_id );
+	// 		wp_fusion()->batch->process->push_to_queue( array( 'wpf_batch_users_register', array( $user_id ) ) );
+	// 	}
+	
+	// 	wp_fusion()->batch->process->save()->dispatch();
+	
+	// 	// Optionally, set a custom message to be shown after the action is processed
+	// 	$redirect_to = add_query_arg( 'exported', count( $user_ids ), $redirect_to );
+	// 	return $redirect_to;
+	// }
+
+	public function wpf_add_bulk_update_bar() {
+		$screen = get_current_screen();
+		
+		// Check if we are on the Users page
+		if ($screen && $screen->id === 'users') {
+			do_action('wpf_settings_notices');
+		}
 	}
 
 

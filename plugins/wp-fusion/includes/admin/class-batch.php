@@ -599,6 +599,7 @@ class WPF_Batch {
 	 */
 
 	public function users_register_init() {
+		
 
 		$args = array(
 			'fields'     => 'ID',

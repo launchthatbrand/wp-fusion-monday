@@ -690,8 +690,9 @@ class WPF_User {
 			delete_user_meta( $user_id, WPF_TAGS_META_KEY, $contact_id );
 
 		} else {
-
 			$contact_id = sanitize_text_field( $contact_id );
+
+			BugFu::log( 'contact_id', $contact_id );
 
 			// Save it for later.
 			update_user_meta( $user_id, WPF_CONTACT_ID_META_KEY, $contact_id );
@@ -2123,6 +2124,7 @@ class WPF_User {
 	 */
 
 	public function import_user( $contact_id, $send_notification = false, $role = false ) {
+		BugFu::log('import_user init');
 
 		// First see if user already exists.
 		$user_id = wpf_get_user_id( $contact_id );

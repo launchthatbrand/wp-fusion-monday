@@ -254,6 +254,9 @@ class WPF_Batch {
 	 */
 
 	public function batch_init( $hook = false, $args = array() ) {
+		BugFu::log( 'batch_init' );
+		BugFu::log( $hook );
+		BUgFu::log( $args );
 
 		if ( wp_doing_ajax() ) {
 			check_ajax_referer( 'wpf_settings_nonce' );
@@ -266,12 +269,17 @@ class WPF_Batch {
 		if ( isset( $_POST['args'] ) && is_array( $_POST['args'] ) ) {
 			$args = array_map( 'sanitize_text_field', wp_unslash( $_POST['args'] ) );
 		}
+		Bugfu::log( $args );
 
 		$objects = apply_filters( 'wpf_batch_' . $hook . '_init', $args );
+		BugFu::log( $objects );
 		$objects = apply_filters( 'wpf_batch_objects', $objects, $args );
+		BugFu::log( $objects );
 
 		$args = apply_filters( 'wpf_batch_' . $hook . '_args', $args, $objects );
 		$args = apply_filters( 'wpf_batch_args', $args, $objects );
+
+		
 
 		if ( empty( $objects ) ) {
 
@@ -306,11 +314,16 @@ class WPF_Batch {
 		);
 
 		// Int IDs are smaller in the DB than strings, but sometimes we'll still need to use strings (i.e. Drip subscriber IDs).
+		BugFu::log( $objects);
 		if ( is_numeric( $objects[0] ) ) {
+			BugFu::log( 'Converting to int');
 			$objects = array_map( 'intval', $objects );
 		} else {
+			BugFu::log( 'Converting to string');
 			$objects = array_map( 'sanitize_text_field', $objects );
 		}
+
+		BugFu::log( $objects);
 
 		if ( isset( $args['skip_processed'] ) ) {
 			// We only need this for the initial query, can remove it now and save some space.
@@ -536,6 +549,7 @@ class WPF_Batch {
 	 */
 	public function import_users_args( $args, $objects ) {
 
+
 		// Keep track of import groups so they can be removed later.
 		$import_groups = get_option( 'wpf_import_groups', array() );
 
@@ -668,6 +682,8 @@ class WPF_Batch {
 	 */
 
 	public function users_register_init() {
+		BugFu::log('users_register base init');
+		BugFu::log( $args );
 
 		$args = array(
 			'fields'     => 'ID',
@@ -684,6 +700,9 @@ class WPF_Batch {
 			),
 		);
 
+		BugFu::log( "import users # " );
+		BugFu::log( get_users( $args ) );
+
 		return get_users( $args );
 
 	}
@@ -696,6 +715,7 @@ class WPF_Batch {
 	 */
 
 	public function users_register_step( $user_id ) {
+		BugFu::log( 'users_register_step init' );
 
 		wp_fusion()->user->user_register( $user_id );
 
